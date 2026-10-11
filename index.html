@@ -2,257 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlashMimic</title>
-  <meta name="description" content="FlashMimic official website">
-  <style>
-    :root {
-      --primary: #6c5ce7;
-      --primary-dark: #4834d4;
-      --accent: #f5576c;
-      --dark: #1a1a2e;
-      --text: #2d3436;
-      --muted: #636e72;
-      --bg: #ffffff;
-      --bg-alt: #f7f7fb;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.7;
-    }
-    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
-
-    /* ===== Navbar ===== */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(26, 26, 46, 0.92);
-      backdrop-filter: blur(8px);
-    }
-    nav .container {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-    }
-    nav .logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; }
-    nav .logo span { color: var(--accent); }
-    nav ul { display: flex; gap: 1.8rem; list-style: none; }
-    nav a { color: #d5d5e8; text-decoration: none; font-size: 0.95rem; transition: color .2s; }
-    nav a:hover { color: #fff; }
-    @media (max-width: 640px) { nav ul { display: none; } }
-
-    /* ===== Hero ===== */
-    header {
-      min-height: 92vh;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      padding: 6rem 1.5rem 4rem;
-    }
-    header h1 {
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      font-weight: 800; letter-spacing: -0.03em;
-      background: linear-gradient(90deg, #f093fb, #f5576c, #ffd200);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      margin-bottom: 1.2rem;
-    }
-    header .tagline {
-      font-size: clamp(1.05rem, 3vw, 1.4rem);
-      color: #c8c8e0; max-width: 640px; margin: 0 auto 2.5rem;
-    }
-    .btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-block; padding: 0.85rem 2.2rem; border-radius: 999px;
-      text-decoration: none; font-weight: 600; transition: transform .15s, box-shadow .15s, background .2s;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(245, 87, 108, .4); }
-    .btn-ghost { border: 1px solid rgba(255,255,255,.45); color: #fff; }
-    .btn-ghost:hover { background: rgba(255,255,255,.12); }
-
-    /* ===== Sections ===== */
-    section { padding: 5rem 0; }
-    section:nth-of-type(even) { background: var(--bg-alt); }
-    .section-title {
-      text-align: center; font-size: 2rem; font-weight: 700;
-      margin-bottom: 0.6rem; color: var(--dark);
-    }
-    .section-sub {
-      text-align: center; color: var(--muted);
-      max-width: 620px; margin: 0 auto 3rem;
-    }
-
-    /* ===== Feature cards ===== */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem; }
-    .card {
-      background: #fff; border-radius: 14px; padding: 2rem;
-      box-shadow: 0 2px 14px rgba(20, 20, 60, .07);
-      transition: transform .15s, box-shadow .15s;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(20, 20, 60, .12); }
-    .card .icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 1.1rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff;
-    }
-    .card h3 { margin-bottom: 0.5rem; color: var(--dark); }
-    .card p { color: var(--muted); font-size: 0.95rem; }
-
-    /* ===== Demo video placeholder ===== */
-    .video-box {
-      max-width: 800px; margin: 0 auto; aspect-ratio: 16 / 9;
-      border-radius: 16px; overflow: hidden;
-      background: repeating-linear-gradient(45deg, #2d2d44, #2d2d44 14px, #32324c 14px, #32324c 28px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: #9c9cb8; gap: 0.6rem;
-      box-shadow: 0 10px 40px rgba(20, 20, 60, .18);
-    }
-    .video-box .play {
-      width: 68px; height: 68px; border-radius: 50%;
-      border: 2px solid #9c9cb8;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; padding-left: 6px;
-    }
-
-    /* ===== News ===== */
-    .news-list { max-width: 720px; margin: 0 auto; list-style: none; }
-    .news-list li {
-      display: flex; gap: 1.4rem; padding: 1.1rem 0.4rem;
-      border-bottom: 1px solid #e8e8f0; align-items: baseline;
-    }
-    .news-list .date { color: var(--primary); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
-
-    /* ===== Team ===== */
-    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.6rem; max-width: 860px; margin: 0 auto; }
-    .member { text-align: center; }
-    .member .avatar {
-      width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 0.9rem;
-      background: linear-gradient(135deg, #c3cfe2, #6c5ce7);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 2rem; font-weight: 700;
-    }
-    .member h4 { color: var(--dark); }
-    .member p { color: var(--muted); font-size: 0.9rem; }
-
-    /* ===== Footer ===== */
-    footer { background: var(--dark); color: #9c9cb8; padding: 2.6rem 0; text-align: center; font-size: 0.9rem; }
-    footer a { color: #c8c8e0; text-decoration: none; }
-    footer a:hover { color: #fff; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090e1b">
+  <meta name="description" content="FlashMimic — project overview, method, results, and demonstrations. More details coming soon.">
+  <title>FlashMimic — Project Page</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-content.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
 <body>
-
-  <nav>
-    <div class="container">
-      <a class="logo" href="#">Flash<span>Mimic</span></a>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#demo">Demo</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#team">Team</a></li>
-        <li><a href="https://github.com/flashmimic">GitHub</a></li>
-      </ul>
+<a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="FlashMimic home"><span class="brand-mark" aria-hidden="true">ϟ</span>Flash<span>Mimic</span></a>
+    <div class="nav-links" id="nav-links">
+      <a href="#highlights" data-i18n="navHighlights">Highlights</a><a href="#method" data-i18n="navMethod">Method</a><a href="#results" data-i18n="navResults">Results</a><a href="#demos" data-i18n="navDemos">Demos</a><a href="#authors" data-i18n="navAuthors">Authors</a>
+    </div>
+    <div class="nav-actions">
+      <div class="language-switch" role="group" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true">EN</button><button type="button" data-language="zh" aria-pressed="false">中文</button></div>
+      <a class="nav-github" data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span></button>
     </div>
   </nav>
-
-  <header>
-    <div>
-      <h1>FlashMimic</h1>
-      <!-- TODO: replace with a one-sentence description of the project -->
-      <p class="tagline">A one-sentence tagline describing what FlashMimic does goes here.</p>
-      <div class="btns">
-        <a class="btn btn-primary" href="#demo">Watch Demo</a>
-        <a class="btn btn-ghost" href="https://github.com/flashmimic">GitHub</a>
+</header>
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="project-title">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <div class="hero-eyebrow"><span class="eyebrow" data-i18n="projectLabel">RESEARCH PROJECT</span><span class="status"><i aria-hidden="true"></i><span data-i18n="projectStatus">More coming soon</span></span></div>
+      <h1 id="project-title">Flash<span>Mimic</span><span class="title-dot">.</span></h1>
+      <p class="hero-subtitle" id="project-subtitle">Project details coming soon.</p>
+      <p class="hero-description" id="project-description">Discover FlashMimic. Our research, method, and demonstrations will be shared here.</p>
+      <div class="resource-links">
+        <a class="button primary" href="#demos"><span aria-hidden="true">▷</span><span data-i18n="exploreDemos">Explore demos</span><span aria-hidden="true">↗</span></a>
+        <a class="button" data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1-4-2-6-2m12 4v-3.4c0-1 .1-1.5-.5-2 3.3-.4 6.7-1.6 6.7-7.2a5.6 5.6 0 0 0-1.5-3.9A5.2 5.2 0 0 0 19.6 1S18.4.6 15.5 2.5a13.5 13.5 0 0 0-7 0C5.6.6 4.4 1 4.4 1a5.2 5.2 0 0 0-.1 3.5 5.6 5.6 0 0 0-1.5 3.9c0 5.6 3.4 6.8 6.7 7.2-.6.5-.6 1.2-.5 2V21"/></svg>GitHub</a>
+        <span class="button pending" data-resource="paper" aria-disabled="true"><span aria-hidden="true">▤</span><span data-i18n="paper">Paper</span><span class="soon" data-i18n="soon">Soon</span></span>
+        <span class="button pending" data-resource="docs" aria-disabled="true"><span aria-hidden="true">▧</span><span data-i18n="docs">Docs</span><span class="soon" data-i18n="soon">Soon</span></span>
       </div>
-    </div>
-  </header>
-
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">About</h2>
-      <!-- TODO: 2-3 sentences introducing the project -->
-      <p class="section-sub">A short paragraph introducing FlashMimic: what problem it solves, and why it matters.</p>
-      <div class="cards">
-        <div class="card">
-          <div class="icon">&#9889;</div>
-          <h3>Highlight One</h3>
-          <p>Describe a key feature or advantage of FlashMimic here.</p>
+      <figure class="teaser media-slot" id="teaser-slot">
+        <div class="teaser-topline"><span><i aria-hidden="true"></i> FLASHMIMIC / <span data-i18n="overview">OVERVIEW</span></span><span class="media-label" data-i18n="videoPending">VIDEO COMING SOON</span></div>
+        <div class="teaser-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+          <svg class="motion-art" viewBox="0 0 800 300" fill="none">
+            <defs><linearGradient id="motion-gradient" x1="220" y1="70" x2="570" y2="280" gradientUnits="userSpaceOnUse"><stop stop-color="#6cf7d7"/><stop offset="1" stop-color="#24b6e6"/></linearGradient></defs>
+            <g stroke="url(#motion-gradient)" stroke-width="2" opacity=".15"><path d="M60 205Q220 50 390 160T740 95"/><path d="M50 220Q220 65 390 175T750 110"/><path d="M40 235Q220 80 390 190T760 125"/></g>
+            <g stroke="#54dacf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".13"><circle cx="284" cy="72" r="17"/><path d="m283 94-15 69 39 32 13 66m-52-98-34 35-40 30m82-110-34 26-41-11m90-15 21 39 37 7"/></g>
+            <g stroke="#54dacf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".3"><circle cx="352" cy="65" r="17"/><path d="m351 87-3 73 36 39 6 64m-42-103-25 39-43 26m69-107-35 13-33-23m70 12 30 32 38-5"/></g>
+            <g stroke="url(#motion-gradient)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="419" cy="59" r="18"/><path d="m418 83 12 73 29 41-11 66m-18-107-34 44-21 58m48-145-38-3-27-33m70 39 37 13 37-24"/></g>
+            <g fill="#6cf7d7"><circle cx="430" cy="156" r="5"/><circle cx="423" cy="113" r="5"/><circle cx="396" cy="200" r="5"/><circle cx="459" cy="197" r="5"/><circle cx="385" cy="110" r="4"/><circle cx="465" cy="129" r="4"/></g>
+            <g stroke="#54dacf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".2"><circle cx="487" cy="63" r="17"/><path d="m490 85 22 69 15 43-25 62m10-105-34 41-8 61m31-142-35-24-13-39m52 74 36-1 29-35"/></g>
+          </svg>
+          <span class="teaser-watermark">FlashMimic</span>
         </div>
-        <div class="card">
-          <div class="icon">&#127919;</div>
-          <h3>Highlight Two</h3>
-          <p>Describe a key feature or advantage of FlashMimic here.</p>
-        </div>
-        <div class="card">
-          <div class="icon">&#128736;</div>
-          <h3>Highlight Three</h3>
-          <p>Describe a key feature or advantage of FlashMimic here.</p>
-        </div>
-      </div>
+        <div class="teaser-bottomline"><div><span class="outlined-play" aria-hidden="true">▷</span><span data-i18n="teaserTitle">A first look at FlashMimic</span></div><span class="teaser-note" data-i18n="teaserNote">Project film · Coming soon</span></div>
+        <figcaption class="sr-only" data-i18n="teaserAccessible">Decorative motion illustration. The project video will be added later.</figcaption>
+      </figure>
+      <div class="at-a-glance" id="stats" aria-label="At a glance"></div>
     </div>
   </section>
-
-  <section id="demo">
-    <div class="container">
-      <h2 class="section-title">Demo</h2>
-      <p class="section-sub">Show FlashMimic in action.</p>
-      <!-- TODO: replace this box with an embedded video, e.g.
-      <iframe class="video-box" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-      -->
-      <div class="video-box">
-        <div class="play">&#9654;</div>
-        <p>Demo video coming soon</p>
-      </div>
-    </div>
+  <section class="section container" id="highlights">
+    <div class="section-heading"><p class="eyebrow" data-i18n="contributionsLabel">01 / CONTRIBUTIONS</p><h2 data-i18n="highlightsTitle">The ideas behind FlashMimic.</h2><p data-i18n="highlightsDescription">An overview of the key contributions. Full details will follow.</p></div>
+    <div class="highlights-grid" id="highlight-list"></div>
   </section>
-
-  <section id="news">
-    <div class="container">
-      <h2 class="section-title">News</h2>
-      <p class="section-sub">Latest updates from the team.</p>
-      <ul class="news-list">
-        <li><span class="date">2026-10-10</span><span>The FlashMimic official website is now online.</span></li>
-        <!-- TODO: add news items, newest first -->
-        <li><span class="date">YYYY-MM-DD</span><span>News item placeholder.</span></li>
-      </ul>
-    </div>
+  <section class="section section-tinted" id="method"><div class="container">
+    <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="methodLabel">02 / METHOD</p><h2 data-i18n="methodTitle">Inside the framework.</h2></div><p data-i18n="methodDescription">The complete method, from an overview to the details that make it work.</p></div>
+    <figure class="method-figure media-slot" id="method-slot">
+      <div class="figure-toolbar"><span data-i18n="methodFigure">Framework overview</span><span class="small-status" data-i18n="figurePending">Figure coming soon</span></div>
+      <div class="pipeline-placeholder" aria-hidden="true"><div class="pipeline-node"><span>01</span><div class="node-icon">▥</div><strong data-i18n="input">Input</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node featured"><span>02</span><div class="node-icon">ϟ</div><strong>FlashMimic</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node"><span>03</span><div class="node-icon">◇</div><strong data-i18n="output">Output</strong></div></div>
+      <figcaption data-i18n="methodCaption">Illustrative layout placeholder. The final architecture figure and caption will be added here.</figcaption>
+    </figure>
+    <div class="method-notes"><div><span class="detail-number">A</span><div><h3 data-i18n="methodNoteOne">Method overview</h3><p data-i18n="methodNoteOneText">A concise explanation of the approach and its main components will appear here.</p></div></div><div><span class="detail-number">B</span><div><h3 data-i18n="methodNoteTwo">Implementation details</h3><p data-i18n="methodNoteTwoText">Training setup, design choices, and technical details will be shared with the release.</p></div></div></div>
+  </div></section>
+  <section class="section container" id="results">
+    <div class="section-heading"><p class="eyebrow" data-i18n="resultsLabel">03 / EVALUATION</p><h2 data-i18n="resultsTitle">Results, at a glance.</h2><p data-i18n="resultsDescription">Quantitative comparisons and analysis will be available with the full project release.</p></div>
+    <div class="results-grid" id="result-list"></div>
+    <div class="comparison-wrap"><table><caption data-i18n="comparisonCaption">Quantitative comparison · Data to be announced</caption><thead><tr><th scope="col" data-i18n="tableMethod">Method</th><th scope="col" data-i18n="metricOne">Metric 01</th><th scope="col" data-i18n="metricTwo">Metric 02</th><th scope="col" data-i18n="metricThree">Metric 03</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+    <p class="table-note" data-i18n="tableNote">— denotes results that have not yet been published.</p>
   </section>
-
-  <section id="team">
-    <div class="container">
-      <h2 class="section-title">Team</h2>
-      <p class="section-sub">The people behind FlashMimic.</p>
-      <!-- TODO: replace with real members: name, role, and photo (put photos in an assets/ folder) -->
-      <div class="team-grid">
-        <div class="member">
-          <div class="avatar">A</div>
-          <h4>Member Name</h4>
-          <p>Role / Affiliation</p>
-        </div>
-        <div class="member">
-          <div class="avatar">B</div>
-          <h4>Member Name</h4>
-          <p>Role / Affiliation</p>
-        </div>
-        <div class="member">
-          <div class="avatar">C</div>
-          <h4>Member Name</h4>
-          <p>Role / Affiliation</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 FlashMimic &middot; <a href="https://github.com/flashmimic">GitHub</a> &middot; Powered by GitHub Pages</p>
-    </div>
-  </footer>
-
+  <section class="section section-tinted" id="demos"><div class="container">
+    <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="demosLabel">04 / SHOWCASE</p><h2 data-i18n="demosTitle">See FlashMimic in action.</h2></div><p data-i18n="demosDescription">A space for project videos, visualizations, and more. Stay tuned.</p></div>
+    <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter demonstrations"><button type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All</button><button type="button" data-filter="video" aria-pressed="false" data-i18n="filterVideos">Videos</button><button type="button" data-filter="image" aria-pressed="false" data-i18n="filterImages">Visualizations</button></div><span class="gallery-count" id="gallery-count" aria-live="polite"></span></div>
+    <div class="demo-grid" id="demo-list"></div>
+  </div></section>
+  <section class="section container updates-section" id="news"><div class="section-heading"><p class="eyebrow" data-i18n="newsLabel">LATEST</p><h2 data-i18n="newsTitle">Project updates.</h2></div><ul class="news-list" id="news-list"></ul></section>
+  <section class="section section-tinted" id="citation"><div class="container citation-layout">
+    <div class="section-heading"><p class="eyebrow" data-i18n="citationLabel">REFERENCE</p><h2>BibTeX</h2><p data-i18n="citationDescription">Citation information will be available when the paper is released.</p></div>
+    <div class="citation-box"><div class="figure-toolbar"><span>FlashMimic</span><button type="button" id="copy-citation" disabled data-i18n="citationPending">Coming soon</button></div><pre><code id="citation-code">% FlashMimic
+% Citation will be added with the paper release.</code></pre><p class="sr-only" id="copy-status" aria-live="polite"></p></div>
+  </div></section>
+  <section class="section container" id="authors"><div class="section-heading centered"><p class="eyebrow" data-i18n="authorsLabel">THE TEAM</p><h2 data-i18n="authorsTitle">People behind the project.</h2><p id="author-list">Authors and affiliations will be announced soon.</p></div><div class="affiliations" id="affiliation-list"></div></section>
+</main>
+<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">ϟ</span>Flash<span>Mimic</span></a><p data-i18n="footerTagline">Research. Motion. Possibility.</p></div><div class="footer-links"><a href="#method" data-i18n="navMethod">Method</a><a href="#demos" data-i18n="navDemos">Demos</a><a data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top" data-i18n="backTop">Back to top ↑</a></div></div><div class="footer-bottom"><span>© 2026 FlashMimic.</span><span data-i18n="footerNote">More to come. Stay curious.</span></div></div></footer>
+<noscript><p class="noscript-note">Enable JavaScript to view configurable content and switch languages. / 启用 JavaScript 可查看完整内容和切换语言。</p></noscript>
 </body>
 </html>
