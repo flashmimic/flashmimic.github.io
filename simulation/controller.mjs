@@ -1,6 +1,6 @@
 import { buildObservation, conjugate, motionField, rotate } from "./observations.mjs";
 
-export const PUSH_FORCE = Object.freeze([1280, 400, 0]); // World-space newtons.
+export const PUSH_FORCE = Object.freeze([160, 50, 0]); // World-space newtons.
 
 export class Controller {
   constructor(mj, model, data, config) {
