@@ -77,16 +77,15 @@ npm run prepare:web
 只用作独立的“观看录制视频”链接。缩略图位于 `assets/images/`。
 `site-content.js` 的 demo `id` 必须对应 manifest 的任务 ID。
 
-缩略图可使用实际网页仿真截图，或从录制视频抽帧。当前冲刺封面采用网页仿真截图
-`G04_sprint.png`，其余四个封面来自视频。更新录制视频后，可用 ffmpeg 生成同样构图
-的缩略图（当前视频为 1280×720）：
+五个仿真封面统一取自当前网页 MuJoCo / Three.js 仿真画布，使用深色网格地面、
+同一相机方向和距离、800×500 JPEG。路径为 `assets/images/G01_dance.jpg` 至
+`G05_walk.jpg`，由 `site-content.js` 的 `poster` 字段独立配置。
+取图时只截画布，不包含按钮、状态和推力箭头。当前代表帧依次为 100、60、75、35、50
+（每秒 50 帧），来自各自策略运行后的真实状态。
 
-```bash
-for job in G01_dance G02_flip G03_run G05_walk; do
-  ffmpeg -ss 0.05 -i "assets/videos/$job.mp4" -frames:v 1 \
-    -vf "crop=640:400:320:200,scale=800:500" -y "assets/images/$job.webp"
-done
-```
+更新封面时保持 800×500 画布、相机相对根位置 `(2.4, -2.9, 1.65)`、
+观察点相对根位置 `(0, 0, 0.65)`（高度为世界坐标）和 42° 视场角。
+这样更换动作后仍能保持背景、比例和构图一致。
 
 ```bash
 /home/pc825/ws/lzy/FlashMimic/.venv/bin/python scripts/validate_observations.py \
