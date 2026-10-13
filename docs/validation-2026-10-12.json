@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-12",
+  "profile": "g1_batch_v1",
+  "engine": "MuJoCo 3.11.0 WASM",
+  "inference": "ONNX Runtime Web 1.23.2 WASM (single thread)",
+  "scope": "Nominal environment, frame-zero starts, full motion clips; no training noise or domain randomization.",
+  "onnx": [
+    {
+      "id": "G01_dance",
+      "onnxMaxAbsError": 1.862645149230957e-06,
+      "onnxTestInputs": 32
+    },
+    {
+      "id": "G02_flip",
+      "onnxMaxAbsError": 1.4901161193847656e-06,
+      "onnxTestInputs": 32
+    },
+    {
+      "id": "G03_run",
+      "onnxMaxAbsError": 1.6093254089355469e-06,
+      "onnxTestInputs": 32
+    },
+    {
+      "id": "G04_sprint",
+      "onnxMaxAbsError": 1.1324882507324219e-06,
+      "onnxTestInputs": 32
+    },
+    {
+      "id": "G05_walk",
+      "onnxMaxAbsError": 2.1457672119140625e-06,
+      "onnxTestInputs": 32
+    }
+  ],
+  "observations": {
+    "source": "FlashMimic obs_terms.py",
+    "cases": 30,
+    "maxAbsError": 2.980232238769531e-07,
+    "coverage": [
+      "clipped past/future frames",
+      "random root position/rotation",
+      "vertical-heading fallback",
+      "upside-down orientation"
+    ]
+  },
+  "closedLoop": [
+    {
+      "id": "G01_dance",
+      "simulatedSteps": 880,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9532811641693115,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.33545278800000006
+    },
+    {
+      "id": "G02_flip",
+      "simulatedSteps": 235,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.995728611946106,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.08950953800000003
+    },
+    {
+      "id": "G03_run",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9863510727882385,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.27912921200000007
+    },
+    {
+      "id": "G04_sprint",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9940492510795593,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.2763984009999999
+    },
+    {
+      "id": "G05_walk",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.877580463886261,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.3061337930000002
+    }
+  ],
+  "browser": {
+    "allFivePoliciesLoaded": true,
+    "singleCanvasOnSwitch": true,
+    "pauseClockStable": true,
+    "reset": true,
+    "push": true,
+    "languageSwitchPreservesCanvas": true,
+    "mobileViewport": {
+      "width": 390,
+      "height": 844,
+      "canvasWidth": 337,
+      "cardWidth": 339,
+      "pageWidth": 375
+    },
+    "policy404ThenRetry": true,
+    "filterPreservesCanvas": true,
+    "orbitDrag": true
+  }
+}

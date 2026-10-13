@@ -2,6 +2,10 @@
 
 参考 [UniLab](https://unilabsim.github.io/) 的深色科研项目长页排版，搭建 FlashMimic 网页框架。纯 HTML / CSS / JavaScript，无需安装依赖或构建，兼容 GitHub Pages。
 
+当前 `main` 已接入 FlashMimic 项目 `logs/g1_batch_v1` 的五个 G1 策略，
+在 `#demos` 中点击卡片即可加载浏览器物理仿真，支持旋转、缩放、暂停、重置与扰动。
+实现方法、模型更新和验证见 [交互 demo 文档](docs/WEB_DEMOS.md)。npm / Python 只用于更新导出素材，预览和部署不需要构建。
+
 ## 本地查看
 
 在项目目录运行 `python3 -m http.server 8000`，访问 `http://localhost:8000`。也可直接打开 `index.html`；复制引用建议使用 localhost 或 HTTPS。
@@ -21,6 +25,7 @@
 | 结果图与图注 | `results` | `assets/images/` 下的 SVG、PNG、WebP |
 | 对比表格 | `comparison` | 每行 `values` 对应三个指标 |
 | 视频 / 图片展示 | `demos` | `type` 为 `video` 或 `image`；`src` 为素材路径 |
+| 交互仿真 | `demos` | `type: "interactive"`，`id` 对应 `assets/sim/manifest.json`；`poster` 为封面 |
 | 演示跳转链接 | `demos[].url` | 可选，填写后出现“打开演示”链接 |
 | 项目动态 | `news` | 日期格式 `YYYY-MM-DD`，自动倒序 |
 | 作者与单位 | `authors`、`affiliations` | 标志放 `assets/logos/` |

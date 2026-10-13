@@ -37,6 +37,9 @@
       element.controls = true;
       element.playsInline = true;
       element.preload = eager ? "metadata" : "none";
+      element.addEventListener("play", () => {
+        document.querySelectorAll("video").forEach(other => { if (other !== element) other.pause(); });
+      });
       if (safeUrl(poster)) element.poster = safeUrl(poster);
       element.setAttribute("aria-label", localize(alt));
     } else {
@@ -80,24 +83,34 @@
     slot.replaceChildren(media({ src: content.method.image, type: "image", alt: content.method.alt }), node("figcaption", "", content.method.caption || content.method.alt));
   }
   function renderGallery() {
+    window.FlashMimicPlayer?.park();
+    document.querySelectorAll("#demo-list video").forEach(video => video.pause());
+    document.querySelectorAll("[data-filter]").forEach(button => {
+      button.hidden = button.dataset.filter !== "all" && !content.demos.some(demo => demo.type === button.dataset.filter);
+    });
     const visible = content.demos.filter((demo) => filter === "all" || demo.type === filter);
-    $("#demo-list").replaceChildren(...visible.map((demo) => {
-      const card = node("article", "demo-card");
-      const preview = node("div", "demo-preview");
+    const group = demo => demo.category === "real" ? "realWorldTitle" : demo.type === "interactive" ? "simulationTitle" : "mediaTitle";
+    $("#demo-list").replaceChildren(...visible.flatMap((demo, index) => {
+      const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real" : ""}`);
+      const preview = demo.type === "interactive" ? window.FlashMimicPlayer.preview(demo, t) : node("div", "demo-preview");
       const src = safeUrl(demo.src);
       const poster = safeUrl(demo.poster);
-      if (src || poster) preview.append(media({ src: src || poster, poster, type: src ? demo.type : "image", alt: demo.title }));
+      if (demo.type === "interactive") { /* Shared live player owns this preview. */ }
+      else if (src || poster) preview.append(media({ src: src || poster, poster, type: src ? demo.type : "image", alt: demo.title }));
       else {
         const icon = node("span", "", demo.type === "video" ? "▷" : "◇");
         icon.setAttribute("aria-hidden", "true");
         preview.append(icon, node("small", "", t("demoPending")));
       }
       const info = node("div", "demo-info");
-      info.append(node("p", "demo-type", t(demo.type === "video" ? "videoType" : "imageType")), node("h3", "", demo.title), node("p", "", demo.description));
+      info.append(node("p", "demo-type", t(demo.category === "real" ? "realVideoType" : demo.type === "interactive" ? "interactiveType" : demo.type === "video" ? "videoType" : "imageType")), node("h4", "", demo.title), node("p", "", demo.description));
+      if (safeUrl(demo.recording)) info.append(link(demo.recording, t("watchRecording")));
       if (safeUrl(demo.url)) info.append(link(demo.url, t("openDemo")));
       card.append(preview, info);
-      return card;
+      return !index || group(demo) !== group(visible[index - 1])
+        ? [node("h3", "demo-group-title", t(group(demo))), card] : [card];
     }));
+    if (!visible.length) $("#demo-list").append(node("p", "gallery-empty", t("noDemos")));
     $("#gallery-count").textContent = t("galleryCount").replace("{count}", visible.length);
   }
   function render() {

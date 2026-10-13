@@ -6,16 +6,18 @@
   <meta name="theme-color" content="#090e1b">
   <meta name="description" content="FlashMimic — project overview, method, results, and demonstrations. More details coming soon.">
   <title>FlashMimic — Project Page</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=fm" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="site-content.js" defer></script>
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.js"}}</script>
+  <script src="demo-player.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 <header class="site-header">
   <nav class="container nav" aria-label="Main navigation">
-    <a class="brand" href="#top" aria-label="FlashMimic home"><span class="brand-mark" aria-hidden="true">ϟ</span>Flash<span>Mimic</span></a>
+    <a class="brand" href="#top" aria-label="FlashMimic home"><img class="brand-mark" src="assets/logos/flashmimic.svg" width="34" height="34" alt="" aria-hidden="true">Flash<span>Mimic</span></a>
     <div class="nav-links" id="nav-links">
       <a href="#highlights" data-i18n="navHighlights">Highlights</a><a href="#method" data-i18n="navMethod">Method</a><a href="#results" data-i18n="navResults">Results</a><a href="#demos" data-i18n="navDemos">Demos</a><a href="#authors" data-i18n="navAuthors">Authors</a>
     </div>
@@ -69,7 +71,7 @@
     <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="methodLabel">02 / METHOD</p><h2 data-i18n="methodTitle">Inside the framework.</h2></div><p data-i18n="methodDescription">The complete method, from an overview to the details that make it work.</p></div>
     <figure class="method-figure media-slot" id="method-slot">
       <div class="figure-toolbar"><span data-i18n="methodFigure">Framework overview</span><span class="small-status" data-i18n="figurePending">Figure coming soon</span></div>
-      <div class="pipeline-placeholder" aria-hidden="true"><div class="pipeline-node"><span>01</span><div class="node-icon">▥</div><strong data-i18n="input">Input</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node featured"><span>02</span><div class="node-icon">ϟ</div><strong>FlashMimic</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node"><span>03</span><div class="node-icon">◇</div><strong data-i18n="output">Output</strong></div></div>
+      <div class="pipeline-placeholder" aria-hidden="true"><div class="pipeline-node"><span>01</span><div class="node-icon">▥</div><strong data-i18n="input">Input</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node featured"><span>02</span><div class="node-icon"><img src="assets/logos/flashmimic.svg" width="46" height="46" alt=""></div><strong>FlashMimic</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node"><span>03</span><div class="node-icon">◇</div><strong data-i18n="output">Output</strong></div></div>
       <figcaption data-i18n="methodCaption">Illustrative layout placeholder. The final architecture figure and caption will be added here.</figcaption>
     </figure>
     <div class="method-notes"><div><span class="detail-number">A</span><div><h3 data-i18n="methodNoteOne">Method overview</h3><p data-i18n="methodNoteOneText">A concise explanation of the approach and its main components will appear here.</p></div></div><div><span class="detail-number">B</span><div><h3 data-i18n="methodNoteTwo">Implementation details</h3><p data-i18n="methodNoteTwoText">Training setup, design choices, and technical details will be shared with the release.</p></div></div></div>
@@ -82,7 +84,7 @@
   </section>
   <section class="section section-tinted" id="demos"><div class="container">
     <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="demosLabel">04 / SHOWCASE</p><h2 data-i18n="demosTitle">See FlashMimic in action.</h2></div><p data-i18n="demosDescription">A space for project videos, visualizations, and more. Stay tuned.</p></div>
-    <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter demonstrations"><button type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All</button><button type="button" data-filter="video" aria-pressed="false" data-i18n="filterVideos">Videos</button><button type="button" data-filter="image" aria-pressed="false" data-i18n="filterImages">Visualizations</button></div><span class="gallery-count" id="gallery-count" aria-live="polite"></span></div>
+    <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter demonstrations"><button type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All</button><button type="button" data-filter="interactive" aria-pressed="false" data-i18n="filterInteractive">Interactive</button><button type="button" data-filter="video" aria-pressed="false" data-i18n="filterVideos">Videos</button><button type="button" data-filter="image" aria-pressed="false" data-i18n="filterImages">Visualizations</button></div><span class="gallery-count" id="gallery-count" aria-live="polite"></span></div>
     <div class="demo-grid" id="demo-list"></div>
   </div></section>
   <section class="section container updates-section" id="news"><div class="section-heading"><p class="eyebrow" data-i18n="newsLabel">LATEST</p><h2 data-i18n="newsTitle">Project updates.</h2></div><ul class="news-list" id="news-list"></ul></section>
@@ -93,7 +95,7 @@
   </div></section>
   <section class="section container" id="authors"><div class="section-heading centered"><p class="eyebrow" data-i18n="authorsLabel">THE TEAM</p><h2 data-i18n="authorsTitle">People behind the project.</h2><p id="author-list">Authors and affiliations will be announced soon.</p></div><div class="affiliations" id="affiliation-list"></div></section>
 </main>
-<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">ϟ</span>Flash<span>Mimic</span></a><p data-i18n="footerTagline">Research. Motion. Possibility.</p></div><div class="footer-links"><a href="#method" data-i18n="navMethod">Method</a><a href="#demos" data-i18n="navDemos">Demos</a><a data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top" data-i18n="backTop">Back to top ↑</a></div></div><div class="footer-bottom"><span>© 2026 FlashMimic.</span><span data-i18n="footerNote">More to come. Stay curious.</span></div></div></footer>
+<footer class="site-footer"><div class="container"><div class="footer-top"><div><a class="brand" href="#top"><img class="brand-mark" src="assets/logos/flashmimic.svg" width="34" height="34" alt="" aria-hidden="true">Flash<span>Mimic</span></a><p data-i18n="footerTagline">Research. Motion. Possibility.</p></div><div class="footer-links"><a href="#method" data-i18n="navMethod">Method</a><a href="#demos" data-i18n="navDemos">Demos</a><a data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top" data-i18n="backTop">Back to top ↑</a></div></div><div class="footer-bottom"><span>© 2026 FlashMimic.</span><span data-i18n="footerNote">More to come. Stay curious.</span></div></div></footer>
 <noscript><p class="noscript-note">Enable JavaScript to view configurable content and switch languages. / 启用 JavaScript 可查看完整内容和切换语言。</p></noscript>
 </body>
 </html>

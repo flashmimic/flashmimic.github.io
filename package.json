@@ -1,0 +1,13 @@
+{
+  "name": "flashmimic-project-page",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-vendor.mjs"
+  },
+  "dependencies": {
+    "@mujoco/mujoco": "3.11.0",
+    "onnxruntime-web": "1.23.2",
+    "three": "0.180.0"
+  }
+}

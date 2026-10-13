@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "engine": "MuJoCo 3.11.0",
+  "algorithm": "FlashSAC",
+  "observationDim": 397,
+  "actionDim": 29,
+  "futureSteps": [
+    -8,
+    -4,
+    -2,
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "scene": "robot/scene_flat.xml",
+  "robotFiles": [
+    "robot/assets/head_link.STL",
+    "robot/assets/left_ankle_pitch_link.STL",
+    "robot/assets/left_ankle_roll_link.STL",
+    "robot/assets/left_elbow_link.STL",
+    "robot/assets/left_hip_pitch_link.STL",
+    "robot/assets/left_hip_roll_link.STL",
+    "robot/assets/left_hip_yaw_link.STL",
+    "robot/assets/left_knee_link.STL",
+    "robot/assets/left_rubber_hand.STL",
+    "robot/assets/left_shoulder_pitch_link.STL",
+    "robot/assets/left_shoulder_roll_link.STL",
+    "robot/assets/left_shoulder_yaw_link.STL",
+    "robot/assets/left_wrist_pitch_link.STL",
+    "robot/assets/left_wrist_roll_link.STL",
+    "robot/assets/left_wrist_yaw_link.STL",
+    "robot/assets/logo_link.STL",
+    "robot/assets/pelvis.STL",
+    "robot/assets/pelvis_contour_link.STL",
+    "robot/assets/right_ankle_pitch_link.STL",
+    "robot/assets/right_ankle_roll_link.STL",
+    "robot/assets/right_elbow_link.STL",
+    "robot/assets/right_hip_pitch_link.STL",
+    "robot/assets/right_hip_roll_link.STL",
+    "robot/assets/right_hip_yaw_link.STL",
+    "robot/assets/right_knee_link.STL",
+    "robot/assets/right_rubber_hand.STL",
+    "robot/assets/right_shoulder_pitch_link.STL",
+    "robot/assets/right_shoulder_roll_link.STL",
+    "robot/assets/right_shoulder_yaw_link.STL",
+    "robot/assets/right_wrist_pitch_link.STL",
+    "robot/assets/right_wrist_roll_link.STL",
+    "robot/assets/right_wrist_yaw_link.STL",
+    "robot/assets/torso_link_rev_1_0.STL",
+    "robot/assets/waist_roll_link_rev_1_0.STL",
+    "robot/assets/waist_yaw_link_rev_1_0.STL",
+    "robot/fragments/torque_sensors.xml",
+    "robot/g1.xml",
+    "robot/scene_flat.xml",
+    "robot/textures/floor.png"
+  ],
+  "rootBody": "pelvis",
+  "anchorBody": "torso_link",
+  "demos": {
+    "G01_dance": {
+      "policy": "G01_dance/policy.onnx",
+      "motion": "G01_dance/motion.bin",
+      "frames": 870,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G01_dance",
+        "checkpoint": "model_60000.pt",
+        "motion": "dance1_subject2_part.npz",
+        "checkpointSha256": "aa17158aa685da3ee0eca426b9762e896d0ee319dc63858f6e1698a0c8ce0151",
+        "motionSha256": "b530b9f4301d2499d619cdb22efd37cd26aa2aacef4b866c16a45f510ff83355",
+        "configSha256": "66fc74187c97e120d233d501ebcd7ba76a2e023ce9ee15d1161b9c1c59ea2d44",
+        "policySha256": "ef3d6f4a88062c3a1c51b9688ad4cb43cc9ce3d8130ce9d64067f89b2dbcbfd8"
+      },
+      "validation": {
+        "onnxMaxAbsError": 1.862645149230957e-06,
+        "onnxTestInputs": 32
+      }
+    },
+    "G02_flip": {
+      "policy": "G02_flip/policy.onnx",
+      "motion": "G02_flip/motion.bin",
+      "frames": 225,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G02_flip",
+        "checkpoint": "model_60000.pt",
+        "motion": "flip_360_001__A304.npz",
+        "checkpointSha256": "3ae23848a543870558ca010e5024e72c2c5141978d77cb595b34133b2f9a78de",
+        "motionSha256": "bd6785de42e569deb0f680057c0ff62449d3d99058e3c0c1ce437c373e8b604d",
+        "configSha256": "21d7500abd891b6c2945153a50fa43c934494b102676e3cb3659145beb3de67c",
+        "policySha256": "f0d604c73e5e96805ece9ed27bb14cf7bb4571863fba1ace7e6a312c38849fd7"
+      },
+      "validation": {
+        "onnxMaxAbsError": 1.4901161193847656e-06,
+        "onnxTestInputs": 32
+      }
+    },
+    "G03_run": {
+      "policy": "G03_run/policy.onnx",
+      "motion": "G03_run/motion.bin",
+      "frames": 750,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G03_run",
+        "checkpoint": "model_60000.pt",
+        "motion": "run1_subject5_from_csv_clip15s_v2.npz",
+        "checkpointSha256": "cedbf4ef6ab3250a784ffadae028fa3ab4ecd0876d7ac42bd1acf327a81a29bb",
+        "motionSha256": "18b585c155bd75ce44f74f2db6a347df5dc0910559711e89713f2d0039c6752a",
+        "configSha256": "f1bc7d122f56db49edf793296836f6b728c4d3a1fa17423170f2540c2ccbb7e5",
+        "policySha256": "8c53afaf0674dd406d3bfdb73b01cf4ce982edef35918d90e6009fb21cecb2c3"
+      },
+      "validation": {
+        "onnxMaxAbsError": 1.6093254089355469e-06,
+        "onnxTestInputs": 32
+      }
+    },
+    "G04_sprint": {
+      "policy": "G04_sprint/policy.onnx",
+      "motion": "G04_sprint/motion.bin",
+      "frames": 750,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G04_sprint",
+        "checkpoint": "model_60000.pt",
+        "motion": "sprint1_subject4_from_csv_clip15s_v2.npz",
+        "checkpointSha256": "f60bc564c1763c4c9f792df38decc2a029b1a44421f0b2ee552343f8556cf283",
+        "motionSha256": "8bf8af4dbf3b6ce8a0761b292ae7690b3877486ab46e508584b3cede697c973e",
+        "configSha256": "98dc562a3bbae359a67b444454a7efefa81f343d29b345070e98bb38199d3d91",
+        "policySha256": "5f4d27930d2a8f3acc6ab2b51f2b9abfe3ae7681bb45eb43f12ea357dbf6f25e"
+      },
+      "validation": {
+        "onnxMaxAbsError": 1.1324882507324219e-06,
+        "onnxTestInputs": 32
+      }
+    },
+    "G05_walk": {
+      "policy": "G05_walk/policy.onnx",
+      "motion": "G05_walk/motion.bin",
+      "frames": 750,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G05_walk",
+        "checkpoint": "model_60000.pt",
+        "motion": "walk1_subject5_from_csv_clip15s_v2.npz",
+        "checkpointSha256": "f2ccba96f7b8e6c25784d36111137b1538fa1a9a6f6468b3c9249159987f67e5",
+        "motionSha256": "bfd138edae8de6496bc23a845492827958a69671cf7cebc33d5051c691e8b6e1",
+        "configSha256": "3ec787e206e3ecb9ef59fa20757088fe0e03fc8d166469dce265d341a894f0db",
+        "policySha256": "fb39807a1c08a517da30ee4d5ede40232131d14bb450d8eecdbefe3ae0596a07"
+      },
+      "validation": {
+        "onnxMaxAbsError": 2.1457672119140625e-06,
+        "onnxTestInputs": 32
+      }
+    }
+  },
+  "simDt": 0.006666666666666667,
+  "ctrlDt": 0.02,
+  "actionScale": 2.0,
+  "defaultJointPosition": [
+    -0.312,
+    0.0,
+    0.0,
+    0.669,
+    -0.363,
+    0.0,
+    -0.312,
+    0.0,
+    0.0,
+    0.669,
+    -0.363,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    0.2,
+    0.0,
+    0.6,
+    0.0,
+    0.0,
+    0.0,
+    0.2,
+    -0.2,
+    0.0,
+    0.6,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "jointNames": [
+    "left_hip_pitch_joint",
+    "left_hip_roll_joint",
+    "left_hip_yaw_joint",
+    "left_knee_joint",
+    "left_ankle_pitch_joint",
+    "left_ankle_roll_joint",
+    "right_hip_pitch_joint",
+    "right_hip_roll_joint",
+    "right_hip_yaw_joint",
+    "right_knee_joint",
+    "right_ankle_pitch_joint",
+    "right_ankle_roll_joint",
+    "waist_yaw_joint",
+    "waist_roll_joint",
+    "waist_pitch_joint",
+    "left_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
+    "left_elbow_joint",
+    "left_wrist_roll_joint",
+    "left_wrist_pitch_joint",
+    "left_wrist_yaw_joint",
+    "right_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
+    "right_shoulder_yaw_joint",
+    "right_elbow_joint",
+    "right_wrist_roll_joint",
+    "right_wrist_pitch_joint",
+    "right_wrist_yaw_joint"
+  ],
+  "trackedBodyNames": [
+    "pelvis",
+    "left_hip_roll_link",
+    "left_knee_link",
+    "left_ankle_roll_link",
+    "right_hip_roll_link",
+    "right_knee_link",
+    "right_ankle_roll_link",
+    "torso_link",
+    "left_shoulder_roll_link",
+    "left_elbow_link",
+    "left_wrist_yaw_link",
+    "right_shoulder_roll_link",
+    "right_elbow_link",
+    "right_wrist_yaw_link"
+  ],
+  "anchorZThreshold": 0.5,
+  "anchorOrientationThreshold": 0.8,
+  "endEffectorZThreshold": 0.5
+}
