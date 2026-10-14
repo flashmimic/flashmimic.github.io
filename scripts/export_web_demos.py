@@ -167,12 +167,8 @@ def main() -> None:
             "validation": {"onnxMaxAbsError": max_error, "onnxTestInputs": 32},
         }
         manifest["demos"][job] = record
-        # Existing recordings are separate links, never presented as live inference.
-        video = run / "play_video.mp4"
-        if video.is_file():
-            video_dir = args.output.parent / "videos"
-            video_dir.mkdir(exist_ok=True)
-            shutil.copy2(video, video_dir / f"{job}.mp4")
+        # Website recordings are rendered separately from these exported policies.
+        # Do not overwrite no-DR camera-follow videos with training playbacks.
         print(f"{job}: ONNX OK max_error={max_error:.2e}; {frames} motion frames", flush=True)
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 

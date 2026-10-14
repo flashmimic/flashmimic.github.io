@@ -100,8 +100,9 @@ npm run prepare:robot
 若换了训练结构或控制配置，先更新适配器，再导出；不要跳过这些检查。
 `manifest.json` 记录模型、配置和动作文件的 SHA-256，以及 ONNX 数值误差。
 
-导出产物直接位于 `assets/sim/`。已有 `play_video.mp4` 复制到 `assets/videos/`，
-只用作独立的“观看录制视频”链接。缩略图位于 `assets/images/`。
+导出产物直接位于 `assets/sim/`。五个“观看录制视频”链接使用独立渲染的
+无 DR、相机跟踪视频，位于 `assets/videos/G01_dance.mp4` 至 `G05_walk.mp4`。
+导出模型时不会用训练日志中的 `play_video.mp4` 覆盖这些视频。缩略图位于 `assets/images/`。
 `site-content.js` 的 demo `id` 必须对应 manifest 的任务 ID。
 
 五个仿真封面统一取自当前网页 MuJoCo / Three.js 仿真画布，使用深色网格地面、
@@ -164,3 +165,25 @@ MuJoCo 使用单线程版本，ONNX 设置 `numThreads=1`，不需要 COOP / COE
 使用原生播放控件，不自动播放；竖屏画面完整显示在固定高度区域中，不裁切。
 封面位于 `assets/images/G1_dance_real.webp` 和 `G1_walk_real.webp`。
 播放另一个视频或切换分类时，会暂停原来的视频。
+
+## 重新渲染录制视频
+
+```bash
+/home/pc825/ws/lzy/FlashMimic/.venv/bin/python scripts/render-recordings.py
+```
+
+需要 MuJoCo 3.11.0、NumPy、Node.js 和 ffmpeg；默认使用 EGL 离屏渲染。
+`export-recording-states.mjs` 运行网页相同的 MuJoCo WASM、397 维观测、
+ONNX actor、一步动作延迟及物理子步，逐帧导出真实闭环状态。
+不启用 DR、观测噪声、随机初态或 Push；不是直接播放参考轨迹。
+
+Python 只把状态交给原生 MuJoCo 离屏渲染，不另行运行物理或推理。
+渲染仅调整背景、网格、灯光和相机，统一为 1280×720、50 fps、H.264 / yuv420p，
+使用 faststart。相机随根位置 XY 平移，观察点世界高度固定为 0.65 m，
+位置世界高度固定为 1.65 m，水平偏移 `(2.4, -2.9)`，不随机器人转身旋转。
+每段包含一次完整动作，末尾在自动重置前结束，避免画面突然跳回起点。
+这与网页采用同一仿真状态，但原生 MuJoCo 与 Three.js 的光照效果会有差别。
+
+生成时先写临时 MP4，编码成功后替换对应视频。运行条件与策略哈希记录在
+`docs/recordings-2026-10-14.json`。替换素材后也要更新录制链接的版本参数及
+首页 `site-content.js` 的版本参数，避免浏览器沿用旧视频。

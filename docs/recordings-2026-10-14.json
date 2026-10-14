@@ -1,0 +1,100 @@
+{
+  "engine": "MuJoCo 3.11.0",
+  "observationDim": 397,
+  "actionDim": 29,
+  "fps": 50,
+  "nq": 36,
+  "nv": 35,
+  "domainRandomization": false,
+  "observationNoise": false,
+  "manualPush": false,
+  "robotBundleSha256": "469d5cc16ca67842ccec8cc933e0701ca85839a3fdb08d36366a9d5cf7492c01",
+  "demos": {
+    "G01_dance": {
+      "frames": 869,
+      "duration": 17.38,
+      "stride": 71,
+      "policySha256": "ef3d6f4a88062c3a1c51b9688ad4cb43cc9ce3d8130ce9d64067f89b2dbcbfd8",
+      "resets": 0
+    },
+    "G02_flip": {
+      "frames": 224,
+      "duration": 4.48,
+      "stride": 71,
+      "policySha256": "f0d604c73e5e96805ece9ed27bb14cf7bb4571863fba1ace7e6a312c38849fd7",
+      "resets": 0
+    },
+    "G03_run": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "8c53afaf0674dd406d3bfdb73b01cf4ce982edef35918d90e6009fb21cecb2c3",
+      "resets": 0
+    },
+    "G04_sprint": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "5f4d27930d2a8f3acc6ab2b51f2b9abfe3ae7681bb45eb43f12ea357dbf6f25e",
+      "resets": 0
+    },
+    "G05_walk": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "fb39807a1c08a517da30ee4d5ede40232131d14bb450d8eecdbefe3ae0596a07",
+      "resets": 0
+    }
+  },
+  "rendering": {
+    "width": 1280,
+    "height": 720,
+    "codec": "H.264",
+    "camera": "root XY follow; fixed world Z and heading",
+    "cameraOffset": [
+      2.4,
+      -2.9,
+      1.65
+    ],
+    "targetZ": 0.65,
+    "fovy": 42,
+    "renderer": "MuJoCo offscreen (visual changes only)"
+  },
+  "validation": {
+    "cameraFollowOffsetMaxErrorMeters": 3.8146972691777137e-07,
+    "decodedFrameCountAndFormat": "passed for all five videos",
+    "faststart": "passed for all five videos",
+    "files": {
+      "G01_dance": {
+        "frames": 869,
+        "duration": 17.38,
+        "bytes": 2402417,
+        "sha256": "6b8f27e838531dc6811072622d07ccab6dc76c66daecae35fbd33dff8b1950c7"
+      },
+      "G02_flip": {
+        "frames": 224,
+        "duration": 4.48,
+        "bytes": 672310,
+        "sha256": "e787eff812b1e8b618c3df72094a005428dac697b3e394a5a675a67bf5562b3e"
+      },
+      "G03_run": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 2965146,
+        "sha256": "e2f8d41d113418be40e9d7b2ea0c5fd151b98ef1278f875796495bd14c7ba095"
+      },
+      "G04_sprint": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 2439568,
+        "sha256": "b7f73ae46b17ee21c2bee99203180d6a1426e7bfbf3b2def2db3f899c567f73f"
+      },
+      "G05_walk": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 2416872,
+        "sha256": "03e07eb3a49d3d15697db86174ff57e30ebdaf13125aea5df4a8751d470c8bd8"
+      }
+    }
+  }
+}
