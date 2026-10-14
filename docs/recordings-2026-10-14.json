@@ -58,43 +58,65 @@
     ],
     "targetZ": 0.65,
     "fovy": 42,
-    "renderer": "MuJoCo offscreen (visual changes only)"
+    "renderer": "MuJoCo offscreen (visual changes only)",
+    "floor": "Motrix-style white/grey checker texture; 1 metre tiles",
+    "floorTexture": "assets/sim/robot/textures/floor.png",
+    "floorTextureSha256": "9ee06a1800f840506d48461c26f097937ad9b17097d186b71e90a5940d2222bb",
+    "cameraFollowOffsetMaxErrorMeters": 2.383546888751198e-07
   },
   "validation": {
-    "cameraFollowOffsetMaxErrorMeters": 3.8146972691777137e-07,
+    "cameraFollowOffsetMaxErrorMeters": 2.383546888751198e-07,
     "decodedFrameCountAndFormat": "passed for all five videos",
     "faststart": "passed for all five videos",
     "files": {
       "G01_dance": {
         "frames": 869,
         "duration": 17.38,
-        "bytes": 2402417,
-        "sha256": "6b8f27e838531dc6811072622d07ccab6dc76c66daecae35fbd33dff8b1950c7"
+        "bytes": 2769309,
+        "sha256": "780dc3ca6ebaf1c0b8583f31f8ba4bfa011844951064f140e55240d511bc0dd8",
+        "floorLowerQuarterMeanRGB": 197.64
       },
       "G02_flip": {
         "frames": 224,
         "duration": 4.48,
-        "bytes": 672310,
-        "sha256": "e787eff812b1e8b618c3df72094a005428dac697b3e394a5a675a67bf5562b3e"
+        "bytes": 782793,
+        "sha256": "947e07b7d1d8c46d2553c271cfc6bbe5c5f41638bcf3d07a1be5b89d308340d9",
+        "floorLowerQuarterMeanRGB": 199.58
       },
       "G03_run": {
         "frames": 749,
         "duration": 14.98,
-        "bytes": 2965146,
-        "sha256": "e2f8d41d113418be40e9d7b2ea0c5fd151b98ef1278f875796495bd14c7ba095"
+        "bytes": 3880003,
+        "sha256": "0ea413e7effe80f5fd160e0f065cb2789ededf34d03a71233551390051eff54f",
+        "floorLowerQuarterMeanRGB": 201.33
       },
       "G04_sprint": {
         "frames": 749,
         "duration": 14.98,
-        "bytes": 2439568,
-        "sha256": "b7f73ae46b17ee21c2bee99203180d6a1426e7bfbf3b2def2db3f899c567f73f"
+        "bytes": 3268963,
+        "sha256": "8150eb4eb3af1c2b6147442ea5d2f2daf469dcf529e2c03776d2ba73319550e5",
+        "floorLowerQuarterMeanRGB": 196.51
       },
       "G05_walk": {
         "frames": 749,
         "duration": 14.98,
-        "bytes": 2416872,
-        "sha256": "03e07eb3a49d3d15697db86174ff57e30ebdaf13125aea5df4a8751d470c8bd8"
+        "bytes": 3188715,
+        "sha256": "a47b07ad00d6bdea22f08b763ae3e9690a6aebf94e961df3c62414af4d6f9e96",
+        "floorLowerQuarterMeanRGB": 199.15
       }
-    }
+    },
+    "physicalParametersCompared": [
+      "body_mass",
+      "body_inertia",
+      "dof_damping",
+      "dof_armature",
+      "geom_friction",
+      "geom_pos",
+      "geom_size",
+      "actuator_gainprm",
+      "actuator_biasprm",
+      "qpos0"
+    ],
+    "physicalParametersPreserved": true
   }
 }
