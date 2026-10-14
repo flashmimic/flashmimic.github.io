@@ -109,7 +109,7 @@
         "policySha256": "ef3d6f4a88062c3a1c51b9688ad4cb43cc9ce3d8130ce9d64067f89b2dbcbfd8"
       },
       "validation": {
-        "onnxMaxAbsError": 1.862645149230957e-06,
+        "onnxMaxAbsError": 0.000001862645149230957,
         "onnxTestInputs": 32
       }
     },
@@ -163,7 +163,7 @@
         "policySha256": "f0d604c73e5e96805ece9ed27bb14cf7bb4571863fba1ace7e6a312c38849fd7"
       },
       "validation": {
-        "onnxMaxAbsError": 1.4901161193847656e-06,
+        "onnxMaxAbsError": 0.0000014901161193847656,
         "onnxTestInputs": 32
       }
     },
@@ -217,7 +217,7 @@
         "policySha256": "8c53afaf0674dd406d3bfdb73b01cf4ce982edef35918d90e6009fb21cecb2c3"
       },
       "validation": {
-        "onnxMaxAbsError": 1.6093254089355469e-06,
+        "onnxMaxAbsError": 0.0000016093254089355469,
         "onnxTestInputs": 32
       }
     },
@@ -271,7 +271,7 @@
         "policySha256": "5f4d27930d2a8f3acc6ab2b51f2b9abfe3ae7681bb45eb43f12ea357dbf6f25e"
       },
       "validation": {
-        "onnxMaxAbsError": 1.1324882507324219e-06,
+        "onnxMaxAbsError": 0.0000011324882507324219,
         "onnxTestInputs": 32
       }
     },
@@ -325,44 +325,44 @@
         "policySha256": "fb39807a1c08a517da30ee4d5ede40232131d14bb450d8eecdbefe3ae0596a07"
       },
       "validation": {
-        "onnxMaxAbsError": 2.1457672119140625e-06,
+        "onnxMaxAbsError": 0.0000021457672119140625,
         "onnxTestInputs": 32
       }
     }
   },
   "simDt": 0.006666666666666667,
   "ctrlDt": 0.02,
-  "actionScale": 2.0,
+  "actionScale": 2,
   "defaultJointPosition": [
     -0.312,
-    0.0,
-    0.0,
+    0,
+    0,
     0.669,
     -0.363,
-    0.0,
+    0,
     -0.312,
-    0.0,
-    0.0,
+    0,
+    0,
     0.669,
     -0.363,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
+    0,
+    0,
+    0,
+    0,
     0.2,
     0.2,
-    0.0,
+    0,
     0.6,
-    0.0,
-    0.0,
-    0.0,
+    0,
+    0,
+    0,
     0.2,
     -0.2,
-    0.0,
+    0,
     0.6,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "jointNames": [
     "left_hip_pitch_joint",
@@ -413,5 +413,208 @@
   ],
   "anchorZThreshold": 0.5,
   "anchorOrientationThreshold": 0.8,
-  "endEffectorZThreshold": 0.5
+  "endEffectorZThreshold": 0.5,
+  "robotBundle": {
+    "path": "robot.bundle.gz?v=469d5cc16ca6",
+    "sha256": "469d5cc16ca67842ccec8cc933e0701ca85839a3fdb08d36366a9d5cf7492c01",
+    "bytes": 8680311,
+    "uncompressedBytes": 19782404,
+    "files": [
+      {
+        "path": "robot/assets/head_link.STL",
+        "offset": 0,
+        "bytes": 932784
+      },
+      {
+        "path": "robot/assets/left_ankle_pitch_link.STL",
+        "offset": 932784,
+        "bytes": 71184
+      },
+      {
+        "path": "robot/assets/left_ankle_roll_link.STL",
+        "offset": 1003968,
+        "bytes": 653384
+      },
+      {
+        "path": "robot/assets/left_elbow_link.STL",
+        "offset": 1657352,
+        "bytes": 88784
+      },
+      {
+        "path": "robot/assets/left_hip_pitch_link.STL",
+        "offset": 1746136,
+        "bytes": 181684
+      },
+      {
+        "path": "robot/assets/left_hip_roll_link.STL",
+        "offset": 1927820,
+        "bytes": 192184
+      },
+      {
+        "path": "robot/assets/left_hip_yaw_link.STL",
+        "offset": 2120004,
+        "bytes": 296284
+      },
+      {
+        "path": "robot/assets/left_knee_link.STL",
+        "offset": 2416288,
+        "bytes": 854884
+      },
+      {
+        "path": "robot/assets/left_rubber_hand.STL",
+        "offset": 3271172,
+        "bytes": 2287484
+      },
+      {
+        "path": "robot/assets/left_shoulder_pitch_link.STL",
+        "offset": 5558656,
+        "bytes": 176784
+      },
+      {
+        "path": "robot/assets/left_shoulder_roll_link.STL",
+        "offset": 5735440,
+        "bytes": 400284
+      },
+      {
+        "path": "robot/assets/left_shoulder_yaw_link.STL",
+        "offset": 6135724,
+        "bytes": 249184
+      },
+      {
+        "path": "robot/assets/left_wrist_pitch_link.STL",
+        "offset": 6384908,
+        "bytes": 85984
+      },
+      {
+        "path": "robot/assets/left_wrist_roll_link.STL",
+        "offset": 6470892,
+        "bytes": 356184
+      },
+      {
+        "path": "robot/assets/left_wrist_yaw_link.STL",
+        "offset": 6827076,
+        "bytes": 318684
+      },
+      {
+        "path": "robot/assets/logo_link.STL",
+        "offset": 7145760,
+        "bytes": 243384
+      },
+      {
+        "path": "robot/assets/pelvis.STL",
+        "offset": 7389144,
+        "bytes": 1060884
+      },
+      {
+        "path": "robot/assets/pelvis_contour_link.STL",
+        "offset": 8450028,
+        "bytes": 1805184
+      },
+      {
+        "path": "robot/assets/right_ankle_pitch_link.STL",
+        "offset": 10255212,
+        "bytes": 71184
+      },
+      {
+        "path": "robot/assets/right_ankle_roll_link.STL",
+        "offset": 10326396,
+        "bytes": 653784
+      },
+      {
+        "path": "robot/assets/right_elbow_link.STL",
+        "offset": 10980180,
+        "bytes": 88784
+      },
+      {
+        "path": "robot/assets/right_hip_pitch_link.STL",
+        "offset": 11068964,
+        "bytes": 181284
+      },
+      {
+        "path": "robot/assets/right_hip_roll_link.STL",
+        "offset": 11250248,
+        "bytes": 192684
+      },
+      {
+        "path": "robot/assets/right_hip_yaw_link.STL",
+        "offset": 11442932,
+        "bytes": 296284
+      },
+      {
+        "path": "robot/assets/right_knee_link.STL",
+        "offset": 11739216,
+        "bytes": 852284
+      },
+      {
+        "path": "robot/assets/right_rubber_hand.STL",
+        "offset": 12591500,
+        "bytes": 2192684
+      },
+      {
+        "path": "robot/assets/right_shoulder_pitch_link.STL",
+        "offset": 14784184,
+        "bytes": 176784
+      },
+      {
+        "path": "robot/assets/right_shoulder_roll_link.STL",
+        "offset": 14960968,
+        "bytes": 401884
+      },
+      {
+        "path": "robot/assets/right_shoulder_yaw_link.STL",
+        "offset": 15362852,
+        "bytes": 249984
+      },
+      {
+        "path": "robot/assets/right_wrist_pitch_link.STL",
+        "offset": 15612836,
+        "bytes": 79584
+      },
+      {
+        "path": "robot/assets/right_wrist_roll_link.STL",
+        "offset": 15692420,
+        "bytes": 356084
+      },
+      {
+        "path": "robot/assets/right_wrist_yaw_link.STL",
+        "offset": 16048504,
+        "bytes": 341484
+      },
+      {
+        "path": "robot/assets/torso_link_rev_1_0.STL",
+        "offset": 16389988,
+        "bytes": 2570584
+      },
+      {
+        "path": "robot/assets/waist_roll_link_rev_1_0.STL",
+        "offset": 18960572,
+        "bytes": 85884
+      },
+      {
+        "path": "robot/assets/waist_yaw_link_rev_1_0.STL",
+        "offset": 19046456,
+        "bytes": 619984
+      },
+      {
+        "path": "robot/fragments/torque_sensors.xml",
+        "offset": 19666440,
+        "bytes": 2562
+      },
+      {
+        "path": "robot/g1.xml",
+        "offset": 19669002,
+        "bytes": 28679
+      },
+      {
+        "path": "robot/scene_flat.xml",
+        "offset": 19697681,
+        "bytes": 2352
+      },
+      {
+        "path": "robot/textures/floor.png",
+        "offset": 19700033,
+        "bytes": 82371
+      }
+    ]
+  }
 }

@@ -3,15 +3,10 @@ import { OrbitControls } from "../assets/vendor/three/OrbitControls.js";
 import loadMujoco from "../assets/vendor/mujoco/mujoco.js";
 import * as ort from "../assets/vendor/onnxruntime-web/ort.wasm.min.mjs";
 import { Controller, PUSH_FORCE } from "./controller.mjs";
-
-const base = new URL("../assets/sim/", import.meta.url);
-async function fetchChecked(url, binary = false) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Asset ${response.status}: ${url}`);
-  return binary ? response.arrayBuffer() : response.json();
-}
+import { base, binary, manifest, physicsBytes, inferenceBytes, robotFiles } from "./assets.mjs";
 
 export async function createViewer(container, report, onError) {
+  const started = performance.now();
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x13202c);
@@ -23,23 +18,24 @@ export async function createViewer(container, report, onError) {
   let mj, model, data;
   try {
     report("loadingEngine");
-    const config = await fetchChecked(new URL("manifest.json", base));
+    const config = await manifest();
     if (config.schemaVersion !== 1 || config.observationDim !== 397 || config.actionDim !== 29) throw new Error("Unsupported demo manifest.");
-    mj = await loadMujoco({ locateFile: file => new URL(`../assets/vendor/mujoco/${file}`, import.meta.url).href });
+    // Network transfers overlap: robot, physics WASM, inference WASM and policy.
+    const robotTask = robotFiles(config);
+    const ortTask = inferenceBytes();
+    // These tasks may fail before their consumers await them.
+    robotTask.catch(() => {}); ortTask.catch(() => {});
+    mj = await loadMujoco({ wasmBinary: await physicsBytes() });
+    const engineReady = performance.now();
     if (mj.mj_versionString() !== "3.11.0") throw new Error("MuJoCo version mismatch.");
     report("loadingRobot");
     mj.FS.mkdirTree("/flashmimic");
-    // Six downloads at a time avoids opening dozens of mesh requests at once.
-    let next = 0;
-    await Promise.all(Array.from({ length: 6 }, async () => {
-      while (next < config.robotFiles.length) {
-        const file = config.robotFiles[next++];
-        const bytes = new Uint8Array(await fetchChecked(new URL(file, base), true));
-        const path = `/flashmimic/${file}`;
-        mj.FS.mkdirTree(path.slice(0, path.lastIndexOf("/")));
-        mj.FS.writeFile(path, bytes);
-      }
-    }));
+    for (const [file, bytes] of await robotTask) {
+      const path = `/flashmimic/${file}`;
+      mj.FS.mkdirTree(path.slice(0, path.lastIndexOf("/")));
+      mj.FS.writeFile(path, bytes);
+    }
+    const robotDownloaded = performance.now();
     model = mj.MjModel.mj_loadXML(`/flashmimic/${config.scene}`);
     data = new mj.MjData(model);
     model.opt.timestep = config.simDt;
@@ -48,7 +44,12 @@ export async function createViewer(container, report, onError) {
     // GitHub Pages does not require cross-origin isolation with these settings.
     ort.env.wasm.numThreads = 1;
     ort.env.wasm.proxy = false;
-    return new Viewer({ renderer, container, mj, model, data, config, report, onError });
+    ort.env.wasm.wasmBinary = await ortTask;
+    const viewer = new Viewer({ renderer, container, mj, model, data, config, report, onError });
+    console.info("FlashMimic startup", JSON.stringify({ engineMs: Math.round(engineReady - started),
+      robotWaitMs: Math.round(robotDownloaded - engineReady),
+      sceneAndRendererMs: Math.round(performance.now() - robotDownloaded), totalMs: Math.round(performance.now() - started) }));
+    return viewer;
   } catch (error) {
     data?.delete(); model?.delete(); renderer.dispose(); renderer.domElement.remove();
     throw error;
@@ -110,6 +111,7 @@ class Viewer {
     this.lastReport = 0;
     this.follow = new THREE.Vector3();
     this.hasFollow = false;
+    this.cameraFollow = true;
     this.resize = new ResizeObserver(() => this.resizeCanvas());
     this.resize.observe(container);
     renderer.domElement.addEventListener("webglcontextlost", event => {
@@ -156,6 +158,7 @@ class Viewer {
     this.camera.updateProjectionMatrix();
   }
   async select(id) {
+    const started = performance.now();
     const spec = this.config.demos[id];
     if (!spec) throw new Error("Unknown FlashMimic demo.");
     this.selecting = true;
@@ -164,17 +167,30 @@ class Viewer {
     if (this.pending) await this.pending;
     if (this.session) { await this.session.release(); this.session = null; }
     this.report("loadingPolicy");
-    const buffer = await fetchChecked(new URL(spec.motion, base), true);
+    const [buffer, policy] = await Promise.all([binary(new URL(spec.motion, base)), binary(new URL(spec.policy, base))]);
     if (buffer.byteLength !== spec.frames * spec.stride * 4) throw new Error("Invalid reference trajectory size.");
-    const session = await ort.InferenceSession.create(new URL(spec.policy, base).href, { executionProviders: ["wasm"], graphOptimizationLevel: "all" });
+    const session = await ort.InferenceSession.create(policy, { executionProviders: ["wasm"], graphOptimizationLevel: "all" });
     this.session = session;
     this.controller.setMotion(new Float32Array(buffer), spec);
     this.pushFadeUntil = 0;
     this.id = id;
+    this.centerCamera();
     this.paused = false;
     this.selecting = false;
     this.lastTick = performance.now();
     this.resizeCanvas();
+    console.info("FlashMimic policy ready", JSON.stringify({ id, totalMs: Math.round(performance.now() - started) }));
+  }
+  centerCamera() {
+    const target = new THREE.Vector3(this.data.qpos[0], this.data.qpos[1], 0.65);
+    this.camera.position.add(target.clone().sub(this.controls.target));
+    this.controls.target.copy(target);
+    this.follow.copy(target);
+    this.hasFollow = true;
+  }
+  setCameraFollow(follow) {
+    this.cameraFollow = follow;
+    if (follow && this.id) this.centerCamera();
   }
   setVisible(visible) { this.visible = visible; this.lastTick = performance.now(); }
   setPaused(paused) { this.paused = paused; this.generation++; this.lastTick = performance.now(); }
@@ -228,8 +244,10 @@ class Viewer {
     const target = new THREE.Vector3(d.qpos[0], d.qpos[1], 0.65);
     if (!this.hasFollow) { this.follow.copy(target); this.hasFollow = true; }
     const delta = target.clone().sub(this.follow);
-    this.camera.position.add(delta);
-    this.controls.target.copy(target);
+    if (this.cameraFollow) {
+      this.camera.position.add(delta);
+      this.controls.target.copy(target);
+    }
     this.follow.copy(target);
     this.sun.position.set(target.x + 3, target.y - 4, 6);
     this.sun.target.position.copy(target);

@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-14",
+  "environment": "Local HTTP, desktop Codex in-app browser; not a controlled network or cache benchmark",
+  "reference": "https://unilabsim.github.io/scripts/motrixsim_roving.js",
+  "baselineLocalStagesMs": {
+    "engineReady": 319,
+    "robotSceneReady": 980,
+    "policyReady": 1103
+  },
+  "updatedLocalClickToReadyMs": 1046,
+  "updatedLocalStartupMs": {
+    "engine": 158,
+    "robotWait": 14,
+    "sceneAndRenderer": 676,
+    "policy": 198
+  },
+  "robot": {
+    "originalBytes": 19782404,
+    "gzipBytes": 8680311,
+    "requestsBefore": 39,
+    "requestsAfter": 1,
+    "losslessCheck": true
+  },
+  "checks": [
+    "five full policy clips complete without tracking failure",
+    "39 unpacked files match originals byte for byte",
+    "concurrent warm requests download each asset once",
+    "failed downloads can retry",
+    "legacy original-file fallback works",
+    "free mode retained when changing task and language",
+    "one canvas retained after language change",
+    "390 px toolbar has no horizontal overflow"
+  ],
+  "simulationValidation": [
+    {
+      "id": "G01_dance",
+      "simulatedSteps": 880,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9532811641693115,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.414336083
+    },
+    {
+      "id": "G02_flip",
+      "simulatedSteps": 235,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.995728611946106,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.10121071399999983
+    },
+    {
+      "id": "G03_run",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9863510727882385,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.32878133000000004
+    },
+    {
+      "id": "G04_sprint",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.9940492510795593,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.35873452299999986
+    },
+    {
+      "id": "G05_walk",
+      "simulatedSteps": 760,
+      "completedClips": 1,
+      "firstFailureFrame": null,
+      "maxAction": 0.877580463886261,
+      "actionDelayMaxError": 0,
+      "elapsedSeconds": 0.3756295409999998
+    }
+  ]
+}

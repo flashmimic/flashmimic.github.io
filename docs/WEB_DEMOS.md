@@ -9,12 +9,38 @@
 [加载脚本](https://unilabsim.github.io/scripts/motrixsim_roving.js) 使用一个共享的
 MotrixSim / Bevy WASM 画布，点击卡片后加载场景和 ONNX 策略，再在卡片之间移动画布。
 它通过 `motrixsim:switch`、`motrixsim:ready` 和 `motrixsim:visibility` 消息管理示例。
+参考站在浏览器空闲时提前下载两份共享 WASM，并把下载 Promise 保存在内存；
+点击时复用同一下载结果，避免把全部等待时间放在点击之后。
 只更换 ONNX 文件无法迁移 FlashMimic 自定义观测。
 
 本站沿用点击加载、单画布和离屏暂停的交互方式，物理后端采用
 [官方 MuJoCo WebAssembly](https://github.com/google-deepmind/mujoco/tree/3.11.0/wasm)，
 与本批训练环境同为 3.11.0。Three.js 渲染机器人，ONNX Runtime Web 在 CPU WASM
 上执行策略，不调用远程推理服务。训练、导出需要 Python，访问者运行 demo 不需要。
+
+镜头默认 `Camera: Follow`，随机器人平移并保持观察距离；点击切换到
+`Camera: Free` 后，相机和观察点固定在世界坐标中，可旋转、缩放和平移。
+再次启用 Follow 会重新居中机器人，并保留当前观察方向和距离。
+切换任务和语言时保留选择的镜头模式，切换任务会把机器人重新移到画面中心。
+
+## 启动加载
+
+原实现点击后才导入模块，依次下载物理引擎、39 个机器人文件、动作和策略，
+最后由 ONNX Runtime 下载推理 WASM。高延迟网络中，这些串行等待会叠加。
+目前滚动到演示区附近（600 px 内）时预热共享模块、两份 WASM 和机器人包；
+悬停或键盘聚焦卡片时预热该任务的动作和策略。启用省流量模式时跳过自动预热。
+所有下载在同一页面内复用 Promise，点击途中也不会重新下载。
+
+机器人原始 XML / STL 无损串联并 gzip 压缩为 `assets/sim/robot.bundle.gz`，
+从 19,782,404 字节降为 8,680,311 字节，39 个网络请求降为 1 个。
+清单记录每个文件的偏移和长度以及压缩包 SHA-256，资源 URL 带内容版本。
+浏览器用 `DecompressionStream` 解包，仍由原来的 XML 编译同一物理模型；
+未支持该 API 的浏览器回退到原始文件。原始素材保留用于维护和回退。
+
+引擎、机器人和策略下载并行。控制台输出 `FlashMimic startup`、
+`FlashMimic policy ready`、`FlashMimic click to ready`，区分下载等待、
+场景构建及点击后的总等待时间。首次使用仍需要初始化 WASM 和 WebGL；
+本机 HTTP 结果不代表 GitHub Pages 冷缓存网络速度。
 
 ```mermaid
 flowchart LR
@@ -66,6 +92,7 @@ npm run prepare:web
 /home/pc825/ws/lzy/FlashMimic/.venv/bin/python scripts/export_web_demos.py \
   --project /home/pc825/ws/lzy/FlashMimic \
   --runs /home/pc825/ws/lzy/FlashMimic/logs/g1_batch_v1
+npm run prepare:robot
 ```
 
 导出脚本为每个任务选择编号最大的 `model_*.pt`，从同一 run 读取
@@ -106,8 +133,9 @@ MuJoCo WASM + ONNX WASM 中运行完整闭环、动作延迟、扰动和重置�
 MuJoCo 使用单线程版本，ONNX 设置 `numThreads=1`，不需要 COOP / COEP 响应头。
 需要支持 WebAssembly 和 WebGL 的现代浏览器。
 
-当前素材总计约 69 MiB，首次打开某个 demo 需要加载约 44 MiB 未压缩资源
-（共享引擎、机器人和一个策略 / 动作），其余策略每个约 2 MiB；主页只先加载缩略图。
+当前素材总计约 78 MiB（包含原始机器人素材和压缩包），首次运行某个 demo 需要
+加载约 33 MiB 资源（两份 WASM、压缩机器人包、JS 和一个策略 / 动作）；
+其余策略每个约 2 MiB。主页先加载缩略图，接近演示区时开始预热共享资源。
 服务器启用压缩和浏览器缓存后网络传输量可能更小。若无法运行，页面提供重试和视频链接。
 
 ## 文件
@@ -116,10 +144,12 @@ MuJoCo 使用单线程版本，ONNX 设置 `numThreads=1`，不需要 COOP / COE
 | --- | --- |
 | `demo-player.js` | 卡片、加载状态、共享画布、暂停与离屏管理 |
 | `simulation/viewer.mjs` | 按需加载 WASM / ONNX，Three.js 渲染与视角控制 |
+| `simulation/assets.mjs` | 共享下载、预热和机器人压缩包解码 |
 | `simulation/controller.mjs` | 传感器读取、动作延迟、物理子步、扰动与重置 |
 | `simulation/observations.mjs` | 397 维观测、四元数与参考动作索引 |
 | `scripts/export_web_demos.py` | 导出、配置检查、轨迹打包和数值验证 |
 | `scripts/prepare-vendor.mjs` | 从锁定 npm 依赖准备静态运行时 |
+| `scripts/prepare-robot.mjs` | 从原始素材生成无损机器人压缩包 |
 | `assets/sim/manifest.json` | 运行配置与模型来源记录 |
 | `assets/vendor/NOTICE.md` | 第三方来源与许可证 |
 

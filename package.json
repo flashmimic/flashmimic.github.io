@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare:web": "node scripts/prepare-vendor.mjs"
+    "prepare:web": "node scripts/prepare-vendor.mjs",
+    "prepare:robot": "node scripts/prepare-robot.mjs"
   },
   "dependencies": {
     "@mujoco/mujoco": "3.11.0",

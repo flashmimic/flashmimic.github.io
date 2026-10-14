@@ -30,3 +30,8 @@ tbody th[scope=row]{font:inherit;letter-spacing:normal;background:transparent;co
 .demo-card--real .demo-preview video{aspect-ratio:auto;object-fit:contain}
 .demo-card--real .demo-info{height:120px}
 @media(max-width:760px){.demo-card--real .demo-preview{height:440px}.demo-info{height:140px}.demo-group-title{font-size:18px}}
+
+/* The camera switch shares the toolbar without overflowing narrow cards. */
+.sim-toolbar{flex-wrap:wrap}
+.sim-control[aria-pressed=true]{border-color:var(--accent)}
+@media(max-width:420px){.sim-clock{flex-basis:100%;text-align:right}}

@@ -3,6 +3,7 @@
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { gunzipSync } from "node:zlib";
 import loadMujoco from "../assets/vendor/mujoco/mujoco.js";
 import * as ort from "../assets/vendor/onnxruntime-web/ort.wasm.min.mjs";
 import { Controller } from "../simulation/controller.mjs";
@@ -12,10 +13,16 @@ const base = path.join(root, "assets/sim");
 const config = JSON.parse(await readFile(path.join(base, "manifest.json")));
 const mj = await loadMujoco({ wasmBinary: await readFile(path.join(root, "assets/vendor/mujoco/mujoco.wasm")) });
 mj.FS.mkdirTree("/flashmimic");
+const packedRobot = config.robotBundle ? gunzipSync(await readFile(new URL(config.robotBundle.path, new URL("../assets/sim/", import.meta.url)))) : null;
+if (packedRobot && packedRobot.length !== config.robotBundle.uncompressedBytes) throw new Error("Robot bundle size mismatch");
 for (const file of config.robotFiles) {
   const dest = `/flashmimic/${file}`;
   mj.FS.mkdirTree(path.dirname(dest));
-  mj.FS.writeFile(dest, await readFile(path.join(base, file)));
+  const original = await readFile(path.join(base, file));
+  const entry = config.robotBundle?.files.find(entry => entry.path === file);
+  const bytes = packedRobot ? packedRobot.subarray(entry.offset, entry.offset + entry.bytes) : original;
+  if (!original.equals(bytes)) throw new Error(`Robot bundle changed ${file}`);
+  mj.FS.writeFile(dest, bytes);
 }
 const model = mj.MjModel.mj_loadXML(`/flashmimic/${config.scene}`);
 const data = new mj.MjData(model);

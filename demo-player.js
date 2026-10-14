@@ -2,7 +2,15 @@
 (() => {
   "use strict";
   let viewer, activeId, translate, statusKey = "loadingEngine", serial = Promise.resolve(), request = 0;
-  let userPaused = false, intersects = true;
+  let userPaused = false, intersects = true, cameraFollow = true, assetModule;
+  const assets = () => assetModule ||= import("./simulation/assets.mjs").catch(error => { assetModule = null; throw error; });
+  let viewerModule;
+  const viewerCode = () => viewerModule ||= import("./simulation/viewer.mjs?v=20261014").catch(error => { viewerModule = null; throw error; });
+  const warmShared = () => {
+    if (navigator.connection?.saveData) return;
+    assets().then(module => module.warmShared()).catch(() => {});
+    viewerCode().catch(() => {});
+  };
   const el = (tag, className) => { const item = document.createElement(tag); item.className = className; return item; };
   const parking = el("div", "sim-parking");
   parking.hidden = true;
@@ -14,7 +22,7 @@
   const clock = el("span", "sim-clock");
   const hint = el("p", "sim-hint");
   const buttons = {};
-  for (const key of ["pauseSim", "resetSim", "pushSim"]) {
+  for (const key of ["pauseSim", "resetSim", "pushSim", "cameraSim"]) {
     const button = el("button", "sim-control");
     button.type = "button";
     buttons[key] = button;
@@ -26,8 +34,10 @@
   document.body.append(parking);
   const updateLabels = () => {
     status.textContent = translate(statusKey);
-    for (const [key, button] of Object.entries(buttons)) button.textContent = translate(key === "pauseSim" && userPaused ? "resumeSim" : key);
+    for (const [key, button] of Object.entries(buttons)) button.textContent = translate(key === "cameraSim" ? (cameraFollow ? "cameraFollow" : "cameraFree") : key === "pauseSim" && userPaused ? "resumeSim" : key);
     buttons.pauseSim.setAttribute("aria-pressed", String(userPaused));
+    buttons.cameraSim.setAttribute("aria-pressed", String(cameraFollow));
+    buttons.cameraSim.title = translate(cameraFollow ? "cameraFreeHint" : "cameraFollowHint");
     hint.textContent = translate("simHint");
   };
   const setStatus = (key, values) => {
@@ -53,10 +63,13 @@
     status.textContent = translate("simError");
     buttons.pauseSim.disabled = true;
     buttons.pushSim.disabled = true;
+    buttons.cameraSim.disabled = true;
     buttons.resetSim.disabled = false;
     buttons.resetSim.textContent = translate("retrySim");
   };
   async function launch(demo, preview) {
+    const started = performance.now();
+    assets().then(module => module.warmDemo(demo.id)).catch(() => {});
     const token = ++request;
     activeId = demo.id;
     userPaused = false;
@@ -73,8 +86,9 @@
       if (token !== request) return;
       try {
         if (!viewer) {
-          const { createViewer } = await import("./simulation/viewer.mjs");
+          const { createViewer } = await viewerCode();
           viewer = await createViewer(viewport, setStatus, fail);
+          viewer.setCameraFollow(cameraFollow);
         }
         if (token !== request) return;
         await viewer.select(demo.id);
@@ -85,6 +99,7 @@
         statusKey = "simLive";
         updateLabels();
         visibility();
+        console.info("FlashMimic click to ready", JSON.stringify({ id: demo.id, totalMs: Math.round(performance.now() - started) }));
       } catch (error) { if (token === request) fail(error); }
     });
     await serial;
@@ -103,6 +118,20 @@
     } else viewer?.reset();
   });
   buttons.pushSim.addEventListener("click", () => viewer?.push());
+  buttons.cameraSim.addEventListener("click", () => {
+    cameraFollow = !cameraFollow;
+    viewer?.setCameraFollow(cameraFollow);
+    updateLabels();
+  });
+  // Warm once as visitors approach the gallery, rather than on every page visit.
+  if ("IntersectionObserver" in window) {
+    const warmer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      warmer.disconnect();
+      warmShared();
+    }, { rootMargin: "600px" });
+    warmer.observe(document.querySelector("#demos"));
+  }
   window.FlashMimicPlayer = {
     park() { parking.append(stage); viewer?.setVisible(false); },
     preview(demo, t) {
@@ -122,6 +151,12 @@
       const symbol = el("span", "launch-symbol"); symbol.textContent = "▷"; symbol.setAttribute("aria-hidden", "true");
       const label = el("span", "launch-label"); label.textContent = t("launchSim");
       launchButton.append(symbol, label);
+      const warm = () => {
+        warmShared();
+        if (!navigator.connection?.saveData) assets().then(module => module.warmDemo(demo.id)).catch(() => {});
+      };
+      launchButton.addEventListener("pointerenter", warm, { once: true });
+      launchButton.addEventListener("focus", warm, { once: true });
       launchButton.addEventListener("click", () => launch(demo, preview));
       preview.append(launchButton);
       if (demo.id === activeId) {
