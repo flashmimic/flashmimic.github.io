@@ -1,0 +1,133 @@
+{
+  "engine": "MuJoCo 3.11.0",
+  "observationDim": 397,
+  "actionDim": 29,
+  "fps": 50,
+  "nq": 36,
+  "nv": 35,
+  "domainRandomization": false,
+  "observationNoise": false,
+  "manualPush": false,
+  "robotBundleSha256": "469d5cc16ca67842ccec8cc933e0701ca85839a3fdb08d36366a9d5cf7492c01",
+  "demos": {
+    "G01_dance": {
+      "frames": 869,
+      "duration": 17.38,
+      "stride": 71,
+      "policySha256": "ef3d6f4a88062c3a1c51b9688ad4cb43cc9ce3d8130ce9d64067f89b2dbcbfd8",
+      "resets": 0
+    },
+    "G02_flip": {
+      "frames": 224,
+      "duration": 4.48,
+      "stride": 71,
+      "policySha256": "f0d604c73e5e96805ece9ed27bb14cf7bb4571863fba1ace7e6a312c38849fd7",
+      "resets": 0
+    },
+    "G03_run": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "8c53afaf0674dd406d3bfdb73b01cf4ce982edef35918d90e6009fb21cecb2c3",
+      "resets": 0
+    },
+    "G04_sprint": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "5f4d27930d2a8f3acc6ab2b51f2b9abfe3ae7681bb45eb43f12ea357dbf6f25e",
+      "resets": 0
+    },
+    "G05_walk": {
+      "frames": 749,
+      "duration": 14.98,
+      "stride": 71,
+      "policySha256": "fb39807a1c08a517da30ee4d5ede40232131d14bb450d8eecdbefe3ae0596a07",
+      "resets": 0
+    }
+  },
+  "rendering": {
+    "width": 1280,
+    "height": 720,
+    "codec": "H.264",
+    "camera": "root XY follow; fixed world Z and heading",
+    "cameraOffset": [
+      2.4,
+      -2.9,
+      1.65
+    ],
+    "targetZ": 0.65,
+    "fovy": 42,
+    "renderer": "MuJoCo offscreen (visual changes only)",
+    "floor": "Original Motphys-logo checker texture; reference material scale and tint",
+    "floorTexrepeat": [
+      0.4,
+      0.4
+    ],
+    "floorMaterialRGBA": [
+      0.7,
+      0.7,
+      0.7,
+      1
+    ],
+    "floorTexture": "assets/textures/motphys-ground.png",
+    "floorTextureSha256": "d5f228fd89bfe1acdc91d558e92f0ec3103cc343c7e75a14e4a38f1a6d6afc9c",
+    "cameraFollowOffsetMaxErrorMeters": 2.383546888751198e-07,
+    "floorTextureSource": "https://unilabsim.github.io/examples/assets/unilab_motrix_onnx_tasks/assets/robots/common/motphys-ground.png"
+  },
+  "validation": {
+    "cameraFollowOffsetMaxErrorMeters": 2.383546888751198e-07,
+    "decodedFrameCountAndFormat": "passed for all five videos",
+    "faststart": "passed for all five videos",
+    "files": {
+      "G01_dance": {
+        "frames": 869,
+        "duration": 17.38,
+        "bytes": 3579770,
+        "sha256": "aa492caa0f27b96f90a3263cdd3926648908a54b93f2a3b8cb25d41a2866da4f",
+        "floorLowerQuarterMeanRGB": 143.26
+      },
+      "G02_flip": {
+        "frames": 224,
+        "duration": 4.48,
+        "bytes": 1010016,
+        "sha256": "75b879765a32e29dee6996e9403bd145a1f945ffbeed3b8cc7ca404d6ec41e4c",
+        "floorLowerQuarterMeanRGB": 142.62
+      },
+      "G03_run": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 5315765,
+        "sha256": "5e3bcfa43d43e5c199a4d9e73a17d439f06b131620e549a4e7f9a07ba6cee945",
+        "floorLowerQuarterMeanRGB": 141.81
+      },
+      "G04_sprint": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 4422042,
+        "sha256": "fdba8ba4b8e345daa8f7bd0cbc271d5d60f7ec5bdfe3ac3ea23b6484675be20f",
+        "floorLowerQuarterMeanRGB": 142.88
+      },
+      "G05_walk": {
+        "frames": 749,
+        "duration": 14.98,
+        "bytes": 4203038,
+        "sha256": "14b7647e78d5dee4884f00c22934f5d5d56c54e71878f1b723b008729b449882",
+        "floorLowerQuarterMeanRGB": 142.83
+      }
+    },
+    "physicalParametersCompared": [
+      "body_mass",
+      "body_inertia",
+      "dof_damping",
+      "dof_armature",
+      "geom_friction",
+      "geom_pos",
+      "geom_size",
+      "actuator_gainprm",
+      "actuator_biasprm",
+      "qpos0"
+    ],
+    "physicalParametersPreserved": true
+  }
+}

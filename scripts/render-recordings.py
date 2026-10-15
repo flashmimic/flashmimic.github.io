@@ -17,7 +17,7 @@ import mujoco
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-FLOOR_TEXTURE = ROOT / "assets/sim/robot/textures/floor.png"
+FLOOR_TEXTURE = ROOT / "assets/textures/motphys-ground.png"
 
 
 def recording_model(config):
@@ -46,9 +46,9 @@ def visual_setup(model, width, height):
         model.light_pos[0] = [3, -4, 6]
         model.light_dir[0] = np.array([-3, 4, -6]) / math.sqrt(61)
     material = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_MATERIAL, "groundplane")
-    # Ten tiles across the original texture: one tile per world-space metre.
-    model.mat_texrepeat[material] = [.1, .1]
-    model.mat_rgba[material] = [1, 1, 1, 1]
+    # Match the reference site's common/flat_ground.xml visual material.
+    model.mat_texrepeat[material] = [.4, .4]
+    model.mat_rgba[material] = [.7, .7, .7, 1]
     # Sky pixels only: leave every physical parameter untouched.
     for tex in range(model.ntex):
         if model.tex_type[tex] == mujoco.mjtTexture.mjTEXTURE_SKYBOX:
@@ -135,11 +135,12 @@ def main():
                 "codec": "H.264", "camera": "root XY follow; fixed world Z and heading",
                 "cameraOffset": [2.4, -2.9, 1.65], "targetZ": .65, "fovy": 42,
                 "renderer": "MuJoCo offscreen (visual changes only)",
-                "floor": "Motrix-style white/grey checker texture; 1 metre tiles",
+                "floor": "Original Motphys-logo checker texture; reference material scale and tint",
+                "floorTexrepeat": [.4, .4], "floorMaterialRGBA": [.7, .7, .7, 1],
                 "floorTexture": str(FLOOR_TEXTURE.relative_to(ROOT)),
                 "floorTextureSha256": hashlib.sha256(FLOOR_TEXTURE.read_bytes()).hexdigest(),
                 "cameraFollowOffsetMaxErrorMeters": camera_error}
-            (ROOT / "docs/recordings-2026-10-14.json").write_text(json.dumps(metadata, indent=2) + "\n")
+            (ROOT / "docs/recordings-2026-10-15.json").write_text(json.dumps(metadata, indent=2) + "\n")
     finally:
         renderer.close()
 
