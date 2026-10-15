@@ -2,44 +2,393 @@
 window.FLASHMIMIC_CONTENT = {
   defaultLanguage: "en",
   links: {
-    github: "https://github.com/Motphys/FlashMimic",
-    paper: "", // 例：assets/flashmimic.pdf 或 https://arxiv.org/abs/...
-    docs: ""
+    "github": "https://github.com/Motphys/FlashMimic",
+    "paper": "",
+    "docs": "#materials"
   },
   hero: {
-    subtitle: { en: "Whole-body motion tracking with FlashSAC.", zh: "基于 FlashSAC 的全身动作跟踪。" },
-    description: {
-      en: "G1 motion tracking built on UniLab. Explore five trained policies, from expressive dance to dynamic locomotion, in an interactive physics simulation.",
-      zh: "基于 UniLab 的 G1 动作跟踪。在交互式物理仿真中体验五个已训练策略，探索舞蹈、翻转与动态移动。"
+    "subtitle": {
+      "en": "Whole-body motion tracking with FlashSAC.",
+      "zh": "基于 FlashSAC 的全身动作跟踪。"
     },
-    video: "", // 例：assets/videos/teaser.mp4
-    poster: "", // 例：assets/images/teaser.webp；仅填封面也可以
-    alt: { en: "FlashMimic project overview", zh: "FlashMimic 项目概览" }
+    "description": {
+      "en": "A G1 motion-tracking framework built on UniLab, with off-policy learning and overlapping collection and optimization on a shared GPU. Explore the system, five-motion evaluations, and live robot demonstrations.",
+      "zh": "基于 UniLab 的 G1 动作跟踪框架，通过离策略学习，在共享 GPU 上重叠执行数据采集与策略优化。了解系统架构、五动作评测，并体验实时机器人演示。"
+    },
+    "video": "",
+    "poster": "assets/images/G01_dance.jpg",
+    "width": 800,
+    "height": 500,
+    "alt": {
+      "en": "G1 dance policy in the FlashMimic browser simulation",
+      "zh": "FlashMimic 浏览器仿真中的 G1 舞蹈策略"
+    }
   },
   stats: [
-    { value: "29", label: { en: "Actuated joints", zh: "驱动关节" }, note: { en: "Unitree G1", zh: "Unitree G1" } },
-    { value: "5", label: { en: "Motion policies", zh: "动作策略" }, note: { en: "Dance · Flip · Run · Sprint · Walk", zh: "舞蹈 · 翻转 · 跑步 · 冲刺 · 行走" } },
-    { value: "50 Hz", label: { en: "Policy control", zh: "策略控制频率" }, note: { en: "One-step action delay", zh: "一步动作延迟" } },
-    { value: "150 Hz", label: { en: "Physics simulation", zh: "物理仿真频率" }, note: { en: "MuJoCo", zh: "MuJoCo" } }
+    {
+      "value": "5 / 5",
+      "label": {
+        "en": "Evaluation motions completed",
+        "zh": "评测动作完成数"
+      },
+      "note": {
+        "en": "17.5k checkpoints · one deterministic run/task",
+        "zh": "17.5k 权重 · 每动作一次确定性回放"
+      }
+    },
+    {
+      "value": "8.68 min",
+      "label": {
+        "en": "Mean checkpoint budget",
+        "zh": "平均评测权重训练预算"
+      },
+      "note": {
+        "en": "RTX 4090 logs · writer to 17.5k",
+        "zh": "RTX 4090 日志 · writer 建立至 17.5k"
+      }
+    },
+    {
+      "value": "4",
+      "label": {
+        "en": "Repositories compared",
+        "zh": "对比仓库"
+      },
+      "note": {
+        "en": "BeyondMimic · MJLab · Holosoma · FlashMimic",
+        "zh": "BeyondMimic · MJLab · Holosoma · FlashMimic"
+      }
+    },
+    {
+      "value": "29",
+      "label": {
+        "en": "Actuated joints",
+        "zh": "驱动关节"
+      },
+      "note": {
+        "en": "Unitree G1 · 50 Hz policy control",
+        "zh": "Unitree G1 · 50 Hz 策略控制"
+      }
+    }
   ],
   highlights: [
-    { title: { en: "Core contribution", zh: "核心贡献" }, text: { en: "The central idea and research contribution of FlashMimic will be introduced here.", zh: "这里将介绍 FlashMimic 的核心思路与主要研究贡献。" } },
-    { title: { en: "Method & design", zh: "方法与设计" }, text: { en: "An overview of the method and the design choices behind it. Details coming soon.", zh: "这里将概述技术方法及其背后的设计思考，详细内容即将补充。" } },
-    { title: { en: "Experiments & insights", zh: "实验与发现" }, text: { en: "Key findings, evaluation results, and insights will accompany the project release.", zh: "主要发现、评估结果与实验分析将随项目发布一同公开。" } }
+    {
+      "title": {
+        "en": "Off-policy motion learning",
+        "zh": "离策略动作学习"
+      },
+      "text": {
+        "en": "Reference motion windows, proprioceptive state, tracking rewards, and randomized training resets feed FlashSAC. Device replay enables experience reuse across policy updates.",
+        "zh": "参考动作窗口、本体状态、跟踪奖励与随机化训练重置共同驱动 FlashSAC，通过设备端 replay 在策略更新间复用经验。"
+      }
+    },
+    {
+      "title": {
+        "en": "Collection meets optimization",
+        "zh": "采集与优化协同运行"
+      },
+      "text": {
+        "en": "MJWarp physics graphs and selective resets support the collector. Compiled objectives and graph execution drive learner updates, with CUDA MPS overlapping work on one shared GPU.",
+        "zh": "采集端使用 MJWarp 物理图与选择性重置；学习端使用编译目标函数与图执行，通过 CUDA MPS 在同一块 GPU 上重叠调度。"
+      }
+    },
+    {
+      "title": {
+        "en": "Evidence you can inspect",
+        "zh": "可查阅的实验依据"
+      },
+      "text": {
+        "en": "Compare checkpoint-level curves across four repositories and read measured five-task metrics with explicit success sets and timing sources. Try five browser policies and two real-robot videos.",
+        "zh": "查看四仓库的逐权重训练曲线，以及注明成功动作集合、计时来源的五任务实测指标；体验五个浏览器策略与两段真机视频。"
+      }
+    }
   ],
   method: {
-    image: "", // 例：assets/images/architecture.svg
-    alt: { en: "FlashMimic architecture", zh: "FlashMimic 方法架构" },
-    caption: "" // 有图时填写真实图注，支持 { en: "...", zh: "..." }
+    "image": "assets/figures/system-framework.jpg",
+    "width": 1240,
+    "height": 726,
+    "alt": {
+      "en": "FlashMimic architecture: learning pipeline, collector and learner runtime, and CUDA MPS scheduling on a shared GPU.",
+      "zh": "FlashMimic 系统框架：学习流程、采集与学习运行时，以及共享 GPU 上的 CUDA MPS 调度。"
+    },
+    "caption": {
+      "en": "From motion reference to off-policy updates. The collector and learner exchange observations, actions, and transitions; CUDA MPS overlaps physics and optimization on one shared GPU.",
+      "zh": "从参考动作到离策略更新：采集端与学习端交换观测、动作和转移数据，CUDA MPS 在共享 GPU 上重叠执行物理仿真与优化。"
+    }
   },
-  results: [
-    { title: { en: "Quantitative evaluation", zh: "定量评估" }, image: "", caption: { en: "Main experimental results will be presented here.", zh: "这里将展示主要实验结果。" } },
-    { title: { en: "Analysis & ablations", zh: "分析与消融实验" }, image: "", caption: { en: "Detailed analysis and ablation studies will be presented here.", zh: "这里将展示详细分析与消融实验。" } }
-  ],
+  results: [],
   comparison: [
-    { name: { en: "Baseline 01 (to be added)", zh: "基线方法 01（待补充）" }, values: ["—", "—", "—"] },
-    { name: { en: "Baseline 02 (to be added)", zh: "基线方法 02（待补充）" }, values: ["—", "—", "—"] },
-    { name: "FlashMimic", values: ["—", "—", "—"], ours: true }
+    {
+      "name": "BeyondMimic (PPO)",
+      "values": [
+        "80% (4/5)",
+        "54.16",
+        "0.1155",
+        "42.23",
+        "0.1478",
+        "144.97 D",
+        {
+          "en": "Dance · Walk · Run · Carry (n = 4)",
+          "zh": "舞蹈 · 行走 · 跑步 · 搬箱（n = 4）"
+        }
+      ],
+      "ours": false
+    },
+    {
+      "name": "MJLab (PPO)",
+      "values": [
+        "100% (5/5)",
+        "56.24",
+        "0.1282",
+        "48.15",
+        "0.1548",
+        "178.20 E/P",
+        {
+          "en": "All five (n = 5)",
+          "zh": "全部五动作（n = 5）"
+        }
+      ],
+      "ours": false
+    },
+    {
+      "name": "Holosoma (FastSAC)",
+      "values": [
+        "60% (3/5)",
+        "113.77",
+        "0.1731",
+        "61.70",
+        "0.2212",
+        "65.14 E/P",
+        {
+          "en": "Dance · Walk · Run (n = 3)",
+          "zh": "舞蹈 · 行走 · 跑步（n = 3）"
+        }
+      ],
+      "ours": false
+    },
+    {
+      "name": {
+        "en": "FlashMimic / FlashSAC (17.5k)",
+        "zh": "FlashMimic / FlashSAC（17.5k）"
+      },
+      "values": [
+        "100% (5/5)",
+        "60.28",
+        "0.1713",
+        "61.09",
+        "0.2218",
+        "8.68 D",
+        {
+          "en": "All five (n = 5)",
+          "zh": "全部五动作（n = 5）"
+        }
+      ],
+      "ours": true
+    }
+  ],
+  curves: [
+    {
+      "id": "dance",
+      "title": {
+        "en": "Dance",
+        "zh": "舞蹈"
+      },
+      "image": "assets/figures/curves-dance.svg",
+      "note": {
+        "en": "Dance uses the 17.5k FlashMimic checkpoint as the three-metric target. Hollow endpoints for other methods are interpolated threshold crossings where available.",
+        "zh": "舞蹈以 FlashMimic 17.5k 权重的三个指标作为目标；其他方法可达阈值处的空心端点为插值估计。"
+      }
+    },
+    {
+      "id": "walk",
+      "title": {
+        "en": "Walk",
+        "zh": "行走"
+      },
+      "image": "assets/figures/curves-walk.svg",
+      "note": {
+        "en": "Full available checkpoint curves; no shared-accuracy cutoff. FlashMimic extends to checkpoint 70k.",
+        "zh": "展示全部可用权重曲线，不按共同精度截断；FlashMimic 延伸至 70k 权重。"
+      }
+    },
+    {
+      "id": "run",
+      "title": {
+        "en": "Run",
+        "zh": "跑步"
+      },
+      "image": "assets/figures/curves-run.svg",
+      "note": {
+        "en": "Full available checkpoint curves, including tracking failures and recoveries. FlashMimic extends to checkpoint 97.5k.",
+        "zh": "保留全部可用权重点及跟踪失败、恢复波动；FlashMimic 延伸至 97.5k 权重。"
+      }
+    },
+    {
+      "id": "flip",
+      "title": {
+        "en": "Flip",
+        "zh": "翻转"
+      },
+      "image": "assets/figures/curves-flip.svg",
+      "note": {
+        "en": "Full curves; MJLab includes the updated 56-checkpoint evaluation. FlashMimic extends to checkpoint 67.5k.",
+        "zh": "展示完整曲线；MJLab 使用更新后的 56 权重点评估，FlashMimic 延伸至 67.5k 权重。"
+      }
+    },
+    {
+      "id": "carry",
+      "title": {
+        "en": "Box carry",
+        "zh": "搬箱"
+      },
+      "image": "assets/figures/curves-carry.svg",
+      "note": {
+        "en": "The source figure labels this task “Box carrying” (box); the precision report calls it carry. FlashMimic extends to checkpoint 80k.",
+        "zh": "原始曲线中的 Box carrying（box）对应精度报告中的 carry；FlashMimic 延伸至 80k 权重。"
+      }
+    }
+  ],
+  comparisonColumns: [
+    {
+      "en": "Method",
+      "zh": "方法"
+    },
+    {
+      "en": "Completed ↑",
+      "zh": "完成 ↑"
+    },
+    {
+      "en": "Torso pos. ↓\nmm",
+      "zh": "Torso 位置 ↓\nmm"
+    },
+    {
+      "en": "Body ori. ↓\nrad",
+      "zh": "身体姿态 ↓\nrad"
+    },
+    {
+      "en": "EE pos. ↓\nmm",
+      "zh": "末端位置 ↓\nmm"
+    },
+    {
+      "en": "EE ori. ↓\nrad",
+      "zh": "末端姿态 ↓\nrad"
+    },
+    {
+      "en": "Budget ↓\nmin · T₄₀₉₀",
+      "zh": "训练预算 ↓\nmin · T₄₀₉₀"
+    },
+    {
+      "en": "Averaged tasks",
+      "zh": "均值参与动作"
+    }
+  ],
+  evaluationNotes: [
+    {
+      "title": {
+        "en": "One rollout per selected checkpoint",
+        "zh": "每个所选权重一次回放"
+      },
+      "text": {
+        "en": "Dance, walk, run, flip, and carry. Deterministic evaluation with DR, observation noise, random initial perturbations, and external pushes disabled; fixed control delay retained. Completion is a tracking criterion, not a multi-seed success probability.",
+        "zh": "任务为舞蹈、行走、跑步、翻转与搬箱。确定性评测关闭 DR、观测噪声、随机初始扰动和外部推力，保留固定控制延迟。完成标记是跟踪判据，不代表多随机种子成功概率。"
+      }
+    },
+    {
+      "title": {
+        "en": "Geometry and aggregation",
+        "zh": "几何指标与汇总方式"
+      },
+      "text": {
+        "en": "Torso position is world-space XYZ error. Local metrics align torso translation and relative yaw over 14 body links; orientation uses quaternion geodesic angles. EE includes both ankles and both wrists. Errors and budgets are action-equal means over each method’s successful tasks only. Native simulation backends and checkpoint-selection rules differ.",
+        "zh": "Torso 位置为世界坐标 XYZ 误差。局部指标对齐 torso 平移及相对 yaw，姿态使用四元数测地角；身体集合含 14 个 link，末端含双踝与双腕。误差和预算仅在各方法成功动作上等权平均；原生仿真后端和权重选点规则存在差异。"
+      }
+    },
+    {
+      "title": {
+        "en": "Read time with its source",
+        "zh": "结合来源解读时间"
+      },
+      "text": {
+        "en": "T₄₀₉₀ runs from the first TensorBoard writer to the selected checkpoint, excluding earlier startup. D: direct RTX 4090 logs; E: same-motion hardware conversion; P: cross-motion estimate. E/P denotes mixed sources. These budgets do not establish an equal-accuracy speedup.",
+        "zh": "T₄₀₉₀ 从首次 TensorBoard writer 建立计至所选权重，排除此前启动时间。D：4090 直接日志；E：同动作硬件折算；P：跨动作估计；E/P 表示混合来源。这些预算不能直接用于宣称等精度加速比。"
+      }
+    }
+  ],
+  materials: [
+    {
+      "title": {
+        "en": "System framework",
+        "zh": "系统框架"
+      },
+      "description": {
+        "en": "Original architecture diagram covering learning, runtime, and GPU scheduling.",
+        "zh": "学习流程、运行时与 GPU 调度的原始系统框架图。"
+      },
+      "links": [
+        {
+          "label": "JPG · 253 KB",
+          "url": "assets/figures/system-framework.jpg"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Five-action comparison",
+        "zh": "五动作四仓库对比"
+      },
+      "description": {
+        "en": "Original full figure: RMSE, MPJPE, and PCK@50 mm for all five actions.",
+        "zh": "原始完整主图：五动作的 RMSE、MPJPE 与 PCK@50 mm。"
+      },
+      "links": [
+        {
+          "label": "SVG",
+          "url": "assets/figures/five-actions-overview.svg"
+        },
+        {
+          "label": "PDF",
+          "url": "assets/downloads/five-actions-overview.pdf"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Measured metrics",
+        "zh": "实测指标"
+      },
+      "description": {
+        "en": "Four measured method rows, recomputed from unrounded checkpoint records; includes the success sets and timing sources.",
+        "zh": "从未取整的权重记录重算四行实测结果，附成功动作集合与计时来源。"
+      },
+      "links": [
+        {
+          "label": "CSV",
+          "url": "assets/data/five-action-measured-summary.csv"
+        },
+        {
+          "label": "JSON",
+          "url": "assets/data/five-action-measured-summary.json"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Plotting & audit materials",
+        "zh": "绘图与指标审阅材料"
+      },
+      "description": {
+        "en": "Original plotted points, provenance, metric and plotting code, checkpoint hashes, and source report. Lightweight subset; excludes weights, trajectories, and a runnable environment.",
+        "zh": "原始绘图点、来源、指标与绘图代码、权重哈希及原始报告的轻量子集；不含权重、轨迹和可运行环境。"
+      },
+      "links": [
+        {
+          "label": {
+            "en": "Data ZIP · 101 KB",
+            "zh": "数据 ZIP · 101 KB"
+          },
+          "url": "assets/downloads/research-data-20261015.zip"
+        }
+      ]
+    }
   ],
   demos: [
     { id: "G1_dance_real", category: "real", type: "video", title: { en: "G1 · Real-world Dance", zh: "G1 · 真机舞蹈" }, description: { en: "Dance motion tracking on the physical G1 robot.", zh: "G1 机器人上的真机舞蹈动作跟踪。" }, src: "assets/videos/G1_dance_real.mp4", poster: "assets/images/G1_dance_real.webp" },
@@ -51,13 +400,53 @@ window.FLASHMIMIC_CONTENT = {
     { id: "G05_walk", type: "interactive", title: { en: "G1 · Walk", zh: "G1 · 行走" }, description: { en: "Track the reference walking motion.", zh: "跟踪参考行走动作。" }, poster: "assets/images/G05_walk.jpg", recording: "assets/videos/G05_walk.mp4?v=nodr-follow-motphys-20261015" }
   ],
   news: [
-    { date: "2026-10-10", text: { en: "The FlashMimic project website is online. More details coming soon.", zh: "FlashMimic 项目主页已上线，更多内容即将公布。" } }
+    {
+      "date": "2026-10-15",
+      "text": {
+        "en": "System framework, five-action/four-repository curves, measured evaluation metrics, and lightweight audit materials are now available.",
+        "zh": "更新系统框架、五动作四仓库曲线、实测精度指标与轻量审阅材料。"
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "text": {
+        "en": "The FlashMimic project website is online. More details coming soon.",
+        "zh": "FlashMimic 项目主页已上线，更多内容即将公布。"
+      }
+    }
   ],
   authors: [], // 例：[{ name: "姓名", affiliation: "单位", url: "https://..." }]
   affiliations: [], // 例：[{ name: "单位名称", logo: "assets/logos/institution.svg", url: "https://..." }]
   citation: "", // 粘贴真实 BibTeX，支持反引号包裹的多行字符串；为空时不可复制
   // 页面固定文案与区块标题也集中在这里。
   ui: {
+    demoScope: {"en": "Browser policies: dance, flip, run, sprint, and walk (existing model60000 exports). The evaluation above includes carry instead of sprint and uses different checkpoints. Browser playback disables DR and observation noise; Push robot applies a user-triggered disturbance.", "zh": "浏览器策略为舞蹈、翻转、跑步、冲刺与行走，沿用现有 model60000 导出；上方评测以搬箱替代冲刺，所用权重也不同。浏览器运行关闭 DR 和观测噪声，推力扰动由用户主动触发。"},
+    materialsNote: {"en": "The data ZIP is a plotting and audit subset, not a full reproduction environment. Large original archives containing weights, trajectories, and training logs are not hosted here.", "zh": "数据 ZIP 是绘图与审阅子集，不是完整复现环境；包含权重、轨迹和训练日志的大型原始归档暂未在此托管。"},
+    materialsDescription: {"en": "Download the figures and a compact set of plotted data and metric evidence, dated October 15, 2026.", "zh": "下载 2026 年 10 月 15 日版图表，以及绘图数据与指标证据的轻量材料。"},
+    materialsTitle: {"en": "Figures, data, and definitions.", "zh": "图表、数据与计算口径。"},
+    materialsLabel: {"en": "04 / MATERIALS", "zh": "04 / 数据材料"},
+    originalReport: {"en": "Original report · Markdown", "zh": "原始报告 · Markdown"},
+    originalTableAlt: {"en": "Original five-action average reference table, including a manually adjusted extended-dance reference row.", "zh": "原始五动作平均参考表，包含手动调整 dance 数据的扩展参考行。"},
+    originalTimingNote: {"en": "The supplied extended-row budget is displayed as D in the figure, but includes reconstructed E timings for walk/run/flip/carry. The source report also describes a different network/reward configuration for extended dance.", "zh": "原图将扩展行总预算标为 D，但 walk/run/flip/carry 实际包含续训重建 E 计时；原报告也注明扩展 dance 使用了不同网络／奖励配置。"},
+    originalWarning: {"en": "Source note: the extended FlashSAC dance errors are manually adjusted, not measured errors of model_45000.pt; the fifth-row averages include that adjustment. Its success and time come from the reference run and do not measure time to the adjusted accuracy. The measured main table above excludes this row.", "zh": "来源说明：扩展 FlashSAC 的 dance 误差为手动调整值，并非 model_45000.pt 实测误差，第五行均值包含该调整。其完成标记和时间来自参考运行，不代表达到调整后精度的实测时间。上方实测主表不纳入该行。"},
+    originalSummary: {"en": "Original supplied precision table & report (adjusted reference included)", "zh": "原始精度表与报告（含调整参考数据）"},
+    protocolDifference: {"en": "The curve figure uses 13 links and post-integration states; this precision table uses 14 links including torso and pre-action states. Their numeric values are not interchangeable.", "zh": "曲线使用 13 个 link 与积分后状态；精度表使用包含 torso 的 14 个 link 与执行动作前状态，两者数值不能混用。"},
+    successCriterion: {"en": "A rollout fails if any frame has aligned 14-link mean position error > 0.5 m, reference-minus-actual torso height > 0.5 m, or nonfinite position/orientation errors. No separate torso-angle failure threshold is used.", "zh": "任一帧的对齐后 14-link 平均位置误差 > 0.5 m、参考 torso 高度减实际高度 > 0.5 m，或位置／姿态误差非有限即失败；未另设 torso 姿态角失败阈值。"},
+    protocolSummary: {"en": "Evaluation protocol & metric definitions", "zh": "评测条件与指标定义"},
+    precisionScrollHint: {"en": "Scroll horizontally to view all metrics →", "zh": "横向滚动查看全部指标 →"},
+    precisionIntro: {"en": "Success uses all five tasks. Errors and budgets average successful tasks only, with the actual task sets shown in the last column. FlashMimic is labeled UniLab/FlashSAC in the source report.", "zh": "完成比例以全部五任务为分母；误差和预算仅对成功动作等权平均，实际参与集合见末列。原报告将 FlashMimic 标为 UniLab/FlashSAC。"},
+    precisionTitle: {"en": "Five-task checkpoint evaluation", "zh": "五任务权重精度评测"},
+    downloadPdf: {"en": "Download PDF", "zh": "下载 PDF"},
+    openSvg: {"en": "Open full-size SVG ↗", "zh": "查看完整 SVG ↗"},
+    overviewSummary: {"en": "View the complete five-action figure", "zh": "展开五动作完整主图"},
+    curveScrollHint: {"en": "On small screens, scroll the chart horizontally to read all three metrics.", "zh": "小屏可横向滚动图表，查看三个指标。"},
+    curveCommonNote: {"en": "Curves connect evaluated checkpoints without smoothing. Metrics use 13 non-torso links, torso translation / relative-yaw alignment, and post-integration states. PCK@50 is the fraction of body-link samples within 50 mm, not task completion. Time is source logged time; Holosoma† GPU is unverified.", "zh": "曲线连接真实评估权重点，不做平滑。使用 13 个非 torso link，逐帧对齐 torso 平移与相对 yaw，采样积分后状态。PCK@50 是误差不超过 50 mm 的 link 样本比例，不是动作完成率。横轴为源日志计时；Holosoma† 的 GPU 未核验。"},
+    curveAlt: {"en": "{action}: body position RMSE, body point MPJPE, and PCK@50 mm versus logged training time.", "zh": "{action}：身体位置 RMSE、身体点 MPJPE、PCK@50 mm 随训练日志时间的变化。"},
+    curvesLegend: {"en": "Methods compared", "zh": "对比方法"},
+    curvesSubtitle: {"en": "Five actions / Four repositories", "zh": "五动作 / 四仓库"},
+    curvesTitle: {"en": "Tracking quality over training time", "zh": "随训练时间变化的跟踪质量"},
+    methodDownload: {"en": "Open original framework ↗", "zh": "查看原始框架图 ↗"},
+    navMaterials: {"en": "Materials", "zh": "材料"},
     realWorldTitle: { en: "On the real robot", zh: "真机演示" },
     simulationTitle: { en: "In simulation", zh: "仿真演示" },
     mediaTitle: { en: "More demonstrations", zh: "更多演示" },
@@ -83,16 +472,16 @@ window.FLASHMIMIC_CONTENT = {
     noDemos: { en: "No demonstrations in this category yet.", zh: "该分类暂无展示。" },
     skip: { en: "Skip to content", zh: "跳转到正文" },
     navHighlights: { en: "Highlights", zh: "亮点" }, navMethod: { en: "Method", zh: "方法" }, navResults: { en: "Results", zh: "结果" }, navDemos: { en: "Demos", zh: "演示" }, navAuthors: { en: "Authors", zh: "作者" },
-    projectLabel: { en: "RESEARCH PROJECT", zh: "研究项目" }, projectStatus: { en: "More coming soon", zh: "更多内容即将公布" },
-    exploreDemos: { en: "Explore demos", zh: "浏览演示" }, paper: { en: "Paper", zh: "论文" }, docs: { en: "Docs", zh: "文档" }, soon: { en: "Soon", zh: "待发布" },
+    projectLabel: { en: "RESEARCH PROJECT", zh: "研究项目" }, projectStatus: {"en": "Framework & results available", "zh": "框架与实验结果已更新"},
+    exploreDemos: { en: "Explore demos", zh: "浏览演示" }, paper: { en: "Paper", zh: "论文" }, docs: {"en": "Materials", "zh": "数据材料"}, soon: { en: "Soon", zh: "待发布" },
     overview: { en: "OVERVIEW", zh: "项目概览" }, videoPending: { en: "VIDEO COMING SOON", zh: "演示视频待补充" }, teaserTitle: { en: "A first look at FlashMimic", zh: "初识 FlashMimic" }, teaserNote: { en: "Project film · Coming soon", zh: "项目视频 · 即将上线" }, teaserAccessible: { en: "Decorative motion illustration. The project video will be added later.", zh: "动作示意占位图，项目视频将在后续补充。" },
-    contributionsLabel: { en: "01 / CONTRIBUTIONS", zh: "01 / 研究贡献" }, highlightsTitle: { en: "The ideas behind FlashMimic.", zh: "FlashMimic 背后的思考。" }, highlightsDescription: { en: "An overview of the key contributions. Full details will follow.", zh: "关键贡献一览，完整内容即将公布。" },
-    methodLabel: { en: "02 / METHOD", zh: "02 / 技术方法" }, methodTitle: { en: "Inside the framework.", zh: "走进方法框架。" }, methodDescription: { en: "The complete method, from an overview to the details that make it work.", zh: "从整体架构到实现细节，在这里了解完整的技术方法。" }, methodFigure: { en: "Framework overview", zh: "方法框架概览" }, figurePending: { en: "Figure coming soon", zh: "图示待补充" }, input: { en: "Input", zh: "输入" }, output: { en: "Output", zh: "输出" }, methodCaption: { en: "Illustrative layout placeholder. The final architecture figure and caption will be added here.", zh: "当前为排版示意占位，正式架构图与图注将在这里补充。" },
-    methodNoteOne: { en: "Method overview", zh: "方法概述" }, methodNoteOneText: { en: "A concise explanation of the approach and its main components will appear here.", zh: "这里将简要说明技术方案与核心组成部分。" }, methodNoteTwo: { en: "Implementation details", zh: "实现细节" }, methodNoteTwoText: { en: "Training setup, design choices, and technical details will be shared with the release.", zh: "训练设置、设计选择与技术细节将随项目发布公开。" },
-    resultsLabel: { en: "03 / EVALUATION", zh: "03 / 实验评估" }, resultsTitle: { en: "Results, at a glance.", zh: "实验结果，一目了然。" }, resultsDescription: { en: "Quantitative comparisons and analysis will be available with the full project release.", zh: "定量对比与实验分析将随完整项目发布。" }, dataPending: { en: "Results coming soon", zh: "实验结果待补充" }, comparisonCaption: { en: "Quantitative comparison · Data to be announced", zh: "定量对比 · 数据待公布" }, tableMethod: { en: "Method", zh: "方法" }, metricOne: { en: "Metric 01", zh: "指标 01" }, metricTwo: { en: "Metric 02", zh: "指标 02" }, metricThree: { en: "Metric 03", zh: "指标 03" }, tableNote: { en: "— denotes results that have not yet been published.", zh: "— 表示尚未公布的实验结果。" },
-    demosLabel: { en: "04 / SHOWCASE", zh: "04 / 项目展示" }, demosTitle: { en: "See FlashMimic in action.", zh: "看看 FlashMimic 的表现。" }, demosDescription: { en: "Watch real-world G1 demonstrations, then explore five trained policies in interactive simulation. Drag to rotate, pause, reset, or push the robot.", zh: "观看 G1 真机演示，并在交互式仿真中体验五个已训练策略。可旋转视角、暂停、重置或施加扰动。" }, filterAll: { en: "All", zh: "全部" }, filterVideos: { en: "Videos", zh: "视频" }, filterImages: { en: "Visualizations", zh: "可视化" }, galleryCount: { en: "{count} items", zh: "{count} 项展示" }, demoPending: { en: "COMING SOON", zh: "即将上线" }, videoType: { en: "VIDEO", zh: "视频演示" }, imageType: { en: "VISUALIZATION", zh: "可视化" }, openDemo: { en: "Open demo ↗", zh: "打开演示 ↗" },
+    contributionsLabel: { en: "01 / CONTRIBUTIONS", zh: "01 / 研究贡献" }, highlightsTitle: { en: "The ideas behind FlashMimic.", zh: "FlashMimic 背后的思考。" }, highlightsDescription: {"en": "Off-policy experience reuse, a shared-GPU runtime, and motion-tracking evidence.", "zh": "离策略经验复用、共享 GPU 运行时，以及动作跟踪评测依据。"},
+    methodLabel: { en: "02 / METHOD", zh: "02 / 技术方法" }, methodTitle: { en: "Inside the framework.", zh: "走进方法框架。" }, methodDescription: {"en": "A learning pipeline backed by a collector–learner runtime, with physics and optimization sharing one GPU.", "zh": "以采集—学习运行时支撑动作学习，在一块 GPU 上协同调度物理仿真与优化。"}, methodFigure: { en: "Framework overview", zh: "方法框架概览" }, figurePending: { en: "Figure coming soon", zh: "图示待补充" }, input: { en: "Input", zh: "输入" }, output: { en: "Output", zh: "输出" }, methodCaption: { en: "Illustrative layout placeholder. The final architecture figure and caption will be added here.", zh: "当前为排版示意占位，正式架构图与图注将在这里补充。" },
+    methodNoteOne: {"en": "Collector: physics, references, and managers", "zh": "采集端：物理、参考动作与管理器"}, methodNoteOneText: {"en": "MJWarp physics graphs and selective resets handle simulation. A scene read plan caches reference transforms, while action, observation, and reward managers organize each transition.", "zh": "MJWarp 物理图与选择性重置负责仿真；场景读取计划缓存参考变换，由动作、观测和奖励管理器组织每次转移。"}, methodNoteTwo: {"en": "Learner: replay, compiled updates, and inference", "zh": "学习端：replay、编译更新与推理"}, methodNoteTwoText: {"en": "Bounded ingress feeds a device replay buffer. FlashSAC updates use compiled objectives and graph execution, while an in-place actor runs inference between updates. CUDA MPS overlaps collection and optimization.", "zh": "通过有界入口向设备端 replay buffer 写入数据；FlashSAC 使用编译目标函数与图执行完成更新，原位 actor 在更新间推理，CUDA MPS 重叠调度采集与优化。"},
+    resultsLabel: { en: "03 / EVALUATION", zh: "03 / 实验评估" }, resultsTitle: { en: "Results, at a glance.", zh: "实验结果，一目了然。" }, resultsDescription: {"en": "Five evaluation tasks: dance, walk, run, flip, and box carry. Curves and checkpoint-level precision use separate measurement protocols, documented below.", "zh": "五个评测任务：舞蹈、行走、跑步、翻转与搬箱。训练曲线与权重精度表采用不同测量口径，详见下方说明。"}, dataPending: { en: "Results coming soon", zh: "实验结果待补充" }, comparisonCaption: {"en": "Selected-checkpoint evaluation · measured tracking metrics", "zh": "所选权重评测 · 跟踪指标实测"}, tableMethod: { en: "Method", zh: "方法" }, metricOne: { en: "Metric 01", zh: "指标 01" }, metricTwo: { en: "Metric 02", zh: "指标 02" }, metricThree: { en: "Metric 03", zh: "指标 03" }, tableNote: {"en": "Different success sets, native backends, and checkpoint rules limit direct ranking. The main table excludes the manually adjusted extended-dance reference row.", "zh": "不同成功集合、原生后端与权重选点规则限制了直接排名。此实测主表不纳入含手动调整 dance 数据的扩展参考行。"},
+    demosLabel: {"en": "05 / SHOWCASE", "zh": "05 / 项目展示"}, demosTitle: { en: "See FlashMimic in action.", zh: "看看 FlashMimic 的表现。" }, demosDescription: {"en": "Watch two real-world G1 videos and explore five browser policies with 50 Hz control and 150 Hz physics. Drag to orbit, switch Follow/Free camera, pause, reset, or push the robot.", "zh": "观看两段 G1 真机视频，并体验以 50 Hz 控制、150 Hz 物理步进运行的五个浏览器策略。支持旋转视角、跟随／自由镜头、暂停、重置与推力扰动。"}, filterAll: { en: "All", zh: "全部" }, filterVideos: { en: "Videos", zh: "视频" }, filterImages: { en: "Visualizations", zh: "可视化" }, galleryCount: { en: "{count} items", zh: "{count} 项展示" }, demoPending: { en: "COMING SOON", zh: "即将上线" }, videoType: { en: "VIDEO", zh: "视频演示" }, imageType: { en: "VISUALIZATION", zh: "可视化" }, openDemo: { en: "Open demo ↗", zh: "打开演示 ↗" },
     newsLabel: { en: "LATEST", zh: "最新动态" }, newsTitle: { en: "Project updates.", zh: "项目动态。" }, citationLabel: { en: "REFERENCE", zh: "引用信息" }, citationDescription: { en: "Citation information will be available when the paper is released.", zh: "论文发布后将在这里提供引用信息。" }, citationPending: { en: "Coming soon", zh: "待发布" }, citationPlaceholder: { en: "% FlashMimic\n% Citation will be added with the paper release.", zh: "% FlashMimic\n% 论文发布后将在这里补充正式引用。" }, copy: { en: "Copy", zh: "复制" }, copied: { en: "Copied", zh: "已复制" }, copyFailed: { en: "Please select and copy the citation below.", zh: "请选中下方引用文本并手动复制。" },
     authorsLabel: { en: "THE TEAM", zh: "研究团队" }, authorsTitle: { en: "People behind the project.", zh: "项目背后的研究者。" }, authorsPending: { en: "Authors and affiliations will be announced soon.", zh: "作者名单与所属单位即将公布。" }, affiliationPending: { en: "Affiliation to be announced", zh: "所属单位待公布" },
-    footerTagline: { en: "Research. Motion. Possibility.", zh: "研究 · 动作 · 更多可能" }, backTop: { en: "Back to top ↑", zh: "返回顶部 ↑" }, footerNote: { en: "More to come. Stay curious.", zh: "更多内容，敬请期待。" }, menuOpen: { en: "Open navigation", zh: "打开导航" }, menuClose: { en: "Close navigation", zh: "关闭导航" }, mediaError: { en: "Media is unavailable. Please check back later.", zh: "素材暂时无法加载，请稍后再试。" }
+    footerTagline: { en: "Research. Motion. Possibility.", zh: "研究 · 动作 · 更多可能" }, backTop: { en: "Back to top ↑", zh: "返回顶部 ↑" }, footerNote: {"en": "Framework & evaluation materials · October 2026", "zh": "框架与评测材料 · 2026 年 10 月"}, menuOpen: { en: "Open navigation", zh: "打开导航" }, menuClose: { en: "Close navigation", zh: "关闭导航" }, mediaError: { en: "Media is unavailable. Please check back later.", zh: "素材暂时无法加载，请稍后再试。" }
   }
 };

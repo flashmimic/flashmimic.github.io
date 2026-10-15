@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090e1b">
-  <meta name="description" content="FlashMimic — project overview, method, results, and demonstrations. More details coming soon.">
+  <meta name="description" content="FlashMimic: whole-body G1 motion tracking with FlashSAC. Explore the system framework, five-action evaluations across four repositories, data, and interactive demonstrations.">
   <title>FlashMimic — Project Page</title>
   <link rel="icon" href="assets/favicon.svg?v=fm" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261014">
-  <script src="site-content.js?v=20261015-motphys-floor" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261015-research">
+  <script src="site-content.js?v=20261015-research" defer></script>
   <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.js"}}</script>
   <script src="demo-player.js?v=20261014" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=20261015-research" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -19,7 +19,7 @@
   <nav class="container nav" aria-label="Main navigation">
     <a class="brand" href="#top" aria-label="FlashMimic home"><img class="brand-mark" src="assets/logos/flashmimic.svg" width="34" height="34" alt="" aria-hidden="true">Flash<span>Mimic</span></a>
     <div class="nav-links" id="nav-links">
-      <a href="#highlights" data-i18n="navHighlights">Highlights</a><a href="#method" data-i18n="navMethod">Method</a><a href="#results" data-i18n="navResults">Results</a><a href="#demos" data-i18n="navDemos">Demos</a><a href="#authors" data-i18n="navAuthors">Authors</a>
+      <a href="#highlights" data-i18n="navHighlights">Highlights</a><a href="#method" data-i18n="navMethod">Method</a><a href="#results" data-i18n="navResults">Results</a><a href="#materials" data-i18n="navMaterials">Materials</a><a href="#demos" data-i18n="navDemos">Demos</a>
     </div>
     <div class="nav-actions">
       <div class="language-switch" role="group" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true">EN</button><button type="button" data-language="zh" aria-pressed="false">中文</button></div>
@@ -78,12 +78,28 @@
   </div></section>
   <section class="section container" id="results">
     <div class="section-heading"><p class="eyebrow" data-i18n="resultsLabel">03 / EVALUATION</p><h2 data-i18n="resultsTitle">Results, at a glance.</h2><p data-i18n="resultsDescription">Quantitative comparisons and analysis will be available with the full project release.</p></div>
-    <div class="results-grid" id="result-list"></div>
-    <div class="comparison-wrap"><table><caption data-i18n="comparisonCaption">Quantitative comparison · Data to be announced</caption><thead><tr><th scope="col" data-i18n="tableMethod">Method</th><th scope="col" data-i18n="metricOne">Metric 01</th><th scope="col" data-i18n="metricTwo">Metric 02</th><th scope="col" data-i18n="metricThree">Metric 03</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
-    <p class="table-note" data-i18n="tableNote">— denotes results that have not yet been published.</p>
+    <figure class="curve-card media-slot">
+      <div class="research-heading"><div><p class="eyebrow" data-i18n="curvesSubtitle">Five actions / Four repositories</p><h3 data-i18n="curvesTitle">Tracking quality over training time</h3></div><a class="text-link" href="assets/figures/five-actions-overview.svg" target="_blank" rel="noopener" data-i18n="openSvg">Open full-size SVG ↗</a></div>
+      <div class="curve-tabs" id="curve-tabs" role="tablist" aria-label="Evaluation motion / 评测动作"></div>
+      <ul class="curve-legend" data-i18n-aria="curvesLegend"><li class="beyond">BeyondMimic</li><li class="holo">Holosoma†</li><li class="mjlab">MJLab</li><li class="flash">FlashMimic</li></ul>
+      <div id="curve-panel" role="tabpanel"><div class="curve-scroll" id="curve-image" tabindex="0" data-i18n-aria="curvesTitle"></div></div>
+      <figcaption><p id="curve-note"></p><p data-i18n="curveCommonNote"></p><p class="scroll-hint" data-i18n="curveScrollHint"></p></figcaption>
+    </figure>
+    <details class="research-details overview-details"><summary data-i18n="overviewSummary">View the complete five-action figure</summary><div class="details-content"><img class="full-figure" src="assets/figures/five-actions-overview.svg" alt="Five actions, four repositories: RMSE, MPJPE and PCK curves / 五动作四仓库训练曲线" loading="lazy" width="1368" height="1512"><div class="figure-links"><a href="assets/figures/five-actions-overview.svg" target="_blank" rel="noopener" data-i18n="openSvg"></a><a href="assets/downloads/five-actions-overview.pdf" download data-i18n="downloadPdf"></a></div></div></details>
+    <div class="precision-heading"><h3 data-i18n="precisionTitle"></h3><p data-i18n="precisionIntro"></p></div>
+    <p class="scroll-hint" data-i18n="precisionScrollHint"></p>
+    <div class="comparison-wrap" role="region" aria-label="Measured checkpoint metrics / 权重实测指标" tabindex="0"><table class="precision-table"><caption data-i18n="comparisonCaption"></caption><thead><tr id="comparison-head"></tr></thead><tbody id="comparison-body"></tbody></table></div>
+    <p class="table-note" data-i18n="tableNote"></p>
+    <details class="research-details" open><summary data-i18n="protocolSummary"></summary><div class="details-content"><div class="evaluation-notes" id="evaluation-notes"></div><p class="protocol-note" data-i18n="successCriterion"></p><p class="protocol-note" data-i18n="protocolDifference"></p></div></details>
+    <details class="research-details source-reference"><summary data-i18n="originalSummary"></summary><div class="details-content"><p class="source-warning" data-i18n="originalWarning"></p><p class="protocol-note" data-i18n="originalTimingNote"></p><img class="full-figure" src="assets/figures/five-action-reference-table.svg" data-i18n-alt="originalTableAlt" alt="Original reference table including adjusted dance errors" loading="lazy"><div class="figure-links"><a href="assets/figures/five-action-reference-table.svg" target="_blank" rel="noopener" data-i18n="openSvg"></a><a href="assets/downloads/five-action-reference-table.pdf" download data-i18n="downloadPdf"></a><a href="assets/downloads/five-motion-original-report.md" download data-i18n="originalReport"></a></div></div></details>
   </section>
+  <section class="section section-tinted" id="materials"><div class="container">
+    <div class="section-heading"><p class="eyebrow" data-i18n="materialsLabel"></p><h2 data-i18n="materialsTitle"></h2><p data-i18n="materialsDescription"></p></div>
+    <div class="materials-grid" id="materials-list"></div><p class="table-note" data-i18n="materialsNote"></p>
+  </div></section>
   <section class="section section-tinted" id="demos"><div class="container">
     <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="demosLabel">04 / SHOWCASE</p><h2 data-i18n="demosTitle">See FlashMimic in action.</h2></div><p data-i18n="demosDescription">A space for project videos, visualizations, and more. Stay tuned.</p></div>
+    <p class="demo-scope" data-i18n="demoScope"></p>
     <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter demonstrations"><button type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All</button><button type="button" data-filter="interactive" aria-pressed="false" data-i18n="filterInteractive">Interactive</button><button type="button" data-filter="video" aria-pressed="false" data-i18n="filterVideos">Videos</button><button type="button" data-filter="image" aria-pressed="false" data-i18n="filterImages">Visualizations</button></div><span class="gallery-count" id="gallery-count" aria-live="polite"></span></div>
     <div class="demo-grid" id="demo-list"></div>
   </div></section>

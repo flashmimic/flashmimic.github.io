@@ -1,6 +1,6 @@
 # FlashMimic 项目主页
 
-参考 [UniLab](https://unilabsim.github.io/) 的深色科研项目长页排版，搭建 FlashMimic 网页框架。纯 HTML / CSS / JavaScript，无需安装依赖或构建，兼容 GitHub Pages。
+参考 [UniLab](https://unilabsim.github.io/) 的深色科研项目长页排版，展示 FlashMimic 的系统框架、实验结果与机器人演示。纯 HTML / CSS / JavaScript，无需安装依赖或构建，兼容 GitHub Pages。
 
 当前 `main` 已接入 FlashMimic 项目 `logs/g1_batch_v1` 的五个 G1 策略，
 在 `#demos` 中点击卡片即可加载浏览器物理仿真，支持旋转、缩放、暂停、重置与扰动。
@@ -22,8 +22,10 @@
 | 概览指标 | `stats` | 填写真实数值、名称和说明 |
 | 贡献亮点 | `highlights` | 可增减条目 |
 | 方法架构图 | `method.image`、`method.caption` | `assets/images/architecture.svg` |
-| 结果图与图注 | `results` | `assets/images/` 下的 SVG、PNG、WebP |
-| 对比表格 | `comparison` | 每行 `values` 对应三个指标 |
+| 五动作曲线及图注 | `curves` | `assets/figures/curves-*.svg`；完整主图可展开、下载 |
+| 对比表格 | `comparisonColumns`、`comparison` | 每行 `values` 对应方法名之外的表头 |
+| 评测口径说明 | `evaluationNotes`、`ui` | 明确任务集合、成功分母和计时来源 |
+| 下载材料 | `materials` | `assets/data/`、`assets/downloads/` |
 | 视频 / 图片展示 | `demos` | `type` 为 `video` 或 `image`；`src` 为素材路径 |
 | 交互仿真 | `demos` | `type: "interactive"`，`id` 对应 `assets/sim/manifest.json`；`poster` 为封面 |
 | 演示跳转链接 | `demos[].url` | 可选，填写后出现“打开演示”链接 |
@@ -32,7 +34,17 @@
 | 引用信息 | `citation` | 粘贴真实 BibTeX 多行字符串 |
 | 各区块标题、固定文案 | `ui` | 中英文分别填写 |
 
-空媒体路径保留占位，不请求不存在的文件。未提供的论文、文档和引用显示待发布状态。当前指标、方法示意与图表均为明确标注的占位，不代表真实实验结论。视频使用浏览器原生控件，默认不自动播放。
+已接入 2026-10-15 提供的系统框架、五动作四仓库曲线和精度证据。未提供的论文、作者与引用仍显示待发布状态，不编造相关信息。视频使用浏览器原生控件，默认不自动播放。
+
+### 研究材料与统计口径
+
+运行 `python3 scripts/import-research-materials.py /path/to/source-materials` 可从本次原始 JPG/SVG/PDF/Markdown 及两个 ZIP 更新图表和轻量数据包。脚本仅复制指定文件、按原始 SVG 裁出单动作视图，并从 `SELECTED_CHECKPOINTS.json` 的未取整实测数据重算四方法均值。网页表格文案位于 `site-content.js`，数据更新后需同步核对。
+
+- 主表任务为 dance、walk、run、flip、carry；现有交互演示为 dance、flip、run、sprint、walk，权重也不同。
+- 完成比例以五任务为分母；误差与时间仅在各方法成功动作中等权平均（BeyondMimic 4、Holosoma 3、其余 5）。每个所选权重仅一次确定性回放，不代表多种子成功概率。
+- 主表实测误差不纳入原始报告中手动调整的扩展 dance 参考行；原始表与报告保留在注明此差异的折叠区及下载材料中。时间同时标明直接日志、硬件折算或跨动作估计，不能据此宣称等精度加速比。
+- 曲线指标为 13 个非 torso link、积分后状态；精度表为 14 个 link、动作前状态，不混用数值。
+- `assets/downloads/research-data-20261015.zip` 是约 101 KB 的绘图与审阅子集，不包含权重、轨迹和可运行环境。原始大型 ZIP 留在网站仓库之外。
 
 ### 示例：添加演示视频
 
@@ -47,7 +59,7 @@
 }
 ```
 
-`hero.video` 留空但填写 `hero.poster` 时，首屏显示静态封面。修改表头名称请编辑 `ui.metricOne`、`ui.metricTwo`、`ui.metricThree`。正式数据发布后，也请同步修改 `ui.comparisonCaption` 和 `ui.tableNote`。
+`hero.video` 留空但填写 `hero.poster` 时，首屏显示静态封面。修改表头名称请编辑 `comparisonColumns`，同时同步 `comparison`、`ui.comparisonCaption` 和 `ui.tableNote`。
 
 ## 文件说明
 
