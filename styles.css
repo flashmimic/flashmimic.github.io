@@ -36,7 +36,8 @@ tbody th[scope=row]{font:inherit;letter-spacing:normal;background:transparent;co
 .sim-control[aria-pressed=true]{border-color:var(--accent)}
 @media(max-width:420px){.sim-clock{flex-basis:100%;text-align:right}}
 /* Research figures and evidence: retain the dark page, give plots a white canvas. */
-.teaser.is-loaded img{height:auto}
+.teaser.is-loaded img{height:auto;max-height:none}
+.teaser.is-loaded figcaption{padding:12px 20px;color:var(--muted);font-size:11px;line-height:1.7}
 .method-figure.is-loaded img{display:block;width:100%;height:auto}
 .method-figure.is-loaded figcaption{font-size:13px;line-height:1.8;padding:20px 24px}
 .method-figure figcaption .text-link{display:block;margin-top:12px}

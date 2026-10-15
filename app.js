@@ -79,6 +79,7 @@
     const slot = $("#teaser-slot");
     slot.classList.add("is-loaded");
     slot.replaceChildren(media({ src: video || poster, poster, type: video ? "video" : "image", alt, width, height }, true));
+    if (localize(content.hero.caption)) slot.append(node("figcaption", "", content.hero.caption));
   }
   function renderMethodMedia() {
     if (!safeUrl(content.method.image)) return;
