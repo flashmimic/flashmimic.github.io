@@ -79,14 +79,18 @@
     const slot = $("#teaser-slot");
     slot.classList.add("is-loaded");
     slot.replaceChildren(media({ src: video || poster, poster, type: video ? "video" : "image", alt, width, height }, true));
-    if (localize(content.hero.caption)) slot.append(node("figcaption", "", content.hero.caption));
+    if (localize(content.hero.caption) || safeUrl(content.hero.pdf)) {
+      const caption = node("figcaption", "", content.hero.caption);
+      if (safeUrl(content.hero.pdf)) caption.append(link(content.hero.pdf, t("viewOriginalPdf"), "text-link"));
+      slot.append(caption);
+    }
   }
   function renderMethodMedia() {
     if (!safeUrl(content.method.image)) return;
     const slot = $("#method-slot");
     slot.classList.add("is-loaded");
     const caption = node("figcaption", "", content.method.caption || content.method.alt);
-    caption.append(link(content.method.image, t("methodDownload"), "text-link"));
+    caption.append(link(content.method.pdf || content.method.image, t(content.method.pdf ? "viewOriginalPdf" : "methodDownload"), "text-link"));
     slot.replaceChildren(media({ src: content.method.image, type: "image", alt: content.method.alt, width: content.method.width, height: content.method.height }), caption);
   }
   function selectCurve(id, moveFocus = false) {

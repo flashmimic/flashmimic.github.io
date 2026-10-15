@@ -16,16 +16,17 @@ window.FLASHMIMIC_CONTENT = {
       "zh": "基于 UniLab 的 G1 动作跟踪框架，通过离策略学习，在共享 GPU 上重叠执行数据采集与策略优化。了解系统架构、五动作评测，并体验实时机器人演示。"
     },
     "video": "",
-    "poster": "assets/images/walk-motion-composite.webp",
-    "width": 1402,
-    "height": 1122,
+    "poster": "assets/images/teaser-20261015.webp",
+    "pdf": "assets/downloads/teaser-20261015.pdf",
+    "width": 2200,
+    "height": 839,
     "alt": {
-      "en": "AI-assisted composite of six G1 walking poses on a shared laboratory background",
-      "zh": "统一实验室背景上的六个 G1 行走姿态，AI 辅助合成"
+      "en": "FlashMimic overview: five simulation motions, G1 dance and walking demonstrations, and dance training efficiency comparisons",
+      "zh": "FlashMimic 概览：五个仿真动作、G1 舞蹈与行走演示，以及舞蹈训练效率对比"
     },
     "caption": {
-      "en": "G1 walking · AI-assisted motion composite",
-      "zh": "G1 行走 · AI 辅助时序合成"
+      "en": "FlashMimic overview · Simulation, G1 demonstrations, and dance training efficiency",
+      "zh": "FlashMimic 项目概览 · 仿真、G1 演示与舞蹈训练效率"
     }
   },
   stats: [
@@ -107,9 +108,10 @@ window.FLASHMIMIC_CONTENT = {
     }
   ],
   method: {
-    "image": "assets/figures/system-framework.jpg",
-    "width": 1240,
-    "height": 726,
+    "image": "assets/figures/system-framework-20261015.svg",
+    "pdf": "assets/downloads/system-framework-20261015.pdf",
+    "width": 2200,
+    "height": 1279,
     "alt": {
       "en": "FlashMimic architecture: learning pipeline, collector and learner runtime, and CUDA MPS scheduling on a shared GPU.",
       "zh": "FlashMimic 系统框架：学习流程、采集与学习运行时，以及共享 GPU 上的 CUDA MPS 调度。"
@@ -329,8 +331,12 @@ window.FLASHMIMIC_CONTENT = {
       },
       "links": [
         {
-          "label": "JPG · 253 KB",
-          "url": "assets/figures/system-framework.jpg"
+          "label": "SVG",
+          "url": "assets/figures/system-framework-20261015.svg"
+        },
+        {
+          "label": "PDF",
+          "url": "assets/downloads/system-framework-20261015.pdf"
         }
       ]
     },
@@ -424,6 +430,7 @@ window.FLASHMIMIC_CONTENT = {
   citation: "", // 粘贴真实 BibTeX，支持反引号包裹的多行字符串；为空时不可复制
   // 页面固定文案与区块标题也集中在这里。
   ui: {
+    viewOriginalPdf: { en: "View original PDF ↗", zh: "查看原始 PDF ↗" },
     demoScope: {"en": "Browser policies: dance, flip, run, sprint, and walk (existing model60000 exports). The evaluation above includes carry instead of sprint and uses different checkpoints. Browser playback disables DR and observation noise; Push robot applies a user-triggered disturbance.", "zh": "浏览器策略为舞蹈、翻转、跑步、冲刺与行走，沿用现有 model60000 导出；上方评测以搬箱替代冲刺，所用权重也不同。浏览器运行关闭 DR 和观测噪声，推力扰动由用户主动触发。"},
     materialsNote: {"en": "The data ZIP is a plotting and audit subset, not a full reproduction environment. Large original archives containing weights, trajectories, and training logs are not hosted here.", "zh": "数据 ZIP 是绘图与审阅子集，不是完整复现环境；包含权重、轨迹和训练日志的大型原始归档暂未在此托管。"},
     materialsDescription: {"en": "Download the figures and a compact set of plotted data and metric evidence, dated October 15, 2026.", "zh": "下载 2026 年 10 月 15 日版图表，以及绘图数据与指标证据的轻量材料。"},
