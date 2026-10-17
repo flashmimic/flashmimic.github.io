@@ -54,7 +54,7 @@ tbody th[scope=row]{font:inherit;letter-spacing:normal;background:transparent;co
 .curve-legend li{display:flex;align-items:center;gap:8px}
 .curve-legend li:before{content:"";width:20px;height:3px;background:var(--curve-color)}
 .curve-legend .beyond{--curve-color:#267cb9}.curve-legend .holo{--curve-color:#209f7b}.curve-legend .mjlab{--curve-color:#9561b5}.curve-legend .flash{--curve-color:#e44056}
-.curve-scroll{overflow-x:auto;background:white;overscroll-behavior-x:contain}
+.curve-scroll{overflow-x:auto;overscroll-behavior-x:contain}
 .curve-scroll img{display:block;width:100%;min-width:850px;height:auto;max-width:none}
 .curve-card figcaption{padding:22px 28px;font-size:12px;line-height:1.9;color:var(--muted)}
 .curve-card figcaption p+p{margin-top:10px}
