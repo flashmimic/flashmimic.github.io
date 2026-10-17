@@ -192,7 +192,7 @@ window.FLASHMIMIC_CONTENT = {
   ],
   curves: [],
   timeTarget: {
-    "image": "assets/figures/time-target-overview.svg?v=20261017-cardbg",
+    "image": "assets/figures/time-target-overview.svg?v=20261017-textfix",
     "pdf": "assets/downloads/time-target-overview.pdf",
     "width": 1368,
     "height": 401,
@@ -300,7 +300,7 @@ window.FLASHMIMIC_CONTENT = {
       "links": [
         {
           "label": "SVG",
-          "url": "assets/figures/time-target-overview.svg?v=20261017-cardbg"
+          "url": "assets/figures/time-target-overview.svg?v=20261017-textfix"
         },
         {
           "label": "PDF",

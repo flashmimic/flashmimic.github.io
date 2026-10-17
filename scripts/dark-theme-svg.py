@@ -9,6 +9,7 @@ colors to dark-theme values. Marker white rings are kept.
 Usage: python3 scripts/dark-theme-svg.py assets/figures/time-target-overview.svg
 """
 from pathlib import Path
+import re
 import sys
 
 # Paper color -> site dark-theme color.
@@ -32,6 +33,11 @@ def main(path: Path) -> None:
     # the page yet stays readable when the SVG is opened standalone (a
     # transparent background would render white in a plain browser tab).
     svg = svg.replace("fill: #ffffff", "fill: #101828")
+    # Matplotlib omits fill on black text glyph groups (black is the SVG
+    # default), so give every unstyled text group an explicit white fill.
+    # Colored end labels carry their own style and are left untouched.
+    svg = re.sub(r'<g transform="(translate\([^)]*\)[^"]*)">',
+                 r'<g style="fill: #ffffff" transform="\1">', svg)
     for old, new in COLORS.items():
         svg = svg.replace(old, new)
     path.write_text(svg)
