@@ -28,8 +28,10 @@ COLORS = {
 
 def main(path: Path) -> None:
     svg = path.read_text()
-    # Transparent figure/axes backgrounds; white marker rings stay untouched.
-    svg = svg.replace("fill: #ffffff", "fill: none")
+    # Give the figure the site card's dark surface color so it blends into
+    # the page yet stays readable when the SVG is opened standalone (a
+    # transparent background would render white in a plain browser tab).
+    svg = svg.replace("fill: #ffffff", "fill: #101828")
     for old, new in COLORS.items():
         svg = svg.replace(old, new)
     path.write_text(svg)
