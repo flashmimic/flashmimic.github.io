@@ -111,20 +111,37 @@
     $("#curve-note").textContent = localize(curve.note);
   }
   function renderResearch() {
-    $("#curve-tabs").replaceChildren(...content.curves.map((curve, index) => {
-      const button = node("button", "", curve.title);
-      button.type = "button"; button.role = "tab";
-      button.id = `curve-tab-${curve.id}`; button.dataset.curve = curve.id;
-      button.setAttribute("aria-controls", "curve-panel");
-      button.addEventListener("click", () => selectCurve(curve.id));
-      button.addEventListener("keydown", event => {
-        const count = content.curves.length;
-        const next = event.key === "ArrowRight" ? (index + 1) % count : event.key === "ArrowLeft" ? (index - 1 + count) % count : event.key === "Home" ? 0 : event.key === "End" ? count - 1 : -1;
-        if (next >= 0) { event.preventDefault(); selectCurve(content.curves[next].id, true); }
-      });
-      return button;
-    }));
-    selectCurve(selectedCurve);
+    const curves = content.curves || [];
+    const tabs = $("#curve-tabs");
+    const legend = document.querySelector(".curve-legend");
+    if (curves.length) {
+      tabs.hidden = false;
+      if (legend) legend.hidden = false;
+      tabs.replaceChildren(...curves.map((curve, index) => {
+        const button = node("button", "", curve.title);
+        button.type = "button"; button.role = "tab";
+        button.id = `curve-tab-${curve.id}`; button.dataset.curve = curve.id;
+        button.setAttribute("aria-controls", "curve-panel");
+        button.addEventListener("click", () => selectCurve(curve.id));
+        button.addEventListener("keydown", event => {
+          const count = curves.length;
+          const next = event.key === "ArrowRight" ? (index + 1) % count : event.key === "ArrowLeft" ? (index - 1 + count) % count : event.key === "Home" ? 0 : event.key === "End" ? count - 1 : -1;
+          if (next >= 0) { event.preventDefault(); selectCurve(curves[next].id, true); }
+        });
+        return button;
+      }));
+      selectCurve(selectedCurve);
+    } else if (content.timeTarget) {
+      // Single overview figure (paper Fig. 3); it carries its own legend.
+      tabs.hidden = true;
+      if (legend) legend.hidden = true;
+      const figure = content.timeTarget;
+      const image = media({ src: figure.image, type: "image", alt: figure.alt }, true);
+      if (figure.width > 0 && figure.height > 0) { image.width = figure.width; image.height = figure.height; }
+      $("#curve-image").replaceChildren(image);
+      $("#curve-image").scrollLeft = 0;
+      $("#curve-note").textContent = localize(figure.note);
+    }
     $("#comparison-head").replaceChildren(...content.comparisonColumns.map(title => {
       const heading = node("th", "", title); heading.scope = "col"; return heading;
     }));
