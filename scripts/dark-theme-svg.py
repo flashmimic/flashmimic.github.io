@@ -13,7 +13,7 @@ import sys
 
 # Paper color -> site dark-theme color.
 COLORS = {
-    "#000000": "#e4ecf5",  # ink: text, axes, ticks, zigzag
+    "#000000": "#ffffff",  # ink: text, axes, ticks, zigzag
     "#e3e3e3": "#36404d",  # horizontal grid
     "#707070": "#9aa7b4",  # target dashed lines
     "#4230bf": "#8b82f2",  # FlashMimic indigo (line, band, marker, label)
