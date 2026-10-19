@@ -16,10 +16,10 @@ window.FLASHMIMIC_CONTENT = {
       "zh": "基于 UniLab 的 G1 动作跟踪框架，通过离策略学习，在共享 GPU 上重叠执行数据采集与策略优化。了解系统架构、五动作评测，并体验实时机器人演示。"
     },
     "video": "",
-    "poster": "assets/images/teaser-20261015.webp",
+    "poster": "assets/figures/teaser-overview.svg?v=20261019-teaser",
     "pdf": "assets/downloads/teaser-20261015.pdf",
-    "width": 2200,
-    "height": 839,
+    "width": 1080,
+    "height": 413,
     "alt": {
       "en": "FlashMimic overview: five simulation motions, G1 dance and walking demonstrations, and dance training efficiency comparisons",
       "zh": "FlashMimic 概览：五个仿真动作、G1 舞蹈与行走演示，以及舞蹈训练效率对比"
