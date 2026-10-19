@@ -38,7 +38,7 @@ tbody th[scope=row]{font:inherit;letter-spacing:normal;background:transparent;co
 /* Research figures and evidence: retain the dark page, give plots a white canvas. */
 .teaser.is-loaded img{height:auto;max-height:none}
 .teaser.is-loaded figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;padding:12px 20px;color:var(--muted);font-size:11px;line-height:1.7}
-.method-figure.is-loaded img{display:block;width:100%;height:auto}
+.method-figure.is-loaded img{display:block;width:100%;height:auto;background:#0c1321}
 .method-figure.is-loaded figcaption{font-size:13px;line-height:1.8;padding:20px 24px}
 .method-figure figcaption .text-link{display:block;margin-top:12px}
 .text-link,.figure-links a{color:var(--accent);font-size:12px;text-decoration:none}

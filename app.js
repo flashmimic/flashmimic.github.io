@@ -79,18 +79,13 @@
     const slot = $("#teaser-slot");
     slot.classList.add("is-loaded");
     slot.replaceChildren(media({ src: video || poster, poster, type: video ? "video" : "image", alt, width, height }, true));
-    if (localize(content.hero.caption) || safeUrl(content.hero.pdf)) {
-      const caption = node("figcaption", "", content.hero.caption);
-      if (safeUrl(content.hero.pdf)) caption.append(link(content.hero.pdf, t("viewOriginalPdf"), "text-link"));
-      slot.append(caption);
-    }
+    if (localize(content.hero.caption)) slot.append(node("figcaption", "", content.hero.caption));
   }
   function renderMethodMedia() {
     if (!safeUrl(content.method.image)) return;
     const slot = $("#method-slot");
     slot.classList.add("is-loaded");
     const caption = node("figcaption", "", content.method.caption || content.method.alt);
-    caption.append(link(content.method.pdf || content.method.image, t(content.method.pdf ? "viewOriginalPdf" : "methodDownload"), "text-link"));
     slot.replaceChildren(media({ src: content.method.image, type: "image", alt: content.method.alt, width: content.method.width, height: content.method.height }), caption);
   }
   function selectCurve(id, moveFocus = false) {
@@ -144,19 +139,6 @@
     }
     $("#comparison-head").replaceChildren(...content.comparisonColumns.map(title => {
       const heading = node("th", "", title); heading.scope = "col"; return heading;
-    }));
-    $("#evaluation-notes").replaceChildren(...content.evaluationNotes.map(note => {
-      const item = node("article"); item.append(node("h4", "", note.title), node("p", "", note.text)); return item;
-    }));
-    $("#materials-list").replaceChildren(...content.materials.map((material, index) => {
-      const item = node("article", "material-card");
-      item.append(node("span", "material-number", String(index + 1).padStart(2, "0")), node("h3", "", material.title), node("p", "", material.description));
-      const links = node("div", "figure-links");
-      material.links.forEach(resource => {
-        const anchor = link(resource.url, resource.label);
-        anchor.setAttribute("download", ""); links.append(anchor);
-      });
-      item.append(links); return item;
     }));
   }
   function renderGallery() {

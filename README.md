@@ -22,10 +22,9 @@
 | 概览指标 | `stats` | 填写真实数值、名称和说明 |
 | 贡献亮点 | `highlights` | 可增减条目 |
 | 方法架构图 | `method.image`、`method.caption` | `assets/images/architecture.svg` |
-| 五动作曲线及图注 | `curves` | `assets/figures/curves-*.svg`；完整主图可展开、下载 |
+| 训练效率主图与图注 | `timeTarget`、`ui` | 展示学习进展，使用总结性说明 |
 | 对比表格 | `comparisonColumns`、`comparison` | 每行 `values` 对应方法名之外的表头 |
-| 评测口径说明 | `evaluationNotes`、`ui` | 明确任务集合、成功分母和计时来源 |
-| 下载材料 | `materials` | `assets/data/`、`assets/downloads/` |
+| 结果说明 | `ui.tableNote` | 简要保留计时来源与参考数据的必要说明 |
 | 视频 / 图片展示 | `demos` | `type` 为 `video` 或 `image`；`src` 为素材路径 |
 | 交互仿真 | `demos` | `type: "interactive"`，`id` 对应 `assets/sim/manifest.json`；`poster` 为封面 |
 | 演示跳转链接 | `demos[].url` | 可选，填写后出现“打开演示”链接 |
@@ -34,7 +33,7 @@
 | 引用信息 | `citation` | 粘贴真实 BibTeX 多行字符串 |
 | 各区块标题、固定文案 | `ui` | 中英文分别填写 |
 
-已接入 2026-10-15 提供的系统框架、五动作四仓库曲线和精度证据。未提供的论文、作者与引用仍显示待发布状态，不编造相关信息。视频使用浏览器原生控件，默认不自动播放。
+展示页保留方法框架、结果对比、训练效率与机器人演示。方法图使用独立深色画布，页面不显示原始 SVG/PDF/CSV/ZIP 下载入口及详细审阅面板；原始材料仍可用于仓库内维护。未提供的论文、作者与引用仍显示待发布状态。视频使用浏览器原生控件，默认不自动播放。
 
 ### 研究材料与统计口径
 
@@ -42,7 +41,7 @@
 
 - 主表任务为 dance、walk、run、flip、carry；现有交互演示为 dance、flip、run、sprint、walk，权重也不同。
 - 完成比例以五任务为分母；误差与时间仅在各方法成功动作中等权平均（BeyondMimic 4、Holosoma 3、其余 5）。每个所选权重仅一次确定性回放，不代表多种子成功概率。
-- 主表实测误差不纳入原始报告中手动调整的扩展 dance 参考行；原始表与报告保留在注明此差异的折叠区及下载材料中。时间同时标明直接日志、硬件折算或跨动作估计，不能据此宣称等精度加速比。
+- 表中的 Extended† 为参考行，均值包含手动调整的 dance 误差，不作为实测精度比较。其余误差与时间按成功动作汇总；计时混有直接记录、折算与估计，页面以简短注释说明。
 - 曲线指标为 13 个非 torso link、积分后状态；精度表为 14 个 link、动作前状态，不混用数值。
 - `assets/downloads/research-data-20261015.zip` 是约 101 KB 的绘图与审阅子集，不包含权重、轨迹和可运行环境。原始大型 ZIP 留在网站仓库之外。
 
