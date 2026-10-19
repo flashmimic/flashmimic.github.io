@@ -108,7 +108,7 @@ window.FLASHMIMIC_CONTENT = {
     }
   ],
   method: {
-    "image": "assets/figures/method-architecture.svg",
+    "image": "assets/figures/method-architecture.svg?v=20261019-dark",
     "pdf": "assets/downloads/method-architecture.pdf",
     "width": 1819,
     "height": 805,
@@ -280,7 +280,7 @@ window.FLASHMIMIC_CONTENT = {
       "links": [
         {
           "label": "SVG",
-          "url": "assets/figures/method-architecture.svg"
+          "url": "assets/figures/method-architecture.svg?v=20261019-dark"
         },
         {
           "label": "PDF",
