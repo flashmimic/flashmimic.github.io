@@ -150,7 +150,7 @@
     const visible = content.demos.filter((demo) => filter === "all" || demo.type === filter);
     const group = demo => demo.category === "real" ? "realWorldTitle" : demo.category === "simulation" || demo.type === "interactive" ? "simulationTitle" : "mediaTitle";
     $("#demo-list").replaceChildren(...visible.flatMap((demo, index) => {
-      const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real" : ""}`);
+      const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real" : demo.category === "simulation" ? " demo-card--simulation" : ""}`);
       const preview = demo.type === "interactive" ? window.FlashMimicPlayer.preview(demo, t) : node("div", "demo-preview");
       const src = safeUrl(demo.src);
       const poster = safeUrl(demo.poster);

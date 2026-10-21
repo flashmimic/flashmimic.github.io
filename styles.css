@@ -31,7 +31,11 @@ tbody th[scope=row]{font:inherit;letter-spacing:normal;background:transparent;co
 .demo-card--real .demo-preview img{object-fit:contain}
 .demo-card--real .demo-preview video{aspect-ratio:auto;object-fit:contain}
 .demo-card--real .demo-info{height:120px}
+.demo-card--simulation{grid-column:1/-1}
+.demo-card--simulation .demo-preview{height:min(620px,52vw);background:#0c1321}
+.demo-card--simulation .demo-preview img{object-fit:contain}
 @media(max-width:760px){.demo-card--real .demo-preview{height:440px}.demo-info{height:140px}.demo-group-title{font-size:18px}}
+@media(max-width:760px){.demo-card--simulation{grid-column:auto}.demo-card--simulation .demo-preview{height:min(460px,78vw)}}
 
 /* The camera switch shares the toolbar without overflowing narrow cards. */
 .sim-toolbar{flex-wrap:wrap}
