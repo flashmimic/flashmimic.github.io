@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090e1b">
-  <meta name="description" content="FlashMimic: learning humanoid motion tracking in minutes. Explore the framework, training results, real-robot videos, and interactive G1 demonstrations.">
-  <title>FlashMimic — Project Page</title>
+  <meta name="description" content="FlashMimic trains deployable Unitree G1 whole-body motion-tracking policies in minutes with FlashSAC and concurrent collection and learning on one GPU.">
+  <title>FlashMimic: Learning Humanoid Motion Tracking in Minutes</title>
   <link rel="icon" href="assets/favicon.svg?v=fm" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=20261020-frames3">
   <script src="site-content.js?v=20261020-frames3" defer></script>
@@ -32,10 +32,10 @@
   <section class="hero" id="top" aria-labelledby="project-title">
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-content">
-      <div class="hero-eyebrow"><span class="eyebrow" data-i18n="projectLabel">RESEARCH PROJECT</span><span class="status"><i aria-hidden="true"></i><span data-i18n="projectStatus">More coming soon</span></span></div>
+      <div class="hero-eyebrow"><span class="eyebrow" data-i18n="projectLabel">RESEARCH PROJECT</span><span class="status"><i aria-hidden="true"></i><span data-i18n="projectStatus">Framework · Results · Demos</span></span></div>
       <h1 id="project-title">Flash<span>Mimic</span><span class="title-dot">.</span></h1>
-      <p class="hero-subtitle" id="project-subtitle">Project details coming soon.</p>
-      <p class="hero-description" id="project-description">Discover FlashMimic. Our research, method, and demonstrations will be shared here.</p>
+      <p class="hero-subtitle" id="project-subtitle">Learning Humanoid Motion Tracking in Minutes.</p>
+      <p class="hero-description" id="project-description">FlashMimic pairs FlashSAC with concurrent collection and learning on one GPU to train deployable whole-body tracking policies for Unitree G1.</p>
       <div class="resource-links">
         <a class="button primary" href="#demos"><span aria-hidden="true">▷</span><span data-i18n="exploreDemos">Explore demos</span><span aria-hidden="true">↗</span></a>
         <a class="button" data-resource="github" href="https://github.com/flashmimic" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1-4-2-6-2m12 4v-3.4c0-1 .1-1.5-.5-2 3.3-.4 6.7-1.6 6.7-7.2a5.6 5.6 0 0 0-1.5-3.9A5.2 5.2 0 0 0 19.6 1S18.4.6 15.5 2.5a13.5 13.5 0 0 0-7 0C5.6.6 4.4 1 4.4 1a5.2 5.2 0 0 0-.1 3.5 5.6 5.6 0 0 0-1.5 3.9c0 5.6 3.4 6.8 6.7 7.2-.6.5-.6 1.2-.5 2V21"/></svg>GitHub</a>
@@ -63,7 +63,7 @@
     </div>
   </section>
   <section class="section container" id="highlights">
-    <div class="section-heading"><p class="eyebrow" data-i18n="contributionsLabel">01 / CONTRIBUTIONS</p><h2 data-i18n="highlightsTitle">The ideas behind FlashMimic.</h2><p data-i18n="highlightsDescription">An overview of the key contributions. Full details will follow.</p></div>
+    <div class="section-heading"><p class="eyebrow" data-i18n="contributionsLabel">01 / CONTRIBUTIONS</p><h2 data-i18n="highlightsTitle">The ideas behind FlashMimic.</h2><p data-i18n="highlightsDescription">Off-policy experience reuse, a shared-GPU runtime, and motion-tracking evidence.</p></div>
     <div class="highlights-grid" id="highlight-list"></div>
   </section>
   <section class="section section-tinted" id="method"><div class="container">
@@ -71,12 +71,12 @@
     <figure class="method-figure media-slot" id="method-slot">
       <div class="figure-toolbar"><span data-i18n="methodFigure">Framework overview</span><span class="small-status" data-i18n="figurePending">Figure coming soon</span></div>
       <div class="pipeline-placeholder" aria-hidden="true"><div class="pipeline-node"><span>01</span><div class="node-icon">▥</div><strong data-i18n="input">Input</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node featured"><span>02</span><div class="node-icon"><img src="assets/logos/flashmimic.svg" width="46" height="46" alt=""></div><strong>FlashMimic</strong></div><span class="pipeline-arrow">⟶</span><div class="pipeline-node"><span>03</span><div class="node-icon">◇</div><strong data-i18n="output">Output</strong></div></div>
-      <figcaption data-i18n="methodCaption">Illustrative layout placeholder. The final architecture figure and caption will be added here.</figcaption>
+      <figcaption data-i18n="methodCaption">Learning formulation, GPU runtime, and concurrent execution from the paper.</figcaption>
     </figure>
-    <div class="method-notes"><div><span class="detail-number">A</span><div><h3 data-i18n="methodNoteOne">Method overview</h3><p data-i18n="methodNoteOneText">A concise explanation of the approach and its main components will appear here.</p></div></div><div><span class="detail-number">B</span><div><h3 data-i18n="methodNoteTwo">Implementation details</h3><p data-i18n="methodNoteTwoText">Training setup, design choices, and technical details will be shared with the release.</p></div></div></div>
+    <div class="method-notes"><div><span class="detail-number">A</span><div><h3 data-i18n="methodNoteOne">Method overview</h3><p data-i18n="methodNoteOneText">Whole-body observations, exponential tracking rewards, adaptive resets, and domain randomization are paired with FlashSAC.</p></div></div><div><span class="detail-number">B</span><div><h3 data-i18n="methodNoteTwo">Implementation details</h3><p data-i18n="methodNoteTwoText">A learner-owned actor serves rollout inference while CUDA MPS overlaps collection and optimization on the shared GPU.</p></div></div></div>
   </div></section>
   <section class="section container" id="results">
-    <div class="section-heading"><p class="eyebrow" data-i18n="resultsLabel">03 / EVALUATION</p><h2 data-i18n="resultsTitle">Results, at a glance.</h2><p data-i18n="resultsDescription">Quantitative comparisons and analysis will be available with the full project release.</p></div>
+    <div class="section-heading"><p class="eyebrow" data-i18n="resultsLabel">03 / EVALUATION</p><h2 data-i18n="resultsTitle">Five motions. One benchmark.</h2><p data-i18n="resultsDescription">FlashMimic passes all five deterministic replays at 8.68 min per motion on average; extended training lowers error further.</p></div>
     <div class="precision-heading"><h3 data-i18n="precisionTitle"></h3><p data-i18n="precisionIntro"></p></div>
     <p class="scroll-hint" data-i18n="precisionScrollHint"></p>
     <div class="comparison-wrap" role="region" aria-label="Measured checkpoint metrics / 权重实测指标" tabindex="0"><table class="precision-table"><caption data-i18n="comparisonCaption"></caption><thead><tr id="comparison-head"></tr></thead><tbody id="comparison-body"></tbody></table></div>
@@ -93,7 +93,7 @@
     </figure>
   </div></section>
   <section class="section section-tinted" id="demos"><div class="container">
-    <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="demosLabel">04 / SHOWCASE</p><h2 data-i18n="demosTitle">See FlashMimic in action.</h2></div><p data-i18n="demosDescription">A space for project videos, visualizations, and more. Stay tuned.</p></div>
+    <div class="section-heading split-heading"><div><p class="eyebrow" data-i18n="demosLabel">04 / SHOWCASE</p><h2 data-i18n="demosTitle">From simulation to G1.</h2></div><p data-i18n="demosDescription">Reference-motion tracking in simulation, real-robot dance and walking snapshots, plus interactive policies.</p></div>
     <p class="demo-scope" data-i18n="demoScope"></p>
     <div class="gallery-toolbar"><div class="gallery-filters" role="group" aria-label="Filter demonstrations"><button type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">All</button><button type="button" data-filter="interactive" aria-pressed="false" data-i18n="filterInteractive">Interactive</button><button type="button" data-filter="video" aria-pressed="false" data-i18n="filterVideos">Videos</button><button type="button" data-filter="image" aria-pressed="false" data-i18n="filterImages">Visualizations</button></div><span class="gallery-count" id="gallery-count" aria-live="polite"></span></div>
     <div class="demo-grid" id="demo-list"></div>

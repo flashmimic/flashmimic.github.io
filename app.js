@@ -148,7 +148,7 @@
       button.hidden = button.dataset.filter !== "all" && !content.demos.some(demo => demo.type === button.dataset.filter);
     });
     const visible = content.demos.filter((demo) => filter === "all" || demo.type === filter);
-    const group = demo => demo.category === "real" ? "realWorldTitle" : demo.type === "interactive" ? "simulationTitle" : "mediaTitle";
+    const group = demo => demo.category === "real" ? "realWorldTitle" : demo.category === "simulation" || demo.type === "interactive" ? "simulationTitle" : "mediaTitle";
     $("#demo-list").replaceChildren(...visible.flatMap((demo, index) => {
       const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real" : ""}`);
       const preview = demo.type === "interactive" ? window.FlashMimicPlayer.preview(demo, t) : node("div", "demo-preview");
