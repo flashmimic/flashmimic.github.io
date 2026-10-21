@@ -200,8 +200,8 @@ window.FLASHMIMIC_CONTENT = {
       "zh": "不同方法逼近动作跟踪目标的训练进展。"
     },
     "note": {
-      "en": "Dance, walk, and box carrying reach matched targets in 22.05, 11.00, and 20.31 min with FlashMimic.",
-      "zh": "FlashMimic 在舞蹈、行走与搬箱上分别于 22.05、11.00 与 20.31 分钟达到统一精度目标。"
+      "en": "Under a common 180-min budget, FlashMimic first reaches the RMSE, MPJPE, and PCK@50 mm targets in 22.05, 11.00, and 20.31 min.",
+      "zh": "在统一的 180 分钟预算下，FlashMimic 首次达到 RMSE、MPJPE 与 PCK@50 mm 目标的时间分别为 22.05、11.00 与 20.31 分钟。"
     }
   },
   comparisonColumns: [
