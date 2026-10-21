@@ -15,7 +15,7 @@ window.FLASHMIMIC_CONTENT = {
       "zh": "FlashMimic 将 FlashSAC 与单 GPU 上的采集—学习并发结合，训练可部署的 Unitree G1 全身动作跟踪策略。"
     },
     "video": "",
-    "poster": "assets/figures/teaser-overview.svg?v=20261019-teaser",
+    "poster": "assets/figures/teaser-overview.svg?v=20261022-paper-teaser",
     "width": 1080,
     "height": 413,
     "alt": {
@@ -210,28 +210,28 @@ window.FLASHMIMIC_CONTENT = {
       "zh": "方法"
     },
     {
-      "en": "Succ. (%) ↑",
-      "zh": "成功率 (%) ↑"
+      "en": "Succ. (%)",
+      "zh": "成功率 (%)"
     },
     {
-      "en": "Torso global pos. ↓\nmm",
-      "zh": "Torso 全局位置 ↓\nmm"
+      "en": "Torso global pos.\nmm",
+      "zh": "Torso 全局位置\nmm"
     },
     {
-      "en": "Body ori.-r ↓\nrad",
-      "zh": "身体姿态-r ↓\nrad"
+      "en": "Body ori.-r\nrad",
+      "zh": "身体姿态-r\nrad"
     },
     {
-      "en": "EE pos.-r ↓\nmm",
-      "zh": "末端位置-r ↓\nmm"
+      "en": "EE pos.-r\nmm",
+      "zh": "末端位置-r\nmm"
     },
     {
-      "en": "EE ori.-r ↓\nrad",
-      "zh": "末端姿态-r ↓\nrad"
+      "en": "EE ori.-r\nrad",
+      "zh": "末端姿态-r\nrad"
     },
     {
-      "en": "T₄₀₉₀ ↓\nmin",
-      "zh": "T₄₀₉₀ ↓\nmin"
+      "en": "T₄₀₉₀\nmin",
+      "zh": "T₄₀₉₀\nmin"
     }
   ],
   demos: [
