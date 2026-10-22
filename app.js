@@ -150,12 +150,12 @@
     const visible = content.demos.filter((demo) => filter === "all" || demo.type === filter);
     const group = demo => demo.category === "real" ? "realWorldTitle" : demo.category === "simulation" || demo.type === "interactive" ? "simulationTitle" : "mediaTitle";
     $("#demo-list").replaceChildren(...visible.flatMap((demo, index) => {
-      const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real" : demo.category === "simulation" ? " demo-card--simulation" : ""}`);
+      const card = node("article", `demo-card${demo.category === "real" ? " demo-card--real-strip" : demo.category === "simulation" ? " demo-card--simulation" : ""}`);
       const preview = demo.type === "interactive" ? window.FlashMimicPlayer.preview(demo, t) : node("div", "demo-preview");
       const src = safeUrl(demo.src);
       const poster = safeUrl(demo.poster);
       if (demo.type === "interactive") { /* Shared live player owns this preview. */ }
-      else if (src || poster) preview.append(media({ src: src || poster, poster, type: src ? demo.type : "image", alt: demo.title }));
+      else if (src || poster) preview.append(media({ src: src || poster, poster, type: src ? demo.type : "image", alt: demo.title, width: demo.width, height: demo.height }));
       else {
         const icon = node("span", "", demo.type === "video" ? "▷" : "◇");
         icon.setAttribute("aria-hidden", "true");
@@ -191,9 +191,6 @@
       const tr = node("tr", row.ours ? "ours" : "");
       const heading = node("th", "", row.name); heading.scope = "row"; tr.append(heading);
       tr.append(...Array.from({ length: content.comparisonColumns.length - 1 }, (_, index) => node("td", "", row.values[index] ?? "—"))); return tr;
-    }));
-    $("#news-list").replaceChildren(...[...content.news].sort((a, b) => b.date.localeCompare(a.date)).map((news) => {
-      const item = node("li"); const date = node("time", "", news.date); date.dateTime = news.date; item.append(date, node("span", "", news.text)); return item;
     }));
     const authors = $("#author-list");
     authors.replaceChildren();
