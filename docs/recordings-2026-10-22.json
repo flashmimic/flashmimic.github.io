@@ -1,0 +1,49 @@
+{
+  "engine": "MuJoCo 3.11.0",
+  "observationDim": 397,
+  "actionDim": 29,
+  "fps": 50,
+  "nq": 36,
+  "nv": 35,
+  "domainRandomization": false,
+  "observationNoise": false,
+  "manualPush": false,
+  "robotBundleSha256": "469d5cc16ca67842ccec8cc933e0701ca85839a3fdb08d36366a9d5cf7492c01",
+  "demos": {
+    "G08_fightAndSports_10s": {
+      "frames": 499,
+      "duration": 9.98,
+      "stride": 71,
+      "policySha256": "0bf0ea800324d021b23bf1a72bb6ca5672bca38f365992c2cf6dcc8e7f392e07",
+      "resets": 0
+    }
+  },
+  "rendering": {
+    "width": 1280,
+    "height": 720,
+    "codec": "H.264",
+    "camera": "root XY follow; fixed world Z and heading",
+    "cameraOffset": [
+      2.4,
+      -2.9,
+      1.65
+    ],
+    "targetZ": 0.65,
+    "fovy": 42,
+    "renderer": "MuJoCo offscreen (visual changes only)",
+    "floor": "Original Motphys-logo checker texture; reference material scale and tint",
+    "floorTexrepeat": [
+      0.4,
+      0.4
+    ],
+    "floorMaterialRGBA": [
+      0.7,
+      0.7,
+      0.7,
+      1
+    ],
+    "floorTexture": "assets/textures/motphys-ground.png",
+    "floorTextureSha256": "d5f228fd89bfe1acdc91d558e92f0ec3103cc343c7e75a14e4a38f1a6d6afc9c",
+    "cameraFollowOffsetMaxErrorMeters": 1.1919697229245685e-07
+  }
+}

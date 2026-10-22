@@ -8,10 +8,12 @@ import * as ort from "../assets/vendor/onnxruntime-web/ort.wasm.min.mjs";
 import { Controller } from "../simulation/controller.mjs";
 
 const output = process.argv[2];
-if (!output) throw new Error("Usage: node scripts/export-recording-states.mjs OUTPUT_DIRECTORY");
+if (!output) throw new Error("Usage: node scripts/export-recording-states.mjs OUTPUT_DIRECTORY [DEMO_ID ...]");
 await mkdir(output, { recursive: true });
 const base = new URL("../assets/sim/", import.meta.url);
 const config = JSON.parse(await readFile(new URL("manifest.json", base)));
+const selected = process.argv.slice(3);
+for (const id of selected) if (!config.demos[id]) throw new Error(`Unknown demo: ${id}`);
 const mj = await loadMujoco({ wasmBinary: await readFile(new URL("../assets/vendor/mujoco/mujoco.wasm", import.meta.url)) });
 if (mj.mj_versionString() !== "3.11.0") throw new Error("MuJoCo version mismatch");
 const packed = gunzipSync(await readFile(new URL(config.robotBundle.path, base)));
@@ -32,6 +34,7 @@ const metadata = { engine: config.engine, observationDim: config.observationDim,
   domainRandomization: false, observationNoise: false, manualPush: false,
   robotBundleSha256: config.robotBundle.sha256, demos: {} };
 for (const [id, spec] of Object.entries(config.demos)) {
+  if (selected.length && !selected.includes(id)) continue;
   const motion = await readFile(new URL(spec.motion, base));
   controller.setMotion(new Float32Array(motion.buffer.slice(motion.byteOffset, motion.byteOffset + motion.byteLength)), spec);
   const policy = await readFile(new URL(spec.policy, base));

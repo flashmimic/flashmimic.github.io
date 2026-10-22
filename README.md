@@ -3,6 +3,7 @@
 参考 [UniLab](https://unilabsim.github.io/) 的深色科研项目长页排版，展示 FlashMimic 的系统框架、实验结果与机器人演示。纯 HTML / CSS / JavaScript，无需安装依赖或构建，兼容 GitHub Pages。
 
 当前 `main` 已接入 FlashMimic 项目 `logs/g1_batch_v1` 的五个 G1 策略，
+以及 `g1_fightAndSports_10s_20261022_60k` 的格斗与运动策略，共六个交互演示。
 在 `#demos` 中点击卡片即可加载浏览器物理仿真，支持旋转、缩放、暂停、重置与扰动。
 实现方法、模型更新和验证见 [交互 demo 文档](docs/WEB_DEMOS.md)。npm / Python 只用于更新导出素材，预览和部署不需要构建。
 
@@ -38,7 +39,7 @@
 
 运行 `python3 scripts/import-research-materials.py /path/to/source-materials` 可从本次原始 JPG/SVG/PDF/Markdown 及两个 ZIP 更新图表和轻量数据包。脚本仅复制指定文件、按原始 SVG 裁出单动作视图，并从 `SELECTED_CHECKPOINTS.json` 的未取整实测数据重算四方法均值。网页表格文案位于 `site-content.js`，数据更新后需同步核对。
 
-- 主表任务为 dance、walk、run、flip、carry；现有交互演示为 dance、flip、run、sprint、walk，权重也不同。
+- 主表任务为 dance、walk、run、flip、carry；现有交互演示为 dance、flip、run、sprint、walk、fight & sports，权重也不同。
 - 完成比例以五任务为分母；误差与时间仅在各方法成功动作中等权平均（BeyondMimic 4、Holosoma 3、其余 5）。每个所选权重仅一次确定性回放，不代表多种子成功概率。
 - 表中的 Extended† 为参考行，均值包含手动调整的 dance 误差，不作为实测精度比较。其余误差与时间按成功动作汇总；计时混有直接记录、折算与估计，页面以简短注释说明。
 - 曲线指标为 13 个非 torso link、积分后状态；精度表为 14 个 link、动作前状态，不混用数值。

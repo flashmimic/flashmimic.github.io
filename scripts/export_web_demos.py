@@ -45,28 +45,54 @@ def require(condition: bool, message: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, required=True)
-    parser.add_argument("--runs", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--runs", type=Path, help="Rebuild the original five-run batch")
+    source.add_argument("--run", type=Path, help="Add/update one run without replacing existing demos or the robot bundle")
+    parser.add_argument("--motion-file", type=Path, help="Reference NPZ for --run; defaults to the configured motion filename in project assets")
+    parser.add_argument("--checkpoint", type=Path, help="Checkpoint for --run; defaults to the latest model_*.pt in that run")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1] / "assets/sim")
     args = parser.parse_args()
+    if not args.run and (args.motion_file or args.checkpoint):
+        parser.error("--motion-file and --checkpoint require --run")
+    if args.run:
+        config_path = args.run / "resolved_config.yaml"
+        cfg = yaml.safe_load(config_path.read_text())
+        jobs = {args.run.name: Path(cfg["env"]["commands"]["motion"]["params"]["motion_file"]).name}
+    else:
+        jobs = MOTIONS
+    for job, motion_name in jobs.items():
+        run = args.run or args.runs / job
+        checkpoints = [args.checkpoint] if args.checkpoint else list(run.glob("model_*.pt"))
+        require(checkpoints and all(p.is_file() for p in checkpoints), f"{job}: no model checkpoint found; provide --checkpoint or download model_*.pt into the run.")
+        motion_file = args.motion_file or args.project / "src/flashmimic/assets/motions/g1" / motion_name
+        require(motion_file.is_file(), f"Motion file not found: {motion_file}")
+        require(motion_file.name == motion_name, f"{job}: reference filename differs from training config.")
     assets = args.project / "src/flashmimic/assets"
     robot = assets / "robots/g1"
-    model = mujoco.MjModel.from_xml_path(str(robot / "scene_flat.xml"))
+    manifest_path = args.output / "manifest.json"
+    existing = json.loads(manifest_path.read_text()) if args.run and manifest_path.exists() else None
+    model = mujoco.MjModel.from_xml_path(str(args.output / existing["scene"] if existing else robot / "scene_flat.xml"))
     require(mujoco.__version__ == "3.11.0", "Use MuJoCo 3.11.0 to match the pinned browser runtime.")
     require((model.nq, model.nv, model.nu) == (36, 35, 29), "Expected the G1 29-DOF model.")
     args.output.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(robot, args.output / "robot", dirs_exist_ok=True)
+    if not existing:
+        shutil.copytree(robot, args.output / "robot", dirs_exist_ok=True)
     robot_files = sorted(str(p.relative_to(args.output)) for p in (args.output / "robot").rglob("*") if p.is_file())
     body_names = [model.body(i).name for i in range(model.nbody)]
-    manifest = {
+    manifest = existing or {
         "schemaVersion": 1, "engine": "MuJoCo 3.11.0", "algorithm": "FlashSAC",
         "observationDim": 397, "actionDim": 29, "futureSteps": FUTURE,
         "scene": "robot/scene_flat.xml", "robotFiles": robot_files,
         "rootBody": "pelvis", "anchorBody": "torso_link", "demos": {},
     }
+    require(manifest["schemaVersion"] == 1 and manifest["engine"] == "MuJoCo 3.11.0"
+            and manifest["algorithm"] == "FlashSAC" and manifest["observationDim"] == 397
+            and manifest["actionDim"] == 29 and manifest["futureSteps"] == FUTURE,
+            "Existing manifest is incompatible with this exporter.")
     common = None
     torch.set_num_threads(1)
-    for job, motion_name in MOTIONS.items():
-        run = args.runs / job
+    for job, motion_name in jobs.items():
+        run = args.run or args.runs / job
         config_path = run / "resolved_config.yaml"
         cfg = yaml.safe_load(config_path.read_text())
         env, algo = cfg["env"], cfg["algo"]
@@ -107,12 +133,15 @@ def main() -> None:
         require(abs(signature["ctrlDt"] - 0.02) < 1e-12 and abs(signature["simDt"] * 3 - 0.02) < 1e-12,
                 "Expected 150 Hz physics / 50 Hz control.")
         if common is None:
+            if existing:
+                require(signature == {key: manifest[key] for key in signature}, "Run differs from the existing website control profile.")
+            else:
+                manifest.update(signature)
             common = signature
-            manifest.update(signature)
         require(signature == common, "All cards must use the same control profile.")
         tracked_ids = [body_names.index(name) for name in params["body_names"]]
         checkpoints = sorted(run.glob("model_*.pt"), key=lambda p: int(p.stem.split("_")[-1]))
-        checkpoint = checkpoints[-1]
+        checkpoint = args.checkpoint or checkpoints[-1]
         state = torch.load(checkpoint, map_location="cpu", weights_only=True)
         actor = FlashSACActor(num_blocks=algo["algo_params"]["actor_num_blocks"], input_dim=397,
                               hidden_dim=algo["actor_hidden_dim"], action_dim=29, device="cpu")
@@ -138,7 +167,7 @@ def main() -> None:
                 actual = session.run(None, {"obs": x})[0]
                 max_error = max(max_error, float(np.max(np.abs(expected - actual))))
         require(max_error < 1e-4, f"{job}: ONNX diverges from PyTorch ({max_error}).")
-        motion_file = assets / "motions/g1" / motion_name
+        motion_file = args.motion_file or assets / "motions/g1" / motion_name
         with np.load(motion_file) as m:
             require(int(m["fps"].item()) == 50, "Reference motion must have 50 FPS.")
             fields = {
@@ -170,7 +199,7 @@ def main() -> None:
         # Website recordings are rendered separately from these exported policies.
         # Do not overwrite no-DR camera-follow videos with training playbacks.
         print(f"{job}: ONNX OK max_error={max_error:.2e}; {frames} motion frames", flush=True)
-    (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
 
 
 if __name__ == "__main__":

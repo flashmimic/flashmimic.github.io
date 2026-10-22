@@ -11,6 +11,8 @@ import { Controller } from "../simulation/controller.mjs";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const base = path.join(root, "assets/sim");
 const config = JSON.parse(await readFile(path.join(base, "manifest.json")));
+const selected = process.argv.slice(3);
+for (const id of selected) if (!config.demos[id]) throw new Error(`Unknown demo: ${id}`);
 const mj = await loadMujoco({ wasmBinary: await readFile(path.join(root, "assets/vendor/mujoco/mujoco.wasm")) });
 mj.FS.mkdirTree("/flashmimic");
 const packedRobot = config.robotBundle ? gunzipSync(await readFile(new URL(config.robotBundle.path, new URL("../assets/sim/", import.meta.url)))) : null;
@@ -32,6 +34,7 @@ ort.env.wasm.proxy = false;
 ort.env.wasm.wasmPaths = new URL("../assets/vendor/onnxruntime-web/", import.meta.url).href;
 const results = [];
 for (const [id, spec] of Object.entries(config.demos)) {
+  if (selected.length && !selected.includes(id)) continue;
   const buffer = await readFile(path.join(base, spec.motion));
   const motion = new Float32Array(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength));
   controller.setMotion(motion, spec);
@@ -68,3 +71,6 @@ for (const [id, spec] of Object.entries(config.demos)) {
 data.delete(); model.delete();
 const out = process.argv[2];
 if (out) { await mkdir(path.dirname(out), { recursive: true }); await writeFile(out, JSON.stringify(results, null, 2) + "\n"); }
+if (results.some(row => row.firstFailureFrame !== null || row.completedClips < 1)) {
+  throw new Error("A policy failed to complete its reference motion; see validation results above.");
+}

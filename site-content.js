@@ -71,8 +71,8 @@ window.FLASHMIMIC_CONTENT = {
         "zh": "浏览器演示"
       },
       "note": {
-        "en": "Five trained policies",
-        "zh": "五个训练策略"
+        "en": "Six trained policies",
+        "zh": "六个训练策略"
       }
     }
   ],
@@ -241,6 +241,7 @@ window.FLASHMIMIC_CONTENT = {
     { id: "G03_run", type: "interactive", title: { en: "G1 · Run", zh: "G1 · 跑步" }, description: { en: "Whole-body coordination for a running gait.", zh: "通过全身协调，跟踪跑步步态。" }, poster: "assets/images/G03_run.jpg", recording: "assets/videos/G03_run.mp4?v=nodr-follow-motphys-20261015" },
     { id: "G04_sprint", type: "interactive", title: { en: "G1 · Sprint", zh: "G1 · 冲刺" }, description: { en: "Track a fast-paced sprinting reference.", zh: "跟踪快节奏的冲刺参考动作。" }, poster: "assets/images/G04_sprint.jpg", recording: "assets/videos/G04_sprint.mp4?v=nodr-follow-motphys-20261015" },
     { id: "G05_walk", type: "interactive", title: { en: "G1 · Walk", zh: "G1 · 行走" }, description: { en: "Track the reference walking motion.", zh: "跟踪参考行走动作。" }, poster: "assets/images/G05_walk.jpg", recording: "assets/videos/G05_walk.mp4?v=nodr-follow-motphys-20261015" },
+    { id: "G08_fightAndSports_10s", type: "interactive", title: { en: "G1 · Fight & Sports", zh: "G1 · 格斗与运动" }, description: { en: "Track a coordinated sequence of fighting and sports motions.", zh: "通过全身协调，跟踪格斗与运动组合动作。" }, poster: "assets/images/G08_fightAndSports_10s.jpg", recording: "assets/videos/G08_fightAndSports_10s.mp4?v=nodr-follow-motphys-20261022" },
     { id: "G1_real_motion_strip", category: "real", type: "image", width: 2856, height: 637, title: { en: "G1 · Real-world Dance & Walk", zh: "G1 · 真机舞蹈与行走" }, description: { en: "Dance and walking motion tracking on the physical G1 robot — four frames from each run.", zh: "G1 机器人真机舞蹈与行走动作跟踪 —— 每次运行的四帧快照。" }, src: "assets/images/G1_real_motion_strip.webp?v=20261022-tight", poster: "" }
   ],
   authors: [], // 例：[{ name: "姓名", affiliation: "单位", url: "https://..." }]

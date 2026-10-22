@@ -328,6 +328,60 @@
         "onnxMaxAbsError": 0.0000021457672119140625,
         "onnxTestInputs": 32
       }
+    },
+    "G08_fightAndSports_10s": {
+      "policy": "G08_fightAndSports_10s/policy.onnx",
+      "motion": "G08_fightAndSports_10s/motion.bin",
+      "frames": 500,
+      "fps": 50,
+      "stride": 169,
+      "layout": {
+        "jointPosition": {
+          "offset": 0,
+          "width": 29
+        },
+        "jointVelocity": {
+          "offset": 29,
+          "width": 29
+        },
+        "rootPosition": {
+          "offset": 58,
+          "width": 3
+        },
+        "rootQuaternion": {
+          "offset": 61,
+          "width": 4
+        },
+        "rootLinearVelocity": {
+          "offset": 65,
+          "width": 3
+        },
+        "rootAngularVelocity": {
+          "offset": 68,
+          "width": 3
+        },
+        "trackedPosition": {
+          "offset": 71,
+          "width": 42
+        },
+        "trackedQuaternion": {
+          "offset": 113,
+          "width": 56
+        }
+      },
+      "source": {
+        "run": "G08_fightAndSports_10s",
+        "checkpoint": "model_60000.pt",
+        "motion": "fightAndSports1_subject4_5_15s_flashmimic.npz",
+        "checkpointSha256": "47dbfe9626a1db586c38f2f99a9f0229da71b4a17a2774ba531b8157afda1556",
+        "motionSha256": "010fe987a591f3aa66c8b2f55a94cf96556b345eba4afca3a30946b8b5e7408a",
+        "configSha256": "f965a910eb017859ac7c71dfb494815b3e922e0fce165bab5c90cfb7ac67482a",
+        "policySha256": "0bf0ea800324d021b23bf1a72bb6ca5672bca38f365992c2cf6dcc8e7f392e07"
+      },
+      "validation": {
+        "onnxMaxAbsError": 0.0000016391277313232422,
+        "onnxTestInputs": 32
+      }
     }
   },
   "simDt": 0.006666666666666667,

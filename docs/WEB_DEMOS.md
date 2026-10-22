@@ -1,7 +1,9 @@
 # FlashMimic 浏览器交互仿真
 
 网站在 `main` 分支开发，服务于旁边的 `FlashMimic` 项目。当前接入
-`logs/g1_batch_v1` 的五个独立 FlashSAC 策略：舞蹈、翻转、跑步、冲刺、行走。
+`logs/g1_batch_v1` 的五个独立 FlashSAC 策略：舞蹈、翻转、跑步、冲刺、行走，
+以及 `logs/g1_fightAndSports_10s_20261022_60k/G08_fightAndSports_10s`
+的格斗与运动策略（`model_60000.pt`、500 帧 / 50 FPS），共六个交互演示。
 
 ## 实现方法
 
@@ -100,15 +102,36 @@ npm run prepare:robot
 若换了训练结构或控制配置，先更新适配器，再导出；不要跳过这些检查。
 `manifest.json` 记录模型、配置和动作文件的 SHA-256，以及 ONNX 数值误差。
 
-导出产物直接位于 `assets/sim/`。五个“观看录制视频”链接使用独立渲染的
-无 DR、相机跟踪视频，位于 `assets/videos/G01_dance.mp4` 至 `G05_walk.mp4`。
+新增单个任务使用 `--run`，保留既有五个策略、共享机器人文件与压缩包；
+新任务的控制配置必须与当前清单一致。参考动作位于日志输入目录时显式提供
+`--motion-file`；权重不在 run 内时可用 `--checkpoint` 指定。
+
+```bash
+/home/pc825/ws/lzy/FlashMimic/.venv/bin/python scripts/export_web_demos.py \
+  --project /home/pc825/ws/lzy/FlashMimic \
+  --run /home/pc825/ws/lzy/FlashMimic/logs/g1_fightAndSports_10s_20261022_60k/G08_fightAndSports_10s \
+  --motion-file /home/pc825/ws/lzy/FlashMimic/logs/g1_fightAndSports_10s_20261022_60k/inputs/fightAndSports1_subject4_5_15s_flashmimic.npz
+
+node scripts/validate-sim.mjs /tmp/flashmimic-fight-validation.json G08_fightAndSports_10s
+/home/pc825/ws/lzy/FlashMimic/.venv/bin/python scripts/render-recordings.py \
+  --demo G08_fightAndSports_10s --metadata docs/recordings-2026-10-22.json
+```
+
+2026-10-22 验证：新策略 PyTorch / ONNX 最大绝对误差 `1.64e-6`，
+浏览器同源 WASM 控制器完整运行 500 帧动作，未触发跟踪失败，动作延迟误差为零。
+录制含 499 帧（9.98 秒），停止在循环重置之前，与原有视频统一使用无 DR、
+1280×720 / 50 FPS、相机跟随和 Motphys 标识地板。
+
+导出产物直接位于 `assets/sim/`。六个“观看录制视频”链接使用独立渲染的
+无 DR、相机跟踪视频，位于 `assets/videos/G01_dance.mp4` 至 `G05_walk.mp4`
+及 `G08_fightAndSports_10s.mp4`。
 导出模型时不会用训练日志中的 `play_video.mp4` 覆盖这些视频。缩略图位于 `assets/images/`。
 `site-content.js` 的 demo `id` 必须对应 manifest 的任务 ID。
 
-五个仿真封面统一取自当前网页 MuJoCo / Three.js 仿真画布，使用深色网格地面、
+六个仿真封面统一取自当前网页 MuJoCo / Three.js 仿真画布，使用深色网格地面、
 同一相机方向和距离、800×500 JPEG。路径为 `assets/images/G01_dance.jpg` 至
-`G05_walk.jpg`，由 `site-content.js` 的 `poster` 字段独立配置。
-取图时只截画布，不包含按钮、状态和推力箭头。当前代表帧依次为 100、60、75、35、50
+`G05_walk.jpg` 及 `G08_fightAndSports_10s.jpg`，由 `site-content.js` 的 `poster` 字段独立配置。
+取图时只截画布，不包含按钮、状态和推力箭头。当前代表帧依次为 100、60、75、35、50、75
 （每秒 50 帧），来自各自策略运行后的真实状态。
 
 更新封面时保持 800×500 画布、相机相对根位置 `(2.4, -2.9, 1.65)`、
@@ -156,15 +179,14 @@ MuJoCo 使用单线程版本，ONNX 设置 `numThreads=1`，不需要 COOP / COE
 
 ## 展示排版与真机视频
 
-演示区先展示真机舞蹈与行走，再展示五个交互仿真。桌面端采用两列等宽卡片，
+演示区先展示仿真跟踪图与六个交互仿真，再展示真机舞蹈与行走合图。桌面端采用两列等宽卡片，
 仿真预览区固定为 340 px 高，卡片信息区固定为 150 px 高；启动仿真不跨列或放大。
 宽度不超过 760 px 时改为单列，仿真预览区为 300 px 高，避免手机横向溢出。
 
-真机视频为 `assets/videos/G1_dance_real.mp4` 和 `G1_walk_real.mp4`，
-在 `site-content.js` 中配置为 `type: "video", category: "real"`。
-使用原生播放控件，不自动播放；竖屏画面完整显示在固定高度区域中，不裁切。
-封面位于 `assets/images/G1_dance_real.webp` 和 `G1_walk_real.webp`。
-播放另一个视频或切换分类时，会暂停原来的视频。
+真机展示为 `assets/images/G1_real_motion_strip.webp`，
+在 `site-content.js` 中配置为 `type: "image", category: "real"`。
+舞蹈与行走各取四帧组成横向合图，桌面端跨两列展示；手机端保留横向滚动。
+原始真机视频保留在 `assets/videos/G1_dance_real.mp4` 和 `G1_walk_real.mp4`。
 
 ## 重新渲染录制视频
 
@@ -178,7 +200,7 @@ ONNX actor、一步动作延迟及物理子步，逐帧导出真实闭环状态�
 不启用 DR、观测噪声、随机初态或 Push；不是直接播放参考轨迹。
 
 Python 只把状态交给原生 MuJoCo 离屏渲染，不另行运行物理或推理。
-渲染仅调整背景、地板纹理、灯光和相机。五段视频统一使用
+渲染仅调整背景、地板纹理、灯光和相机。六段视频统一使用
 `assets/textures/motphys-ground.png` 带 Motphys Logo 的原始白灰棋盘纹理。
 纹理来自 UniLab 参考站，来源见 `assets/textures/README.md`；贴图重复为 `(0.4, 0.4)`，
 材质颜色为 `(0.7, 0.7, 0.7, 1)`，与参考站 `common/flat_ground.xml` 一致。

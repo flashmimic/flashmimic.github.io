@@ -64,10 +64,15 @@ def main():
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--output", type=Path, default=ROOT / "assets/videos")
     parser.add_argument("--preview", type=Path, help="Render only one JPEG for visual inspection")
+    parser.add_argument("--demo", action="append", default=[], help="Render only this demo (repeatable); defaults to all")
+    parser.add_argument("--metadata", type=Path, default=ROOT / "docs/recordings-2026-10-15.json")
     args = parser.parse_args()
     if mujoco.__version__ != "3.11.0":
         raise RuntimeError("Use the FlashMimic Python environment with MuJoCo 3.11.0")
     config = json.loads((ROOT / "assets/sim/manifest.json").read_text())
+    for id in args.demo:
+        if id not in config["demos"]:
+            parser.error(f"Unknown demo: {id}")
     model = recording_model(config)
     visual_setup(model, args.width, args.height)
     data = mujoco.MjData(model)
@@ -83,7 +88,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     try:
         with tempfile.TemporaryDirectory(prefix="flashmimic-recordings-") as tmp:
-            subprocess.run(["node", str(ROOT / "scripts/export-recording-states.mjs"), tmp], check=True)
+            subprocess.run(["node", str(ROOT / "scripts/export-recording-states.mjs"), tmp, *args.demo], check=True)
             metadata = json.loads((Path(tmp) / "recordings.json").read_text())
             camera_error = 0.
             for id, spec in metadata["demos"].items():
@@ -140,7 +145,7 @@ def main():
                 "floorTexture": str(FLOOR_TEXTURE.relative_to(ROOT)),
                 "floorTextureSha256": hashlib.sha256(FLOOR_TEXTURE.read_bytes()).hexdigest(),
                 "cameraFollowOffsetMaxErrorMeters": camera_error}
-            (ROOT / "docs/recordings-2026-10-15.json").write_text(json.dumps(metadata, indent=2) + "\n")
+            args.metadata.write_text(json.dumps(metadata, indent=2) + "\n")
     finally:
         renderer.close()
 
