@@ -109,16 +109,16 @@ window.FLASHMIMIC_CONTENT = {
     }
   ],
   method: {
-    "image": "assets/figures/method-architecture.svg?v=20261022-system",
-    "width": 1820,
-    "height": 806,
+    "image": "assets/figures/method-architecture.svg?v=20261019-showcase",
+    "width": 1819,
+    "height": 805,
     "alt": {
-      "en": "FlashMimic learning formulation, GPU runtime, and concurrent execution with CUDA MPS.",
-      "zh": "FlashMimic 的学习构成、GPU 运行时，以及基于 CUDA MPS 的并发执行。"
+      "en": "FlashMimic co-design: whole-body tracking, FlashSAC replay, and concurrent collector–learner execution on one GPU.",
+      "zh": "FlashMimic 协同设计：全身动作跟踪、FlashSAC 经验复用，以及单 GPU 上的采集器—学习器并发执行。"
     },
     "caption": {
-      "en": "Learning formulation, GPU runtime, and concurrent execution: task ingredients with FlashSAC reuse, a collector–learner runtime on one shared GPU, and CUDA MPS overlap.",
-      "zh": "学习构成、GPU 运行时与并发执行：含 FlashSAC 复用的任务构成、共享 GPU 上的采集器—学习器运行时，以及 CUDA MPS 并发重叠。"
+      "en": "Reference windows and rewards drive FlashSAC; CUDA MPS overlaps physics collection with policy updates on one GPU.",
+      "zh": "参考窗口与奖励驱动 FlashSAC，CUDA MPS 让物理采集与策略更新在单 GPU 上重叠执行。"
     }
   },
   results: [],
@@ -235,13 +235,37 @@ window.FLASHMIMIC_CONTENT = {
     }
   ],
   demos: [
-    { id: "simulation_motion_tracking", category: "simulation", type: "image", width: 3840, height: 960, title: { en: "Simulation · Motion Tracking", zh: "仿真 · 动作跟踪" }, description: { en: "Each pair shows the reference replay on the left and the FlashMimic policy rollout at the same reference frame on the right, providing a qualitative view of tracking in simulation.", zh: "每组相邻画面左侧为参考动作回放，右侧为 FlashMimic 在相同参考帧的策略执行结果，用于直观展示仿真中的动作跟踪效果。" }, src: "assets/images/simulation_motion_tracking_compact.webp?v=20261022-compact", poster: "" },
+    { id: "simulation_motion_tracking", category: "simulation", type: "image", title: { en: "Simulation · Motion Tracking", zh: "仿真 · 动作跟踪" }, description: { en: "Each pair shows the reference replay on the left and the FlashMimic policy rollout at the same reference frame on the right, providing a qualitative view of tracking in simulation.", zh: "每组相邻画面左侧为参考动作回放，右侧为 FlashMimic 在相同参考帧的策略执行结果，用于直观展示仿真中的动作跟踪效果。" }, src: "assets/images/simulation_motion_tracking.png?v=20261022-sim-tracking", poster: "" },
+    { id: "G1_dance_real", category: "real", type: "image", title: { en: "G1 · Real-world Dance", zh: "G1 · 真机舞蹈" }, description: { en: "Dance motion tracking on the physical G1 robot — four frames from one run.", zh: "G1 机器人真机舞蹈动作跟踪 —— 单次运行的四帧快照。" }, src: "assets/images/G1_dance_real_frames.webp?v=20261020-frames3", poster: "" },
+    { id: "G1_walk_real", category: "real", type: "image", title: { en: "G1 · Real-world Walk", zh: "G1 · 真机行走" }, description: { en: "Walking motion tracking on the physical G1 robot — four frames from one run.", zh: "G1 机器人真机行走动作跟踪 —— 单次运行的四帧快照。" }, src: "assets/images/G1_walk_real_frames.webp?v=20261020-frames3", poster: "" },
     { id: "G01_dance", type: "interactive", title: { en: "G1 · Dance", zh: "G1 · 舞蹈" }, description: { en: "Coordinated full-body dance motion tracking.", zh: "协调全身关节，跟踪舞蹈参考动作。" }, poster: "assets/images/G01_dance.jpg", recording: "assets/videos/G01_dance.mp4?v=nodr-follow-motphys-20261015" },
     { id: "G02_flip", type: "interactive", title: { en: "G1 · Flip", zh: "G1 · 翻转" }, description: { en: "A dynamic 360° flip reference motion.", zh: "跟踪动态 360° 翻转参考动作。" }, poster: "assets/images/G02_flip.jpg", recording: "assets/videos/G02_flip.mp4?v=nodr-follow-motphys-20261015" },
     { id: "G03_run", type: "interactive", title: { en: "G1 · Run", zh: "G1 · 跑步" }, description: { en: "Whole-body coordination for a running gait.", zh: "通过全身协调，跟踪跑步步态。" }, poster: "assets/images/G03_run.jpg", recording: "assets/videos/G03_run.mp4?v=nodr-follow-motphys-20261015" },
     { id: "G04_sprint", type: "interactive", title: { en: "G1 · Sprint", zh: "G1 · 冲刺" }, description: { en: "Track a fast-paced sprinting reference.", zh: "跟踪快节奏的冲刺参考动作。" }, poster: "assets/images/G04_sprint.jpg", recording: "assets/videos/G04_sprint.mp4?v=nodr-follow-motphys-20261015" },
-    { id: "G05_walk", type: "interactive", title: { en: "G1 · Walk", zh: "G1 · 行走" }, description: { en: "Track the reference walking motion.", zh: "跟踪参考行走动作。" }, poster: "assets/images/G05_walk.jpg", recording: "assets/videos/G05_walk.mp4?v=nodr-follow-motphys-20261015" },
-    { id: "G1_real_motion_strip", category: "real", type: "image", width: 2880, height: 640, title: { en: "G1 · Real-world Dance & Walk", zh: "G1 · 真机舞蹈与行走" }, description: { en: "Dance and walking motion-tracking snapshots on the physical G1 robot.", zh: "G1 机器人真机舞蹈与行走动作跟踪快照。" }, src: "assets/images/G1_real_motion_strip.webp?v=20261022-compact", poster: "" }
+    { id: "G05_walk", type: "interactive", title: { en: "G1 · Walk", zh: "G1 · 行走" }, description: { en: "Track the reference walking motion.", zh: "跟踪参考行走动作。" }, poster: "assets/images/G05_walk.jpg", recording: "assets/videos/G05_walk.mp4?v=nodr-follow-motphys-20261015" }
+  ],
+  news: [
+    {
+      "date": "2026-10-17",
+      "text": {
+        "en": "New training-efficiency comparisons and an updated framework overview.",
+        "zh": "更新训练效率对比与方法框架。"
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "text": {
+        "en": "System framework and motion-tracking results are now available.",
+        "zh": "上线系统框架与动作跟踪结果。"
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "text": {
+        "en": "The FlashMimic project website is online. More details coming soon.",
+        "zh": "FlashMimic 项目主页已上线，更多内容即将公布。"
+      }
+    }
   ],
   authors: [], // 例：[{ name: "姓名", affiliation: "单位", url: "https://..." }]
   affiliations: [], // 例：[{ name: "单位名称", logo: "assets/logos/institution.svg", url: "https://..." }]
@@ -298,7 +322,7 @@ window.FLASHMIMIC_CONTENT = {
     methodNoteOne: {"en": "Task and learner", "zh": "任务与学习器"}, methodNoteOneText: {"en": "Whole-body observations, exponential tracking rewards, adaptive resets, and domain randomization are paired with FlashSAC.", "zh": "全身观测、指数跟踪奖励、自适应重置与域随机化和 FlashSAC 结合。"}, methodNoteTwo: {"en": "Concurrent runtime", "zh": "并发运行时"}, methodNoteTwoText: {"en": "A learner-owned actor serves rollout inference while CUDA MPS overlaps collection and optimization on the shared GPU.", "zh": "学习器持有的 actor 服务 rollout 推理，CUDA MPS 让采集与优化在共享 GPU 上重叠。"},
     resultsLabel: { en: "03 / EVALUATION", zh: "03 / 实验评估" }, resultsTitle: { en: "Five motions. One benchmark.", zh: "五个动作，一套基准。" }, resultsDescription: {"en": "FlashMimic passes all five deterministic replays at 8.68 min per motion on average; extended training lowers error further.", "zh": "FlashMimic 平均每个动作 8.68 分钟通过五个确定性回放，延长训练可进一步降低误差。"}, dataPending: { en: "Results", zh: "实验结果" }, comparisonCaption: {"en": "Tracking accuracy and training budget on five G1 motions", "zh": "G1 五动作的跟踪精度与训练预算"}, tableMethod: { en: "Method", zh: "方法" }, metricOne: { en: "Metric 01", zh: "指标 01" }, metricTwo: { en: "Metric 02", zh: "指标 02" }, metricThree: { en: "Metric 03", zh: "指标 03" }, tableNote: {"en": "Success is the fraction of motions passed by one deterministic replay. Errors and budgets are conditional means over passed motions; Extended† uses selected extended-training checkpoints.", "zh": "成功率为一次确定性回放通过的动作比例。误差与预算仅统计通过动作的均值；Extended† 使用延长训练后筛选的检查点。"},
     demosLabel: {"en": "05 / SHOWCASE", "zh": "05 / 项目展示"}, demosTitle: { en: "From simulation to G1.", zh: "从仿真到 G1。" }, demosDescription: {"en": "Reference-motion tracking in simulation, real-robot dance and walking snapshots, plus interactive policies.", "zh": "仿真参考动作跟踪、真实 G1 舞蹈与行走快照，以及交互策略演示。"}, filterAll: { en: "All", zh: "全部" }, filterVideos: { en: "Videos", zh: "视频" }, filterImages: { en: "Visualizations", zh: "可视化" }, galleryCount: { en: "{count} items", zh: "{count} 项展示" }, demoPending: { en: "COMING SOON", zh: "即将上线" }, videoType: { en: "VIDEO", zh: "视频演示" }, imageType: { en: "VISUALIZATION", zh: "可视化" }, openDemo: { en: "Open demo ↗", zh: "打开演示 ↗" },
-    citationLabel: { en: "REFERENCE", zh: "引用信息" }, citationDescription: { en: "Citation information will be available when the paper is released.", zh: "论文发布后将在这里提供引用信息。" }, citationPending: { en: "Coming soon", zh: "待发布" }, citationPlaceholder: { en: "% FlashMimic\n% Citation will be added with the paper release.", zh: "% FlashMimic\n% 论文发布后将在这里补充正式引用。" }, copy: { en: "Copy", zh: "复制" }, copied: { en: "Copied", zh: "已复制" }, copyFailed: { en: "Please select and copy the citation below.", zh: "请选中下方引用文本并手动复制。" },
+    newsLabel: { en: "LATEST", zh: "最新动态" }, newsTitle: { en: "Project updates.", zh: "项目动态。" }, citationLabel: { en: "REFERENCE", zh: "引用信息" }, citationDescription: { en: "Citation information will be available when the paper is released.", zh: "论文发布后将在这里提供引用信息。" }, citationPending: { en: "Coming soon", zh: "待发布" }, citationPlaceholder: { en: "% FlashMimic\n% Citation will be added with the paper release.", zh: "% FlashMimic\n% 论文发布后将在这里补充正式引用。" }, copy: { en: "Copy", zh: "复制" }, copied: { en: "Copied", zh: "已复制" }, copyFailed: { en: "Please select and copy the citation below.", zh: "请选中下方引用文本并手动复制。" },
     authorsLabel: { en: "THE TEAM", zh: "研究团队" }, authorsTitle: { en: "People behind the project.", zh: "项目背后的研究者。" }, authorsPending: { en: "Authors and affiliations will be announced soon.", zh: "作者名单与所属单位即将公布。" }, affiliationPending: { en: "Affiliation to be announced", zh: "所属单位待公布" },
     footerTagline: { en: "Research. Motion. Possibility.", zh: "研究 · 动作 · 更多可能" }, backTop: { en: "Back to top ↑", zh: "返回顶部 ↑" }, footerNote: {"en": "Learning motion. Exploring possibilities.", "zh": "学习动作，探索更多可能。"}, menuOpen: { en: "Open navigation", zh: "打开导航" }, menuClose: { en: "Close navigation", zh: "关闭导航" }, mediaError: { en: "Media is unavailable. Please check back later.", zh: "素材暂时无法加载，请稍后再试。" }
   }

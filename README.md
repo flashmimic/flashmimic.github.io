@@ -28,6 +28,7 @@
 | 视频 / 图片展示 | `demos` | `type` 为 `video` 或 `image`；`src` 为素材路径 |
 | 交互仿真 | `demos` | `type: "interactive"`，`id` 对应 `assets/sim/manifest.json`；`poster` 为封面 |
 | 演示跳转链接 | `demos[].url` | 可选，填写后出现“打开演示”链接 |
+| 项目动态 | `news` | 日期格式 `YYYY-MM-DD`，自动倒序 |
 | 作者与单位 | `authors`、`affiliations` | 标志放 `assets/logos/` |
 | 引用信息 | `citation` | 粘贴真实 BibTeX 多行字符串 |
 | 各区块标题、固定文案 | `ui` | 中英文分别填写 |
